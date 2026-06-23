@@ -257,11 +257,99 @@ function narrText(res){
 }
 
 async function enviarCorreo(part,res,narrativa,analisisIA){
-  const dimRows=res.porDim.map(d=>`<tr><td style="padding:8px 12px;border-bottom:1px solid #eee">${d.nombre}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:700;color:#1B4FD8">${d.promedio}/5</td><td style="padding:8px 12px;border-bottom:1px solid #eee">${['','Exploración','Experimentación','Adopción','Escalamiento','Transformación'][Math.round(d.promedio)]||''}</td></tr>`).join('');
-  const reporte=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;color:#1E293B;margin:0;padding:40px;max-width:800px;margin:0 auto}.hdr{background:#0F1F3D;color:white;padding:30px;border-radius:8px;margin-bottom:24px}.met{background:#F7F8FA;border-radius:8px;padding:16px;margin:8px;display:inline-block;min-width:180px;vertical-align:top}table{width:100%;border-collapse:collapse;margin:16px 0}th{background:#0F1F3D;color:white;padding:10px 12px;text-align:left}.narr{background:#EEF2FF;border-left:4px solid #1B4FD8;padding:16px;margin:16px 0;border-radius:0 8px 8px 0;line-height:1.7}.ia{background:#F0FDF4;border-left:4px solid #059669;padding:16px;margin:16px 0;border-radius:0 8px 8px 0;line-height:1.7}</style></head><body><div class="hdr"><div style="font-size:22px;font-weight:700">Diagnóstico de Madurez en IA</div><div style="color:#94A3B8;font-size:13px;margin-top:4px">MadurezIA Colombia &middot; ${new Date().toLocaleDateString('es-CO')}</div></div><p><strong>Participante:</strong> ${part.nombre} &mdash; ${part.cargo}</p><p><strong>Empresa:</strong> ${part.empresa} | <strong>Sector:</strong> ${part.sector||'N/A'} | <strong>Ubicación:</strong> ${part.municipio||''}${part.departamento?', '+part.departamento:''}</p><div style="text-align:center;margin:24px 0"><div style="font-size:66px;font-weight:800;color:${res.nivel.col}">${res.IMP}</div><div style="font-size:20px;font-weight:700;color:${res.nivel.col}">${res.nivel.nom}</div><div style="color:#64748B">${res.nivel.desc}</div></div><div style="margin:20px 0"><div class="met"><div style="font-size:24px;font-weight:800">${res.IMP}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Índice de Madurez</div></div><div class="met" style="background:#FEF3C7"><div style="font-size:24px;font-weight:800;color:#D97706">${res.DR.promedio}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Dimensión Restrictiva</div><div style="font-size:11px">${res.DR.nombre}</div></div><div class="met"><div style="font-size:24px;font-weight:800;color:${res.brecha>1?'#DC2626':'#059669'}">${res.brecha}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Brecha Estratégica</div></div></div><table><thead><tr><th>Dimensión</th><th>Puntaje</th><th>Nivel</th></tr></thead><tbody>${dimRows}</tbody></table><div class="narr"><strong>Interpretación:</strong><br>${narrativa}</div>${analisisIA?`<div class="ia"><strong>Análisis personalizado:</strong><br>${analisisIA}</div>`:''}<div style="margin-top:32px;padding-top:16px;border-top:1px solid #eee;font-size:11px;color:#94A3B8">Generado por MadurezIA Colombia &middot; NIST AI RMF y CONPES 3975</div></body></html>`;
-  const b64=btoa(unescape(encodeURIComponent(reporte)));
-  const htmlCorreo=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto"><div style="background:#0F1F3D;padding:24px;border-radius:8px 8px 0 0"><div style="color:white;font-size:18px;font-weight:700">MadurezIA Colombia</div><div style="color:#94A3B8;font-size:13px">Resultados del Diagnóstico de Madurez en IA</div></div><div style="background:#F7F8FA;padding:24px;border-radius:0 0 8px 8px;border:1px solid #E2E8F0"><p>Estimado/a <strong>${part.nombre}</strong>,</p><p>Adjunto encontrará los resultados de su diagnóstico para <strong>${part.empresa}</strong>.</p><div style="background:white;border-radius:8px;padding:20px;margin:16px 0;text-align:center;border:1px solid #E2E8F0"><div style="font-size:48px;font-weight:800;color:${res.nivel.col}">${res.IMP}/5</div><div style="font-size:18px;font-weight:700;color:${res.nivel.col}">${res.nivel.nom}</div></div><div style="background:#EEF2FF;border-left:4px solid #1B4FD8;padding:14px;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7">${narrativa}</div>${analisisIA?`<div style="background:#F0FDF4;border-left:4px solid #059669;padding:14px;margin-top:12px;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7">${analisisIA}</div>`:''}<p style="color:#64748B;font-size:12px;margin-top:24px">Generado con base en el NIST AI RMF y la Política Nacional de IA (CONPES 3975).</p></div></div>`;
-  const r=await fetch('/.netlify/functions/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:part.correo,subject:`Diagnóstico de Madurez en IA — ${part.empresa}`,html:htmlCorreo,attachments:[{filename:`diagnostico_${part.empresa.replace(/\s+/g,'_')}.html`,content:b64}]})});
+  const dimRows=res.porDim.map(d=>`
+    <tr>
+      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-size:14px">${d.nombre}</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-weight:700;color:#1B4FD8;font-size:14px">${d.promedio}/5</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-size:13px">${['','Exploración','Experimentación','Adopción','Escalamiento','Transformación'][Math.round(d.promedio)]||''}</td>
+    </tr>`).join('');
+
+  const htmlCorreo=`<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diagnóstico MadurezIA Colombia</title>
+</head>
+<body style="margin:0;padding:0;background:#F7F8FA;font-family:Arial,sans-serif">
+<div style="max-width:640px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)">
+  <!-- Header -->
+  <div style="background:#0F1F3D;padding:28px 32px">
+    <div style="color:#fff;font-size:20px;font-weight:700">🧠 MadurezIA Colombia</div>
+    <div style="color:#94A3B8;font-size:13px;margin-top:4px">Diagnóstico de Madurez en Inteligencia Artificial</div>
+  </div>
+  <!-- Saludo -->
+  <div style="padding:28px 32px 0">
+    <p style="font-size:15px;color:#1E293B;margin:0 0 8px">Estimado/a <strong>${part.nombre}</strong>,</p>
+    <p style="font-size:14px;color:#64748B;margin:0">A continuación encontrará los resultados de su diagnóstico de madurez en IA para <strong>${part.empresa}</strong>.</p>
+    <p style="font-size:12px;color:#94A3B8;margin:8px 0 0">${part.cargo} · ${part.sector||''} · ${part.municipio||''}${part.departamento?', '+part.departamento:''}</p>
+  </div>
+  <!-- Nivel principal -->
+  <div style="margin:24px 32px;background:linear-gradient(135deg,#0F1F3D,#1B3A6B);border-radius:10px;padding:28px;text-align:center">
+    <div style="font-size:64px;font-weight:800;color:${res.nivel.col};line-height:1">${res.IMP}</div>
+    <div style="font-size:22px;font-weight:700;color:${res.nivel.col};margin-top:6px">${res.nivel.nom}</div>
+    <div style="font-size:13px;color:#94A3B8;margin-top:4px">${res.nivel.desc}</div>
+  </div>
+  <!-- Métricas -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 32px 24px">
+    <div style="background:#F7F8FA;border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:#0F1F3D">${res.IMP}</div>
+      <div style="font-size:10px;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Índice de Madurez</div>
+    </div>
+    <div style="background:#FEF3C7;border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:#D97706">${res.DR.promedio}</div>
+      <div style="font-size:10px;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Dim. Restrictiva</div>
+      <div style="font-size:11px;color:#92400E;margin-top:2px">${res.DR.nombre.split(' ').slice(0,2).join(' ')}</div>
+    </div>
+    <div style="background:${res.brecha>1?'#FEE2E2':'#D1FAE5'};border-radius:8px;padding:14px;text-align:center">
+      <div style="font-size:22px;font-weight:800;color:${res.brecha>1?'#DC2626':'#059669'}">${res.brecha}</div>
+      <div style="font-size:10px;color:${res.brecha>1?'#991B1B':'#065F46'};text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Brecha Estratégica</div>
+    </div>
+  </div>
+  <!-- Tabla dimensiones -->
+  <div style="margin:0 32px 24px">
+    <div style="font-size:13px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Resultados por Dimensión</div>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #E2E8F0;border-radius:8px;overflow:hidden">
+      <thead>
+        <tr style="background:#0F1F3D">
+          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Dimensión</th>
+          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Puntaje</th>
+          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Nivel</th>
+        </tr>
+      </thead>
+      <tbody>${dimRows}</tbody>
+    </table>
+  </div>
+  <!-- Narrativa -->
+  <div style="margin:0 32px 24px;background:#EEF2FF;border-left:4px solid #1B4FD8;border-radius:0 8px 8px 0;padding:16px 18px">
+    <div style="font-size:12px;font-weight:700;color:#1B4FD8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Interpretación</div>
+    <p style="font-size:14px;color:#1E293B;line-height:1.7;margin:0">${narrativa}</p>
+  </div>
+  ${analisisIA?`
+  <!-- Análisis IA -->
+  <div style="margin:0 32px 24px;background:#F0FDF4;border-left:4px solid #059669;border-radius:0 8px 8px 0;padding:16px 18px">
+    <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">✨ Análisis Personalizado</div>
+    <p style="font-size:14px;color:#1E293B;line-height:1.7;margin:0">${analisisIA}</p>
+  </div>`:''}
+  <!-- Footer -->
+  <div style="background:#F7F8FA;padding:20px 32px;border-top:1px solid #E2E8F0">
+    <p style="font-size:11px;color:#94A3B8;margin:0;line-height:1.6">
+      Generado por <strong>MadurezIA Colombia</strong> · Basado en NIST AI RMF y Política Nacional de IA (CONPES 3975)<br>
+      Tratamiento de datos conforme a la Ley 1581 de 2012
+    </p>
+  </div>
+</div>
+</body>
+</html>`;
+
+  // Enviar sin adjunto — el reporte completo va en el cuerpo del correo
+  const r=await fetch('/.netlify/functions/send-email',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      to:part.correo,
+      subject:`Diagnóstico de Madurez en IA — ${part.empresa} (${res.IMP}/5 · ${res.nivel.nom})`,
+      html:htmlCorreo
+    })
+  });
   if(!r.ok){const e=await r.text();throw new Error(e);}
   return r.json();
 }
