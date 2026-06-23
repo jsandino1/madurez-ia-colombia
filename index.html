@@ -346,7 +346,7 @@ function Login({onLogin,onVolver}){
       const d=await fn(email,pass);
       if(d.error){setErr(d.error.message||'Error.');}
       else if(modo==='registro'){setModo('login');alert('Cuenta creada. Ahora inicia sesión.');}
-      else{onLogin({token:d.access_token,user:d.user,email});}
+      else{const tok=d.access_token||d.session?.access_token||'';const usr=d.user||d.session?.user||{};onLogin({token:tok,user:usr,email});}
     }catch(e){setErr('Error de conexión.');}
     setCarg(false);
   };
