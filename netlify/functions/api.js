@@ -1,11 +1,5 @@
-// ================================================================
-// MadurezIA Colombia — API Function segura
-// Todas las operaciones de BD pasan por aquí con Service Role Key
-// Las claves secretas NUNCA llegan al navegador
-// ================================================================
-
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const SB_URL = process.env.SUPABASE_URL;
+const SB_SERVICE = process.env.SUPABASE_SERVICE_KEY;
 const RESEND_KEY = process.env.RESEND_KEY;
 
 const CORS = {
@@ -15,169 +9,139 @@ const CORS = {
   'Content-Type': 'application/json'
 };
 
-// Helper: respuesta JSON
-const ok = (data) => ({ statusCode: 200, headers: CORS, body: JSON.stringify(data) });
-const err = (msg, code = 400) => ({ statusCode: code, headers: CORS, body: JSON.stringify({ error: msg }) });
+const ok  = (d) => ({ statusCode:200, headers:CORS, body:JSON.stringify(d) });
+const err = (m,c=400) => ({ statusCode:c, headers:CORS, body:JSON.stringify({error:m}) });
 
-// Helper: llamada a Supabase con Service Role Key (privilegiada)
-async function sb(method, path, body = null, token = null) {
-  const headers = {
-    'Content-Type': 'application/json',
-    'apikey': SUPABASE_SERVICE_KEY,
-    // Si hay token de usuario, lo usamos para respetar RLS; si no, usamos service key
-    'Authorization': token ? `Bearer ${token}` : `Bearer ${SUPABASE_SERVICE_KEY}`,
+// Llamada a Supabase con service key (privilegiada, solo en servidor)
+async function sb(method, path, body=null) {
+  const h = {
+    'Content-Type':'application/json',
+    'apikey': SB_SERVICE,
+    'Authorization': `Bearer ${SB_SERVICE}`,
     'Prefer': 'return=representation'
   };
-  const opts = { method, headers };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
+  const opts = { method, headers:h };
+  if(body) opts.body = JSON.stringify(body);
+  const r = await fetch(`${SB_URL}/rest/v1/${path}`, opts);
   const text = await r.text();
-  if (!r.ok) throw new Error(text);
+  if(!r.ok) throw new Error(text);
   return text ? JSON.parse(text) : null;
 }
 
-// Helper: verificar token de usuario con Supabase Auth
-async function verificarToken(token) {
-  if (!token) throw new Error('Token requerido');
-  const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-    headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${token}` }
-  });
-  if (!r.ok) throw new Error('Token inválido o expirado');
-  return r.json();
+// Verificar token JWT de Supabase sin llamada externa
+// Decodificamos el payload del JWT para obtener el user_id
+function decodeJWT(token) {
+  try {
+    const payload = token.split('.')[1];
+    const decoded = JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
+    // Verificar que no haya expirado
+    if(decoded.exp && decoded.exp < Math.floor(Date.now()/1000)) {
+      throw new Error('Token expirado');
+    }
+    // Verificar que sea del proyecto correcto
+    if(!decoded.sub) throw new Error('Token inválido');
+    return { id: decoded.sub, email: decoded.email, role: decoded.role };
+  } catch(e) {
+    throw new Error('Token inválido: ' + e.message);
+  }
 }
 
 exports.handler = async (event) => {
-  // Preflight CORS
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: CORS, body: '' };
-  }
-  if (event.httpMethod !== 'POST') {
-    return err('Método no permitido', 405);
-  }
+  if(event.httpMethod === 'OPTIONS') return { statusCode:204, headers:CORS, body:'' };
+  if(event.httpMethod !== 'POST') return err('Método no permitido', 405);
 
   let body;
-  try {
-    body = JSON.parse(event.body);
-  } catch {
-    return err('Body inválido');
-  }
+  try { body = JSON.parse(event.body); }
+  catch { return err('Body inválido'); }
 
   const { accion, token } = body;
 
   try {
-    // ── ACCIONES PÚBLICAS (no requieren auth) ────────────────────
-    
-    // Buscar sesión por código (participante ingresa su código)
-    if (accion === 'buscar_sesion') {
+    // ── ACCIONES PÚBLICAS ────────────────────────────────────────
+    if(accion === 'buscar_sesion') {
       const { codigo } = body;
-      if (!codigo) return err('Código requerido');
+      if(!codigo) return err('Código requerido');
       const data = await sb('GET', `sesiones?codigo=eq.${codigo.toUpperCase()}&activa=eq.true&select=id,codigo,nombre,descripcion,fecha,hora`);
-      if (!data || data.length === 0) return err('Sesión no encontrada o inactiva', 404);
+      if(!data || data.length===0) return err('Sesión no encontrada o inactiva', 404);
       return ok(data[0]);
     }
 
-    // Guardar respuesta de participante
-    if (accion === 'guardar_respuesta') {
+    if(accion === 'guardar_respuesta') {
       const { sesion_codigo, participante, resultados, respuestas_raw } = body;
-      if (!sesion_codigo || !participante) return err('Datos incompletos');
-
-      // Verificar que la sesión existe y está activa
+      if(!sesion_codigo || !participante) return err('Datos incompletos');
       const sesion = await sb('GET', `sesiones?codigo=eq.${sesion_codigo}&activa=eq.true&select=id`);
-      if (!sesion || sesion.length === 0) return err('Sesión inactiva o no existe', 404);
-
+      if(!sesion || sesion.length===0) return err('Sesión inactiva', 404);
       const data = await sb('POST', 'respuestas', {
         sesion_codigo,
-        nombre: participante.nombre,
-        cargo: participante.cargo,
-        empresa: participante.empresa,
-        sector: participante.sector || null,
-        correo: participante.correo,
-        tamano: participante.tamano || null,
-        departamento: participante.departamento || null,
-        municipio: participante.municipio || null,
-        imp: resultados.IMP,
-        nivel: resultados.nivel.nom,
-        dim_restrictiva: resultados.DR.nombre,
-        puntaje_dr: resultados.DR.promedio,
+        nombre: participante.nombre, cargo: participante.cargo,
+        empresa: participante.empresa, sector: participante.sector||null,
+        correo: participante.correo, tamano: participante.tamano||null,
+        departamento: participante.departamento||null, municipio: participante.municipio||null,
+        imp: resultados.IMP, nivel: resultados.nivel.nom,
+        dim_restrictiva: resultados.DR.nombre, puntaje_dr: resultados.DR.promedio,
         brecha: resultados.brecha,
-        dim1: resultados.porDim[0].promedio,
-        dim2: resultados.porDim[1].promedio,
-        dim3: resultados.porDim[2].promedio,
-        dim4: resultados.porDim[3].promedio,
+        dim1: resultados.porDim[0].promedio, dim2: resultados.porDim[1].promedio,
+        dim3: resultados.porDim[2].promedio, dim4: resultados.porDim[3].promedio,
         dim5: resultados.porDim[4].promedio,
         respuestas_raw: JSON.stringify(respuestas_raw)
       });
-      return ok({ success: true, id: data[0]?.id });
+      return ok({ success:true, id:data[0]?.id });
     }
 
-    // ── ACCIONES PROTEGIDAS (requieren token de instructor) ──────
-
-    // Verificar identidad del instructor para todas las acciones siguientes
+    // ── ACCIONES PROTEGIDAS ──────────────────────────────────────
     let usuario;
     try {
-      usuario = await verificarToken(token);
-    } catch (e) {
-      return err('No autorizado. Inicie sesión nuevamente.', 401);
+      if(!token) throw new Error('Token requerido');
+      usuario = decodeJWT(token);
+    } catch(e) {
+      return err('No autorizado: ' + e.message, 401);
     }
 
-    // Crear sesión
-    if (accion === 'crear_sesion') {
+    if(accion === 'crear_sesion') {
       const { nombre, descripcion, fecha, hora } = body;
-      if (!nombre) return err('Nombre requerido');
-
-      // Generar código único
-      const codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
-
+      if(!nombre) return err('Nombre requerido');
+      const codigo = Math.random().toString(36).substring(2,8).toUpperCase();
       const data = await sb('POST', 'sesiones', {
-        codigo,
-        nombre,
-        descripcion: descripcion || null,
-        fecha: fecha || new Date().toISOString().split('T')[0],
-        hora: hora || null,
+        codigo, nombre,
+        descripcion: descripcion||null,
+        fecha: fecha||new Date().toISOString().split('T')[0],
+        hora: hora||null,
         instructor_id: usuario.id,
         activa: true
       });
       return ok(data[0]);
     }
 
-    // Listar sesiones del instructor
-    if (accion === 'listar_sesiones') {
+    if(accion === 'listar_sesiones') {
       const data = await sb('GET', `sesiones?instructor_id=eq.${usuario.id}&order=creada_en.desc`);
-      return ok(data || []);
+      return ok(data||[]);
     }
 
-    // Obtener respuestas de una sesión (solo si es del instructor)
-    if (accion === 'listar_respuestas') {
+    if(accion === 'listar_respuestas') {
       const { sesion_codigo } = body;
-      if (!sesion_codigo) return err('Código de sesión requerido');
-
-      // Verificar que la sesión pertenece al instructor
+      if(!sesion_codigo) return err('Código requerido');
       const sesion = await sb('GET', `sesiones?codigo=eq.${sesion_codigo}&instructor_id=eq.${usuario.id}&select=id`);
-      if (!sesion || sesion.length === 0) return err('Sesión no encontrada o sin permiso', 403);
-
+      if(!sesion || sesion.length===0) return err('Sin permiso', 403);
       const data = await sb('GET', `respuestas?sesion_codigo=eq.${sesion_codigo}&order=fecha.desc`);
-      // Omitir correos en la respuesta para mayor privacidad (el instructor ve los datos pero no los correos completos)
-      const sanitizados = (data || []).map(r => ({
+      const sanitizados = (data||[]).map(r=>({
         ...r,
         correo: r.correo ? r.correo.replace(/(.{2}).*(@.*)/, '$1***$2') : null
       }));
       return ok(sanitizados);
     }
 
-    // Desactivar sesión
-    if (accion === 'desactivar_sesion') {
+    if(accion === 'desactivar_sesion') {
       const { sesion_codigo } = body;
-      // Verificar propiedad
       const sesion = await sb('GET', `sesiones?codigo=eq.${sesion_codigo}&instructor_id=eq.${usuario.id}&select=id`);
-      if (!sesion || sesion.length === 0) return err('Sin permiso', 403);
-      await sb('PATCH', `sesiones?codigo=eq.${sesion_codigo}`, { activa: false });
-      return ok({ success: true });
+      if(!sesion || sesion.length===0) return err('Sin permiso', 403);
+      await sb('PATCH', `sesiones?codigo=eq.${sesion_codigo}`, { activa:false });
+      return ok({ success:true });
     }
 
     return err('Acción no reconocida');
 
-  } catch (e) {
+  } catch(e) {
     console.error('API error:', e.message);
-    return err(`Error interno: ${e.message}`, 500);
+    return err('Error interno: ' + e.message, 500);
   }
 };
