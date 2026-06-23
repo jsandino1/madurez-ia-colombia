@@ -676,7 +676,7 @@ function FormPart({sesion,onOk}){
         React.createElement('div',{className:'form-r'},
           inp('Empresa','empresa'),
           React.createElement('div',{className:'form-g'},React.createElement('label',null,'Sector'),React.createElement('select',{value:f.sector,onChange:e=>set('sector',e.target.value)},
-            ['','Financiero y Seguros','Manufactura','Comercio y Retail','Salud','Educación','Tecnología','Energía y Servicios Públicos','Gobierno y Sector Público','Logística y Transporte','Agroindustria','Otro'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
+            ['','Financiero y Seguros','Manufactura','Comercio y Retail','Salud','Educación','Tecnología','Energía y Servicios Públicos','Gobierno y Sector Público','Logística y Transporte','Agroindustria','Construcción e Infraestructura','Turismo, Hotelería y Entretenimiento','Servicios Profesionales y Empresariales','Minería, Petróleo y Gas','Otro'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
           ))
         ),
         React.createElement('div',{className:'form-r'},
