@@ -2,7 +2,6 @@
 // MadurezIA Colombia — Función de envío de correos
 // Usa RESEND_KEY desde variables de entorno (nunca expuesta al navegador)
 // ================================================================
-
 const RESEND_KEY = process.env.RESEND_KEY;
 
 const CORS = {
