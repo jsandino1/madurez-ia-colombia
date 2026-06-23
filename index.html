@@ -344,6 +344,7 @@ function Login({onLogin,onVolver}){
     try{
       const fn=modo==='login'?sbSignIn:sbSignUp;
       const d=await fn(email,pass);
+      console.log('SUPABASE RESPONSE:', JSON.stringify(d));
       if(d.error){setErr(d.error.message||'Error.');}
       else if(modo==='registro'){setModo('login');alert('Cuenta creada. Ahora inicia sesión.');}
       else{const tok=d.access_token||d.session?.access_token||'';const usr=d.user||d.session?.user||{};onLogin({token:tok,user:usr,email});}
