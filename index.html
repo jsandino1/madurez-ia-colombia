@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MadurezIA Colombia</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+:root{--azul:#0F1F3D;--anil:#1B4FD8;--anil-c:#EEF2FF;--ambar:#F59E0B;--ambar-c:#FEF3C7;--verde:#059669;--verde-c:#D1FAE5;--rojo:#DC2626;--rojo-c:#FEE2E2;--purp:#7C3AED;--purp-c:#EDE9FE;--blanco:#fff;--fondo:#F7F8FA;--borde:#E2E8F0;--texto:#1E293B;--texto2:#64748B;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--texto);min-height:100vh}
+.header{background:var(--azul);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;background:var(--anil);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.logo-text{color:#fff;font-weight:700;font-size:15px}
+.logo-sub{color:#94A3B8;font-size:11px}
+.header-right{display:flex;align-items:center;gap:10px}
+.header-user{color:#94A3B8;font-size:12px}
+.btn-nav{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#CBD5E1;padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-nav:hover{background:rgba(255,255,255,0.1);color:#fff}
+.btn-nav.danger{border-color:rgba(220,38,38,0.4);color:#FCA5A5}
+.main{max-width:820px;margin:0 auto;padding:36px 20px 80px}
+.main-w{max-width:1060px;margin:0 auto;padding:36px 20px 80px}
+.card{background:#fff;border-radius:14px;border:1px solid var(--borde);box-shadow:0 4px 20px rgba(15,31,61,.09);overflow:hidden;margin-bottom:20px}
+.card-h{background:var(--azul);padding:24px 28px}
+.card-h h2{color:#fff;font-size:19px;font-weight:700;margin-bottom:3px}
+.card-h p{color:#94A3B8;font-size:13px}
+.card-b{padding:28px}
+.inicio-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(135deg,#0F1F3D 0%,#1B3A6B 100%)}
+.inicio-logo{text-align:center;margin-bottom:40px}
+.inicio-logo h1{color:#fff;font-size:28px;font-weight:800;margin-bottom:6px}
+.inicio-logo p{color:#94A3B8;font-size:14px}
+.inicio-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px;width:100%}
+.inicio-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:32px 24px;cursor:pointer;transition:all .25s;text-align:center}
+.inicio-card:hover{background:rgba(255,255,255,0.13);border-color:rgba(255,255,255,0.3);transform:translateY(-2px)}
+.inicio-card .ic-icon{font-size:36px;margin-bottom:12px}
+.inicio-card h3{color:#fff;font-size:16px;font-weight:700;margin-bottom:6px}
+.inicio-card p{color:#94A3B8;font-size:13px;line-height:1.5}
+.codigo-wrap{margin-top:12px;display:flex;gap:8px}
+.codigo-input{flex:1;padding:11px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-size:15px;font-family:'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;outline:none}
+.codigo-input::placeholder{color:#94A3B8;letter-spacing:1px;text-transform:none}
+.codigo-input:focus{border-color:#1B4FD8}
+.btn-codigo{padding:11px 16px;background:#1B4FD8;border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:18px}
+.form-g{margin-bottom:18px}
+.form-r{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+label span{color:var(--rojo)}
+input,select,textarea{width:100%;padding:10px 13px;border:1.5px solid var(--borde);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--texto);background:#fff;outline:none;transition:border-color .2s}
+textarea{resize:vertical;min-height:70px}
+input:focus,select:focus,textarea:focus{border-color:var(--anil);box-shadow:0 0 0 3px rgba(27,79,216,.09)}
+input:disabled,select:disabled{background:#F1F5F9;color:#94A3B8;cursor:not-allowed}
+.btn{padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-p{background:var(--anil);color:#fff}
+.btn-p:hover{background:#1440B8;transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,79,216,.28)}
+.btn-p:disabled{background:var(--borde);color:var(--texto2);transform:none;box-shadow:none;cursor:not-allowed}
+.btn-s{background:var(--fondo);color:var(--texto);border:1.5px solid var(--borde)}
+.btn-s:hover{background:var(--borde)}
+.btn-full{width:100%}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px}
+.sesion-item{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:12px;transition:box-shadow .2s}
+.sesion-item:hover{box-shadow:0 4px 16px rgba(15,31,61,.08)}
+.sesion-info{flex:1}
+.sesion-nombre{font-size:15px;font-weight:700;margin-bottom:3px}
+.sesion-meta{font-size:12px;color:var(--texto2)}
+.sesion-codigo{font-weight:700;color:var(--anil)}
+.sesion-resp{font-size:13px;font-weight:700;color:var(--anil);min-width:60px;text-align:center}
+.sesion-acciones{display:flex;gap:8px;flex-wrap:wrap}
+.btn-sm{padding:7px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;white-space:nowrap}
+.btn-sm-anil{background:var(--anil-c);color:var(--anil)}
+.btn-sm-verde{background:var(--verde-c);color:#065F46}
+.prog-wrap{margin-bottom:28px}
+.prog-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px;color:var(--texto2)}
+.prog-bar{height:5px;background:var(--borde);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--anil),#6366F1);border-radius:99px;transition:width .4s}
+.steps{display:flex;gap:5px;margin-top:10px}
+.step{flex:1;height:4px;border-radius:99px;background:var(--borde)}
+.step.done{background:var(--anil)}.step.active{background:var(--ambar)}
+.dim-badge{display:inline-flex;align-items:center;gap:7px;background:var(--anil-c);color:var(--anil);padding:5px 13px;border-radius:99px;font-size:11px;font-weight:600;margin-bottom:16px}
+.dim-title{font-size:17px;font-weight:700;margin-bottom:5px}
+.dim-desc{font-size:13px;color:var(--texto2);margin-bottom:24px;line-height:1.6}
+.preg-wrap{margin-bottom:26px}
+.preg-num{font-size:11px;font-weight:600;color:var(--texto2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.preg-texto{font-size:14px;font-weight:600;margin-bottom:14px;line-height:1.5}
+.opciones{display:flex;flex-direction:column;gap:7px}
+.opcion{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border:1.5px solid var(--borde);border-radius:9px;cursor:pointer;background:#fff;transition:all .2s}
+.opcion:hover,.opcion.sel{border-color:var(--anil);background:var(--anil-c)}
+.op-n{width:26px;height:26px;border-radius:50%;background:var(--borde);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--texto2);flex-shrink:0}
+.opcion.sel .op-n{background:var(--anil);color:#fff}
+.op-t{font-size:13px;line-height:1.5;padding-top:3px}
+.res-hero{text-align:center;padding:36px 28px 28px;border-bottom:1px solid var(--borde)}
+.nivel-n{font-size:66px;font-weight:800;line-height:1}
+.nivel-nom{font-size:21px;font-weight:700;margin-top:4px}
+.nivel-sub{font-size:13px;color:var(--texto2);margin-top:3px}
+.met-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:20px 28px;border-bottom:1px solid var(--borde)}
+.met-c{background:var(--fondo);border-radius:11px;padding:15px;text-align:center}
+.met-v{font-size:26px;font-weight:800;color:var(--azul)}
+.met-l{font-size:11px;font-weight:600;color:var(--texto2);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.met-s{font-size:11px;color:var(--texto2);margin-top:2px}
+.radar-wrap{display:flex;justify-content:center;padding:20px 28px;border-bottom:1px solid var(--borde)}
+.dim-res{padding:20px 28px}
+.dim-res-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.dim-res-n{font-size:12px;font-weight:600;width:185px;flex-shrink:0;line-height:1.3}
+.barra-wrap{flex:1;height:7px;background:var(--borde);border-radius:99px;overflow:hidden}
+.barra-fill{height:100%;border-radius:99px;transition:width .6s}
+.dim-pt{font-size:13px;font-weight:700;width:28px;text-align:right}
+.nivel-tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;width:105px;text-align:center;flex-shrink:0}
+.narr{margin:0 28px 24px;background:var(--anil-c);border-left:4px solid var(--anil);border-radius:0 8px 8px 0;padding:14px 18px}
+.narr p{font-size:13px;color:var(--azul);line-height:1.7}
+.tag-cuello{display:inline-flex;align-items:center;gap:3px;background:var(--ambar-c);color:#92400E;padding:2px 7px;border-radius:99px;font-size:11px;font-weight:600}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700}
+.b1{background:#FEE2E2;color:#991B1B}.b2{background:#FEF3C7;color:#92400E}.b3{background:#EEF2FF;color:#1E40AF}.b4{background:#EDE9FE;color:#5B21B6}.b5{background:#D1FAE5;color:#065F46}
+.alert{padding:11px 15px;border-radius:8px;font-size:13px;margin-bottom:16px}
+.alert-e{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
+.alert-ok{background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0}
+.loading{text-align:center;padding:60px 28px;color:var(--texto2)}
+.spin{width:38px;height:38px;border:3px solid var(--borde);border-top-color:var(--anil);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tabs{display:flex;gap:4px;background:var(--fondo);border-radius:9px;padding:4px;margin-bottom:20px;border:1px solid var(--borde)}
+.tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;border-radius:7px;cursor:pointer;color:var(--texto2);border:none;background:transparent;font-family:'Inter',sans-serif}
+.tab.active{background:#fff;color:var(--anil);box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.stats-r{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-c{background:#fff;border:1px solid var(--borde);border-radius:11px;padding:18px}
+.stat-v{font-size:30px;font-weight:800;color:var(--azul)}
+.stat-l{font-size:12px;color:var(--texto2);margin-top:3px;font-weight:500}
+.stat-d{font-size:12px;color:var(--verde);font-weight:600;margin-top:5px}
+.tabla{width:100%;border-collapse:collapse;font-size:13px}
+.tabla th{background:var(--fondo);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--texto2);border-bottom:2px solid var(--borde)}
+.tabla td{padding:12px 14px;border-bottom:1px solid var(--borde);vertical-align:middle}
+.tabla tr:hover td{background:var(--fondo)}
+.empty{text-align:center;padding:56px 28px;color:var(--texto2)}
+.empty-i{font-size:44px;margin-bottom:10px}
+.correo-ok{text-align:center;padding:20px 28px 28px}
+.co-i{font-size:44px;margin-bottom:10px}
+.co-t{font-size:17px;font-weight:700;color:var(--verde);margin-bottom:5px}
+.co-s{font-size:13px;color:var(--texto2)}
+.sec-t{font-size:17px;font-weight:700;margin-bottom:3px}
+.sec-s{font-size:13px;color:var(--texto2);margin-bottom:20px}
+.sesion-banner{background:var(--anil-c);border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap}
+.sesion-banner strong{color:var(--anil)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal{background:#fff;border-radius:16px;padding:32px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:20px}
+@media(max-width:600px){.form-r{grid-template-columns:1fr}.met-row{grid-template-columns:1fr}.stats-r{grid-template-columns:repeat(2,1fr)}.inicio-cards{grid-template-columns:1fr}.dim-res-n{width:120px}.nivel-tag{display:none}.sesion-acciones{flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const {useState,useEffect} = React;
+
+// ── CONFIG (solo claves públicas en el navegador) ────────────────────
+const SB_URL = "https://mmgmwrbxzxmqmygwtwdw.supabase.co";
+const SB_KEY = "sb_publishable_Ii_rirLA5pmmoejJwQBXqw_FwQe-MXm"; // Solo para autenticación de usuarios
+const MUNICIPIOS_DANE = {"Amazonas": ["Leticia", "Puerto Nariño"], "Antioquia": ["Abejorral", "Abriaquí", "Alejandría", "Amagá", "Amalfi", "Andes", "Angelópolis", "Angostura", "Anorí", "Anzá", "Apartadó", "Arboletes", "Argelia", "Armenia", "Barbosa", "Bello", "Belmira", "Betania", "Betulia", "Briceño", "Buriticá", "Caicedo", "Caldas", "Campamento", "Caracolí", "Caramanta", "Carepa", "Carolina Del Principe", "Caucasia", "Cañasgordas", "Chigorodó", "Cisneros", "Ciudad Bolívar", "Cocorná", "Concepción", "Concordia", "Copacabana", "Cáceres", "Dabeiba", "Don Matías", "Ebéjico", "El Bagre", "El Carmen De Viboral", "El Peñol", "El Retiro", "El Santuario", "Entrerríos", "Envigado", "Fredonia", "Frontino", "Giraldo", "Girardota", "Granada", "Guadalupe", "Guarne", "Guatapé", "Gómez Plata", "Heliconia", "Hispania", "Itagüí", "Ituango", "Jardín", "Jericó", "La Ceja Del Tambo", "La Estrella", "La Pintada", "La Unión", "Liborina", "Maceo", "Marinilla", "Medellín", "Montebello", "Murindó", "Mutatá", "Nariño", "Nechí", "Necoclí", "Olaya", "Peque", "Pueblorrico", "Puerto Berrío", "Puerto Nare", "Puerto Triunfo", "Remedios", "Rionegro", "Sabanalarga", "Sabaneta", "Salgar", "San Andrés De Cuerquía", "San Carlos", "San Francisco", "San Jerónimo", "San José De La Montaña", "San Juan De Urabá", "San Luis", "San Pedro De Los Milagros", "San Pedro De Urabá", "San Rafael", "San Roque", "San Vicente Ferrer", "Santa Bárbara", "Santa Fé De Antioquia", "Santa Rosa De Osos", "Santo Domingo", "Segovia", "Sonsón", "Sopetrán", "Tarazá", "Tarso", "Titiribí", "Toledo", "Turbo", "Támesis", "Uramita", "Urrao", "Valdivia", "Valparaíso", "Vegachí", "Venecia", "Vigía Del Fuerte", "Yalí", "Yarumal", "Yolombó", "Yondó", "Zaragoza"], "Arauca": ["Arauca", "Arauquita", "Cravo Norte", "Fortul", "Puerto Rondón", "Saravena", "Tame"], "Atlántico": ["Baranoa", "Barranquilla", "Campo De La Cruz", "Candelaria", "Galapa", "Juan De Acosta", "Luruaco", "Malambo", "Manatí", "Palmar De Varela", "Piojó", "Polonuevo", "Ponedera", "Puerto Colombia", "Repelón", "Sabanagrande", "Sabanalarga", "Santa Lucía", "Santo Tomas", "Soledad", "Suan", "Tubará", "Usiacurí"], "Bolívar": ["Achí", "Altos Del Rosario", "Arenal", "Arjona", "Arroyohondo", "Barranco De Loba", "Calamar", "Cantagallo", "Cartagena de Indias", "Cicuco", "Clemencia", "Córdoba", "El Carmen De Bolívar", "El Guamo", "El Peñón", "Hatillo De Loba", "Magangué", "Mahates", "Margarita", "María La Baja", "Mompóx", "Montecristo", "Morales", "Norosí", "Pinillos", "Regidor", "Rioviejo", "San Cristóbal", "San Estanislao", "San Fernando", "San Jacinto", "San Jacinto Del Cauca", "San Juan Nepomuceno", "San Martín De Loba", "San Pablo", "Santa Catalina", "Santa Rosa", "Santa Rosa Del Sur", "Simití", "Soplaviento", "Talaigua Nuevo", "Tiquisio", "Turbaco", "Turbaná", "Villanueva", "Zambrano"], "Boyacá": ["Almeida", "Aquitania", "Arcabuco", "Belén", "Berbeo", "Betéitiva", "Boavita", "Boyacá", "Briceño", "Buenavista", "Busbanzá", "Caldas", "Campohermoso", "Cerinza", "Chinavita", "Chiquinquirá", "Chiscas", "Chita", "Chitaraque", "Chivatá", "Chivor", "Chíquiza", "Ciénega", "Coper", "Corrales", "Covarachía", "Cubará", "Cucaita", "Cuítiva", "Cómbita", "Duitama", "El Cocuy", "El Espino", "Firavitoba", "Floresta", "Gachantivá", "Garagoa", "Guacamayas", "Guateque", "Guayatá", "Gámeza", "Güicán De La Sierra", "Iza", "Jenesano", "Jericó", "La Capilla", "La Uvita", "La Victoria", "Labranzagrande", "Macanal", "Maripí", "Miraflores", "Mongua", "Monguí", "Moniquirá", "Motavita", "Muzo", "Nobsa", "Nuevo Colón", "Oicatá", "Otanche", "Pachavita", "Paipa", "Pajarito", "Panqueba", "Pauna", "Paya", "Paz De Río", "Pesca", "Pisba", "Puerto Boyacá", "Páez", "Quípama", "Ramiriquí", "Rondón", "Ráquira", "Saboyá", "Samacá", "San Eduardo", "San José De Pare", "San Luis De Gaceno", "San Mateo", "San Miguel De Sema", "San Pablo De Borbur", "Santa María", "Santa Rosa De Viterbo", "Santa Sofía", "Santana", "Sativanorte", "Sativasur", "Siachoque", "Soatá", "Socha", "Socotá", "Sogamoso", "Somondoco", "Sora", "Soracá", "Sotaquirá", "Susacón", "Sutamarchán", "Sutatenza", "Sáchica", "Tasco", "Tenza", "Tibaná", "Tibasosa", "Tinjacá", "Tipacoque", "Toca", "Togüí", "Tota", "Tunja", "Tununguá", "Turmequé", "Tuta", "Tutazá", "Tópaga", "Ventaquemada", "Villa De Leyva", "Viracachá", "Zetaquirá", "Úmbita"], "Caldas": ["Aguadas", "Anserma", "Aranzazu", "Belalcázar", "Chinchiná", "Filadelfia", "La Dorada", "La Merced", "Manizales", "Manzanares", "Marmato", "Marquetalia", "Marulanda", "Neira", "Norcasia", "Palestina", "Pensilvania", "Pácora", "Riosucio", "Risaralda", "Salamina", "Samaná", "San José", "Supía", "Victoria", "Villamaría", "Viterbo"], "Caquetá": ["Albania", "Belén De Los Andaquíes", "Cartagena Del Chairá", "Curillo", "El Doncello", "El Paujíl", "Florencia", "La Montañita", "Milán", "Morelia", "Puerto Rico", "San José Del Fragua", "San Vicente Del Caguán", "Solano", "Solita", "Valparaíso"], "Casanare": ["Aguazul", "Chámeza", "Hato Corozal", "La Salina", "Maní", "Monterrey", "Nunchía", "Orocué", "Paz De Ariporo", "Pore", "Recetor", "Sabanalarga", "San Luis De Palenque", "Sácama", "Tauramena", "Trinidad", "Támara", "Villanueva", "Yopal"], "Cauca": ["Almaguer", "Argelia", "Balboa", "Bolívar", "Buenos Aires", "Cajibío", "Caldono", "Caloto", "Corinto", "El Tambo", "Florencia", "Guachené", "Guapi", "Inzá", "Jambaló", "La Sierra", "La Vega", "López De Micay", "Mercaderes", "Miranda", "Morales", "Padilla", "Patía", "Piamonte", "Piendamó", "Popayán", "Puerto Tejada", "Puracé", "Páez", "Rosas", "San Sebastián", "Santa Rosa", "Santander De Quilichao", "Silvia", "Sotará", "Sucre", "Suárez", "Timbiquí", "Timbío", "Toribío", "Totoró", "Villa Rica"], "Cesar": ["Aguachica", "Agustín Codazzi", "Astrea", "Becerril", "Bosconia", "Chimichagua", "Chiriguaná", "Curumaní", "El Copey", "El Paso", "Gamarra", "González", "La Gloria", "La Jagua De Ibirico", "La Paz", "Manaure Balcón Del César", "Pailitas", "Pelaya", "Pueblo Bello", "Río De Oro", "San Alberto", "San Diego", "San Martín", "Tamalameque", "Valledupar"], "Chocó": ["Acandí", "Alto Baudó", "Atrato", "Bagadó", "Bahía Solano", "Bajo Baudó", "Bojayá", "Carmen Del Darién", "Condoto", "Cértegui", "El Cantón De San Pablo", "El Carmen De Atrato", "El Litoral De San Juan", "Istmina", "Juradó", "Lloró", "Medio Atrato", "Medio Baudó", "Medio San Juan", "Nuevo Belén de Bajirá", "Nuquí", "Nóvita", "Quibdó", "Riosucio", "Río Iró", "Río Quito", "San José Del Palmar", "San José de Tadó", "Sipí", "Unguía", "Unión Panamericana"], "Córdoba": ["Ayapel", "Buenavista", "Canalete", "Cereté", "Chimá", "Chinú", "Ciénaga De Oro", "Cotorra", "La Apartada", "Lorica", "Los Córdobas", "Momil", "Montelíbano", "Montería", "Moñitos", "Planeta Rica", "Pueblo Nuevo", "Puerto Escondido", "Puerto Libertador", "Purísima", "Sahagún", "San Andrés De Sotavento", "San Antero", "San Bernardo Del Viento", "San Carlos", "San José De Uré", "San Pelayo", "Tierralta", "Tuchín", "Valencia"], "Cundinamarca": ["Agua De Dios", "Albán", "Anapoima", "Anolaima", "Apulo", "Arbeláez", "Beltrán", "Bituima", "Bojacá", "Cabrera", "Cachipay", "Cajicá", "Caparrapí", "Carmen De Carupa", "Chaguaní", "Chipaque", "Choachí", "Chocontá", "Chía", "Cogua", "Cota", "Cucunubá", "Cáqueza", "El Colegio", "El Peñón", "El Rosal", "Facatativá", "Fosca", "Funza", "Fusagasugá", "Fómeque", "Fúquene", "Gachalá", "Gachancipá", "Gachetá", "Gama", "Girardot", "Granada", "Guachetá", "Guaduas", "Guasca", "Guataquí", "Guatavita", "Guayabal De Síquima", "Guayabetal", "Gutiérrez", "Jerusalén", "Junín", "La Calera", "La Mesa", "La Palma", "La Peña", "La Vega", "Lenguazaque", "Machetá", "Madrid", "Manta", "Medina", "Mosquera", "Nariño", "Nemocón", "Nilo", "Nimaima", "Nocaima", "Pacho", "Paime", "Pandi", "Paratebueno", "Pasca", "Puerto Salgar", "Pulí", "Quebradanegra", "Quetame", "Quipile", "Ricaurte", "San Antonio Del Tequendama", "San Bernardo", "San Cayetano", "San Francisco", "San Juan De Rioseco", "Sasaima", "Sesquilé", "Sibaté", "Silvania", "Simijaca", "Soacha", "Sopó", "Subachoque", "Suesca", "Supatá", "Susa", "Sutatausa", "Tabio", "Tausa", "Tena", "Tenjo", "Tibacuy", "Tibirita", "Tocaima", "Tocancipá", "Topaipí", "Ubalá", "Ubaque", "Ubaté", "Une", "Venecia", "Vergara", "Vianí", "Villagómez", "Villapinzón", "Villeta", "Viotá", "Yacopí", "Zipacón", "Zipaquirá", "Útica"], "Bogotá D.C.": ["Bogotá D.C."], "Guainía": ["Barrancominas", "Inírida"], "Guaviare": ["Calamar", "El Retorno", "Miraflores", "San José Del Guaviare"], "Huila": ["Acevedo", "Agrado", "Aipe", "Algeciras", "Altamira", "Baraya", "Campoalegre", "Colombia", "Elías", "Garzón", "Gigante", "Guadalupe", "Hobo", "Isnos", "La Argentina", "La Plata", "Neiva", "Nátaga", "Oporapa", "Paicol", "Palermo", "Palestina", "Pital", "Pitalito", "Rivera", "Saladoblanco", "San Agustín", "Santa María", "Suaza", "Tarqui", "Tello", "Teruel", "Tesalia", "Timaná", "Villavieja", "Yaguará", "Íquira"], "La Guajira": ["Albania", "Barrancas", "Dibulla", "Distracción", "El Molino", "Fonseca", "Hatonuevo", "La Jagua Del Pilar", "Maicao", "Manaure", "Riohacha", "San Juan Del Cesar", "Uribia", "Urumita", "Villanueva"], "Magdalena": ["Algarrobo", "Aracataca", "Ariguaní", "Cerro De San Antonio", "Chibolo", "Ciénaga", "Concordia", "El Banco", "El Piñón", "El Retén", "Fundación", "Guamal", "Nueva Granada", "Pedraza", "Pijiño Del Carmen", "Pivijay", "Plato", "Puebloviejo", "Remolino", "Sabanas De San Ángel", "Salamina", "San Sebastián De Buenavista", "San Zenón", "Santa Ana", "Santa Bárbara De Pinto", "Santa Marta", "Sitionuevo", "Tenerife", "Zapayán", "Zona Bananera"], "Meta": ["Acacías", "Barranca De Upía", "Cabuyaro", "Castilla La Nueva", "Cubarral", "Cumaral", "El Calvario", "El Castillo", "El Dorado", "Fuente De Oro", "Granada", "Guamal", "La Macarena", "LejanÍas", "Mapiripán", "Mesetas", "Puerto Concordia", "Puerto Gaitán", "Puerto Lleras", "Puerto López", "Puerto Rico", "Restrepo", "San Carlos De Guaroa", "San Juan De Arama", "San Juanito", "San Martín", "Uribe", "Villavicencio", "Vista Hermosa"], "Nariño": ["Albán", "Aldana", "Ancuyá", "Arboleda", "Barbacoas", "Belén", "Buesaco", "Chachagüí", "Colón", "Consacá", "Contadero", "Cuaspud", "Cumbal", "Cumbitara", "Córdoba", "El Charco", "El Peñol", "El Rosario", "El Tablón De Gómez", "El Tambo", "Francisco Pizarro", "Funes", "Guachucal", "Guaitarilla", "Gualmatán", "Iles", "Imués", "Ipiales", "La Cruz", "La Florida", "La Llanada", "La Tola", "La Unión", "Leiva", "Linares", "Los Andes", "Magüí", "Mallama", "Mosquera", "Nariño", "Olaya Herrera", "Ospina", "Pasto", "Policarpa", "Potosí", "Providencia", "Puerres", "Pupiales", "Ricaurte", "Roberto Payán", "Samaniego", "San Bernardo", "San Lorenzo", "San Pablo", "San Pedro De Cartago", "Sandoná", "Santa Bárbara", "Santa cruz", "Sapuyes", "Taminango", "Tangua", "Tumaco", "Túquerres", "Yacuanquer"], "Norte De Santander": ["Arboledas", "Bochalema", "Bucarasica", "Chinácota", "Chitagá", "Convención", "Cucutilla", "Cáchira", "Cácota", "Durania", "El Carmen", "El Tarra", "El Zulia", "Gramalote", "Hacarí", "Herrán", "La Esperanza", "La Playa", "Labateca", "Los Patios", "Lourdes", "Mutiscua", "Ocaña", "Pamplona", "Pamplonita", "Puerto Santander", "Ragonvalia", "Salazar", "San Calixto", "San Cayetano", "San José De Cúcuta", "Santiago", "Sardinata", "Silos", "Teorama", "Tibú", "Toledo", "Villa Caro", "Villa Del Rosario", "Ábrego"], "Putumayo": ["Colón", "Mocoa", "Orito", "Puerto Asís", "Puerto Caicedo", "Puerto Guzmán", "Puerto Leguízamo", "San Francisco", "San Miguel", "Santiago", "Sibundoy", "Valle Del Guamuez", "Villagarzón"], "Quindío": ["Armenia", "Buenavista", "Calarcá", "Circasia", "Córdoba", "Filandia", "Génova", "La Tebaida", "Montenegro", "Pijao", "Quimbaya", "Salento"], "Risaralda": ["Apía", "Balboa", "Belén De Umbría", "Dosquebradas", "Guática", "La Celia", "La Virginia", "Marsella", "Mistrató", "Pereira", "Pueblo Rico", "Quinchía", "Santa Rosa De Cabal", "Santuario"], "San Andrés": ["Providencia"], "Santander": ["Aguada", "Albania", "Aratoca", "Barbosa", "Barichara", "Barrancabermeja", "Betulia", "Bolívar", "Bucaramanga", "Cabrera", "California", "Capitanejo", "Carcasí", "Cepitá", "Cerrito", "Charalá", "Charta", "Chimá", "Chipatá", "Cimitarra", "Concepción", "Confines", "Contratación", "Coromoro", "Curití", "El Carmen De Chucurí", "El Guacamayo", "El Peñón", "El Playón", "Encino", "Enciso", "Floridablanca", "Florián", "Galán", "Girón", "Guaca", "Guadalupe", "Guapotá", "Guavatá", "Gámbita", "Güepsa", "Hato", "Jesús María", "Jordán", "La Belleza", "La Paz", "Landázuri", "Lebrija", "Los Santos", "Macaravita", "Matanza", "Mogotes", "Molagavita", "Málaga", "Ocamonte", "Oiba", "Onzaga", "Palmar", "Palmas Del Socorro", "Piedecuesta", "Pinchote", "Puente Nacional", "Puerto Parra", "Puerto Wilches", "Páramo", "Rionegro", "Sabana De Torres", "San Andrés", "San Benito", "San Gil", "San Joaquín", "San José De Miranda", "San Miguel", "San Vicente De Chucurí", "Santa Bárbara", "Santa Helena De Opón", "Simacota", "Socorro", "Suaita", "Sucre", "Suratá", "Tona", "Valle De San José", "Vetas", "Villanueva", "Vélez", "Zapatoca"], "Sucre": ["Buenavista", "Caimito", "Chalán", "Coloso", "Corozal", "Coveñas", "El Roble", "Galeras", "Guaranda", "La Unión", "Los Palmitos", "Majagual", "Morroa", "Ovejas", "Sampués", "San Antonio De Palmito", "San Benito Abad", "San Juan De Betulia", "San Marcos", "San Onofre", "San Pedro", "Santiago De Tolú", "Sincelejo", "Sincé", "Sucre", "Toluviejo"], "Tolima": ["Alpujarra", "Alvarado", "Ambalema", "Anzoátegui", "Armero", "Ataco", "Cajamarca", "Carmen De Apicalá", "Casabianca", "Chaparral", "Coello", "Coyaima", "Cunday", "Dolores", "Espinal", "Falan", "Flandes", "Fresno", "Guamo", "Herveo", "Honda", "Ibagué", "Icononzo", "Lérida", "Líbano", "Mariquita", "Melgar", "Murillo", "Natagaima", "Ortega", "Palocabildo", "Piedras", "Planadas", "Prado", "Purificación", "Rioblanco", "Roncesvalles", "Rovira", "Saldaña", "San Antonio", "San Luis", "Santa Isabel", "Suárez", "Valle De San Juan", "Venadillo", "Villahermosa", "Villarrica"], "Valle Del Cauca": ["Alcalá", "Andalucía", "Ansermanuevo", "Argelia", "Bolívar", "Buenaventura", "Bugalagrande", "Caicedonia", "Cali", "Calima El Darién", "Candelaria", "Cartago", "Dagua", "El Cairo", "El Cerrito", "El Dovio", "El Águila", "Florida", "Ginebra", "Guacarí", "Guadalajara De Buga", "Jamundí", "La Cumbre", "La Unión", "La Victoria", "Obando", "Palmira", "Pradera", "Restrepo", "Riofrío", "Roldanillo", "San Pedro", "Sevilla", "Toro", "Trujillo", "Tuluá", "Ulloa", "Versalles", "Vijes", "Yotoco", "Yumbo", "Zarzal"], "Vaupés": ["Carurú", "Mitú", "Taraira"], "Vichada": ["Cumaribo", "La Primavera", "Puerto Carreño", "Santa Rosalía"]};
+
+// ── API: todas las llamadas de datos van por Netlify Function ────────
+async function api(accion, datos = {}, token = null) {
+  const r = await fetch('/.netlify/functions/api', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ accion, token, ...datos })
+  });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || 'Error en la API');
+  return d;
+}
+
+// ── AUTH: login/signup directo con Supabase (solo auth, no datos) ────
+async function sbSignIn(email, password) {
+  const r = await fetch(`${SB_URL}/auth/v1/token?grant_type=password`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','apikey':SB_KEY},
+    body: JSON.stringify({email, password})
+  });
+  return r.json();
+}
+async function sbSignUp(email, password) {
+  const r = await fetch(`${SB_URL}/auth/v1/signup`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','apikey':SB_KEY},
+    body: JSON.stringify({email, password})
+  });
+  return r.json();
+}
+async function sbSignOut(token) {
+  await fetch(`${SB_URL}/auth/v1/logout`, {
+    method: 'POST',
+    headers: {'apikey':SB_KEY,'Authorization':`Bearer ${token}`}
+  });
+}
+
+// ── MODELO DE DATOS ──────────────────────────────────────────────────
+const DIMS=[
+  {id:1,nombre:"Estrategia Orientada a Valor",desc:"Mide la alineación de la IA con los objetivos de negocio para asegurar un retorno de inversión claro y el compromiso del liderazgo.",pregs:[
+    {t:"Alineación Estratégica y ROI: ¿Cómo se seleccionan y miden sus iniciativas de IA?",ops:["No hay selección formal; son iniciativas aisladas por curiosidad sin métricas.","Se eligen proyectos por su novedad tecnológica, sin un caso de negocio claro.","Los proyectos se eligen según su impacto en la utilidad operativa (EBIT) o reducción de costos.","Existen métricas de éxito estandarizadas que demuestran valor en múltiples funciones.","La IA impulsa nuevos modelos de negocio y flujos de ingresos con ROI superior al 200%."]},
+    {t:"Apoyo del Liderazgo: ¿Cuál es el nivel de involucramiento de la alta dirección?",ops:["No hay apoyo; la IA ocurre como 'IA en la sombra' (sin conocimiento ni control de la empresa).","Existe un patrocinador interesado, pero su apoyo es reactivo y solo para pilotos.","La dirección participa en la definición de la hoja de ruta y asigna responsables por área.","Existe un líder dedicado (CAIO o equivalente) con presupuesto plurianual y acceso al CEO.","La IA es inseparable de la estrategia de negocio, liderada activamente por la junta directiva."]},
+    {t:"Rango de Inversión: ¿Cómo se estructura el presupuesto anual destinado a IA?",ops:["Sin presupuesto asignado; el gasto en IA está oculto en otros rubros operativos.","Presupuesto puntual para pruebas (menos del 1% del presupuesto de TI).","Inversión formal para proyectos en producción (entre el 5% y el 15% del presupuesto de TI).","Inversión estructurada con línea presupuestal propia (más del 15% del presupuesto de TI o superior a $2.000M COP).","La IA representa más del 3–5% de los ingresos totales, integrada en el estado de resultados (P&L)."]}
+  ]},
+  {id:2,nombre:"Modernización de Datos",desc:"Mide el paso de datos fragmentados hacia arquitecturas unificadas, garantizando su calidad y control institucional.",pregs:[
+    {t:"Arquitectura de Datos: ¿Cuál es el estado de la infraestructura técnica de sus datos?",ops:["Datos fragmentados en silos locales y sistemas legados inaccesibles.","Migración parcial a la nube, pero persisten silos departamentales.","Arquitectura centralizada para funciones críticas con estándares de integración.","Capa unificada de datos (Data Lakehouse) compartida por toda la empresa.","Infraestructura en tiempo real, autogestionada y escalable para cualquier carga de IA."]},
+    {t:"Prácticas de Calidad de Datos: ¿Cómo se asegura la confiabilidad de los datos?",ops:["Sin controles; los datos requieren limpieza manual constante y son inconsistentes.","Validación manual reactiva antes de cada experimento por parte de técnicos.","Estándares de calidad definidos y documentados con revisiones periódicas.","Monitoreo automatizado con SLAs y métricas de salud de datos en tiempo real.","Sistemas de autocuración con detección de anomalías y deriva del modelo (drift)."]},
+    {t:"Gobernanza de Datos: ¿Quién es responsable del control y la propiedad de la información?",ops:["Sin dueños de datos definidos; el control es inexistente.","Propiedad informal basada en el conocimiento individual de los equipos.","Roles de responsables de datos (Data Stewards) definidos y políticas por función.","Trazabilidad de linaje de punta a punta y auditoría activa de cada modelo.","Gobernanza automatizada y federada integrada en el ciclo de vida del desarrollo."]}
+  ]},
+  {id:3,nombre:"Cultura y Alfabetización Digital",desc:"Evalúa el desarrollo de habilidades (AI Literacy) y la gestión del talento frente al cambio tecnológico.",pregs:[
+    {t:"Oferta Formativa: ¿Cómo capacita la organización a su personal en IA?",ops:["Sin capacitación formal; el aprendizaje ocurre por iniciativa individual sin respaldo institucional.","Sesiones de sensibilización esporádicas (charlas, webinars) sin continuidad ni evaluación.","Formación estructurada concentrada en TI o un grupo piloto, sin cobertura transversal.","Programas de formación (Academias de IA) que cubren múltiples áreas con seguimiento.","Cultura de aprendizaje continuo donde la fluidez en IA es requisito de desarrollo profesional."]},
+    {t:"Medición del Talento: ¿Cómo evalúa la empresa la competencia en IA de su personal?",ops:["No se mide; la evaluación de talento ignora las habilidades tecnológicas.","Encuestas de percepción para identificar miedo al cambio o adopción básica.","Análisis de brechas (Gap Analysis) de habilidades frente a las necesidades de IA.","Métricas de desempeño asistidas por IA para medir incrementos de productividad.","Vínculo directo entre fluidez tecnológica, innovación y resultados financieros."]},
+    {t:"Cultura y Preparación: ¿Qué tan preparados están los colaboradores para trabajar con IA?",ops:["Alta resistencia cultural; la IA se percibe como amenaza al empleo o moda pasajera.","Existen entusiastas aislados (generalmente en TI); el resto es indiferente o escéptico.","Algunas áreas han iniciado pilotos de IA de forma independiente, sin coordinación institucional.","Existe una cultura de experimentación coordinada con respaldo directivo y aprendizaje entre áreas.","Los colaboradores integran IA en su flujo diario; los roles se rediseñan para potenciar el juicio humano."]}
+  ]},
+  {id:4,nombre:"Gobernanza de Riesgos y Cumplimiento",desc:"Mide la mitigación de riesgos éticos, legales y de privacidad bajo estándares globales y normas colombianas.",pregs:[
+    {t:"Inventario de Riesgos: ¿Existe un inventario formal de riesgos de IA?",ops:["Sin inventario; los riesgos se tratan solo cuando ocurre un incidente.","Lista informal de riesgos técnicos básicos sin considerar impacto de negocio.","Inventario formal alineado con NIST AI RMF (alineado con CONPES 3975), incluyendo sesgos y Ley 1581.","Registro dinámico de riesgos por criticidad, incluyendo dependencia de proveedor único (vendor lock-in).","Monitoreo constante con planes de mitigación automatizados, incluyendo riesgos reputacionales."]},
+    {t:"Privacidad y Protección de Datos: ¿Cómo se gestionan los datos personales en IA?",ops:["Sin controles; uso de datos personales sin clasificación de sensibilidad.","Conciencia de la Ley 1581 de 2012 y Decreto 1377 de 2013; borradores de políticas de uso aceptable.","Evaluaciones de Impacto (DPIA) obligatorias bajo la Ley 1581 de 2012.","Arquitectura de contención (anillos de seguridad) que aísla datos sensibles.","Privacidad por diseño integrada en el código y auditorías en tiempo real."]},
+    {t:"Alineación con Estándares: ¿Qué tan alineada está la empresa con marcos internacionales?",ops:["Uso de IA sin marco de referencia ni cumplimiento normativo.","Referenciación del CONPES 3975 como punto de entrada; consulta informal de guías externas.","Cumplimiento de subcategorías específicas del NIST AI RMF 1.0.","Gobernanza auditable bajo ISO 42001 (en proceso de adopción por ICONTEC en Colombia).","Liderazgo sectorial certificado que influye en la creación de normas éticas nacionales e internacionales."]}
+  ]},
+  {id:5,nombre:"Procesos y Agilidad Operativa",desc:"Evalúa la capacidad de rediseñar la empresa hacia la autonomía cognitiva y procesos ágiles (trayectoria RPA → IA).",pregs:[
+    {t:"Rediseño de Flujos: ¿Qué tan fácil es rediseñar procesos con IA?",ops:["Procesos manuales rígidos; la IA es una herramienta externa desconectada.","Rediseño de tareas aisladas sin cambiar el flujo estructural.","Rediseño estructural de flujos departamentales para integrar automatización cognitiva.","Capacidad de orquestar procesos interfuncionales sin fricción humana constante.","Metodologías ágiles que despliegan nuevos procesos inteligentes en semanas."]},
+    {t:"Gobernanza de Decisiones Autónomas: ¿Cómo se controlan los agentes de IA?",ops:["No existen decisiones automatizadas; toda acción requiere intervención humana.","Se usan herramientas básicas (RPA, macros, flujos) con supervisión humana constante.","Algunos procesos operan con reglas predefinidas; el humano interviene en excepciones.","Agentes de IA ejecutan tareas complejas con protocolos de escalada claros.","Gobernanza adaptativa donde los sistemas se auto-corrigen según el riesgo."]},
+    {t:"Agilidad Estructural: ¿Qué tanto ha cambiado la estructura del negocio por la IA?",ops:["La IA se añade sobre procesos existentes sin cambio organizativo.","Automatización de tareas repetitivas (RPA, formularios inteligentes) para eficiencia marginal.","Rediseño de flujos completos en áreas seleccionadas con IA integrada (no superpuesta).","La organización migra a modelos compartidos: la IA gestiona volumen, los humanos el criterio.","Empresa en rediseño continuo basado en datos; procesos inteligentes se despliegan en semanas."]}
+  ]}
+];
+
+const NIVELES=[
+  {n:1,nom:"Exploración",desc:"La IA existe como concepto pero no como práctica institucional",col:"#DC2626",bg:"#FEE2E2"},
+  {n:2,nom:"Experimentación",desc:"Hay iniciativas puntuales sin estructura ni continuidad",col:"#D97706",bg:"#FEF3C7"},
+  {n:3,nom:"Adopción",desc:"La IA empieza a integrarse de forma estructurada en áreas clave",col:"#1B4FD8",bg:"#EEF2FF"},
+  {n:4,nom:"Escalamiento",desc:"La IA opera a escala con gobernanza y genera valor medible",col:"#7C3AED",bg:"#EDE9FE"},
+  {n:5,nom:"Transformación",desc:"La IA es inseparable del modelo de negocio y se reinventa continuamente",col:"#059669",bg:"#D1FAE5"}
+];
+
+function calcRes(resp){
+  const porDim=DIMS.map((d,di)=>{
+    const pts=d.pregs.map((_,pi)=>resp[`${di}-${pi}`]||0);
+    const prom=parseFloat((pts.reduce((a,b)=>a+b,0)/pts.length).toFixed(2));
+    return {nombre:d.nombre,promedio:prom};
+  });
+  const IMP=parseFloat((porDim.reduce((a,d)=>a+d.promedio,0)/5).toFixed(2));
+  const DR=porDim.reduce((m,d)=>d.promedio<m.promedio?d:m,porDim[0]);
+  const brecha=parseFloat((IMP-DR.promedio).toFixed(2));
+  return {porDim,IMP,DR,brecha,nivel:NIVELES[Math.min(Math.max(Math.round(IMP)-1,0),4)]};
+}
+function colPt(p){if(p>=4.5)return"#059669";if(p>=3.5)return"#7C3AED";if(p>=2.5)return"#1B4FD8";if(p>=1.5)return"#D97706";return"#DC2626";}
+function nvPt(p){return NIVELES[Math.min(Math.max(Math.round(p)-1,0),4)];}
+
+function narrText(res){
+  const {IMP,DR,brecha,nivel}=res;
+  let t=`Su organización tiene un Índice de Madurez Ponderado de ${IMP}/5, ubicándola en el nivel de ${nivel.nom}. `;
+  if(brecha>1.2)t+=`La Dimensión Restrictiva es "${DR.nombre}" (${DR.promedio}/5). La Brecha Estratégica de ${brecha} puntos indica que algunas áreas están adelantadas respecto a este cuello de botella crítico. `;
+  else if(brecha>0.5)t+=`La Dimensión Restrictiva es "${DR.nombre}" (${DR.promedio}/5) con una brecha moderada de ${brecha} puntos que conviene atender. `;
+  else t+=`El desarrollo entre dimensiones es equilibrado. La dimensión con menor puntaje es "${DR.nombre}" (${DR.promedio}/5). `;
+  if(IMP<2)t+='Se recomienda priorizar fundamentos: casos de uso concretos, gobernanza básica y alfabetización digital.';
+  else if(IMP<3)t+='El siguiente paso es estructurar las iniciativas con una hoja de ruta formal y métricas claras.';
+  else if(IMP<4)t+='La organización está lista para escalar. Extienda las prácticas exitosas y fortalezca la gobernanza transversal.';
+  else t+='La organización está en posición de liderazgo. El reto es mantener la ventaja innovando continuamente.';
+  return t;
+}
+
+async function enviarCorreo(part,res,narrativa,analisisIA){
+  const dimRows=res.porDim.map(d=>`<tr><td style="padding:8px 12px;border-bottom:1px solid #eee">${d.nombre}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:700;color:#1B4FD8">${d.promedio}/5</td><td style="padding:8px 12px;border-bottom:1px solid #eee">${['','Exploración','Experimentación','Adopción','Escalamiento','Transformación'][Math.round(d.promedio)]||''}</td></tr>`).join('');
+  const reporte=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;color:#1E293B;margin:0;padding:40px;max-width:800px;margin:0 auto}.hdr{background:#0F1F3D;color:white;padding:30px;border-radius:8px;margin-bottom:24px}.met{background:#F7F8FA;border-radius:8px;padding:16px;margin:8px;display:inline-block;min-width:180px;vertical-align:top}table{width:100%;border-collapse:collapse;margin:16px 0}th{background:#0F1F3D;color:white;padding:10px 12px;text-align:left}.narr{background:#EEF2FF;border-left:4px solid #1B4FD8;padding:16px;margin:16px 0;border-radius:0 8px 8px 0;line-height:1.7}.ia{background:#F0FDF4;border-left:4px solid #059669;padding:16px;margin:16px 0;border-radius:0 8px 8px 0;line-height:1.7}</style></head><body><div class="hdr"><div style="font-size:22px;font-weight:700">Diagnóstico de Madurez en IA</div><div style="color:#94A3B8;font-size:13px;margin-top:4px">MadurezIA Colombia &middot; ${new Date().toLocaleDateString('es-CO')}</div></div><p><strong>Participante:</strong> ${part.nombre} &mdash; ${part.cargo}</p><p><strong>Empresa:</strong> ${part.empresa} | <strong>Sector:</strong> ${part.sector||'N/A'} | <strong>Ubicación:</strong> ${part.municipio||''}${part.departamento?', '+part.departamento:''}</p><div style="text-align:center;margin:24px 0"><div style="font-size:66px;font-weight:800;color:${res.nivel.col}">${res.IMP}</div><div style="font-size:20px;font-weight:700;color:${res.nivel.col}">${res.nivel.nom}</div><div style="color:#64748B">${res.nivel.desc}</div></div><div style="margin:20px 0"><div class="met"><div style="font-size:24px;font-weight:800">${res.IMP}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Índice de Madurez</div></div><div class="met" style="background:#FEF3C7"><div style="font-size:24px;font-weight:800;color:#D97706">${res.DR.promedio}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Dimensión Restrictiva</div><div style="font-size:11px">${res.DR.nombre}</div></div><div class="met"><div style="font-size:24px;font-weight:800;color:${res.brecha>1?'#DC2626':'#059669'}">${res.brecha}</div><div style="font-size:11px;color:#64748B;text-transform:uppercase">Brecha Estratégica</div></div></div><table><thead><tr><th>Dimensión</th><th>Puntaje</th><th>Nivel</th></tr></thead><tbody>${dimRows}</tbody></table><div class="narr"><strong>Interpretación:</strong><br>${narrativa}</div>${analisisIA?`<div class="ia"><strong>Análisis personalizado:</strong><br>${analisisIA}</div>`:''}<div style="margin-top:32px;padding-top:16px;border-top:1px solid #eee;font-size:11px;color:#94A3B8">Generado por MadurezIA Colombia &middot; NIST AI RMF y CONPES 3975</div></body></html>`;
+  const b64=btoa(unescape(encodeURIComponent(reporte)));
+  const htmlCorreo=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto"><div style="background:#0F1F3D;padding:24px;border-radius:8px 8px 0 0"><div style="color:white;font-size:18px;font-weight:700">MadurezIA Colombia</div><div style="color:#94A3B8;font-size:13px">Resultados del Diagnóstico de Madurez en IA</div></div><div style="background:#F7F8FA;padding:24px;border-radius:0 0 8px 8px;border:1px solid #E2E8F0"><p>Estimado/a <strong>${part.nombre}</strong>,</p><p>Adjunto encontrará los resultados de su diagnóstico para <strong>${part.empresa}</strong>.</p><div style="background:white;border-radius:8px;padding:20px;margin:16px 0;text-align:center;border:1px solid #E2E8F0"><div style="font-size:48px;font-weight:800;color:${res.nivel.col}">${res.IMP}/5</div><div style="font-size:18px;font-weight:700;color:${res.nivel.col}">${res.nivel.nom}</div></div><div style="background:#EEF2FF;border-left:4px solid #1B4FD8;padding:14px;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7">${narrativa}</div>${analisisIA?`<div style="background:#F0FDF4;border-left:4px solid #059669;padding:14px;margin-top:12px;border-radius:0 6px 6px 0;font-size:14px;line-height:1.7">${analisisIA}</div>`:''}<p style="color:#64748B;font-size:12px;margin-top:24px">Generado con base en el NIST AI RMF y la Política Nacional de IA (CONPES 3975).</p></div></div>`;
+  const r=await fetch('/.netlify/functions/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:part.correo,subject:`Diagnóstico de Madurez en IA — ${part.empresa}`,html:htmlCorreo,attachments:[{filename:`diagnostico_${part.empresa.replace(/\s+/g,'_')}.html`,content:b64}]})});
+  if(!r.ok){const e=await r.text();throw new Error(e);}
+  return r.json();
+}
+
+function Radar({porDim}){
+  const cx=170,cy=160,r=110,n=5;
+  const ang=porDim.map((_,i)=>Math.PI*2*i/n-Math.PI/2);
+  const pt=(a,v)=>({x:cx+r*(v/5)*Math.cos(a),y:cy+r*(v/5)*Math.sin(a)});
+  const grid=[1,2,3,4,5].map(lv=>ang.map(a=>pt(a,lv)).map(p=>`${p.x},${p.y}`).join(' '));
+  const data=ang.map((a,i)=>pt(a,porDim[i].promedio));
+  const labs=ang.map((a,i)=>({x:cx+(r+28)*Math.cos(a),y:cy+(r+28)*Math.sin(a),txt:porDim[i].nombre.split(' ').slice(0,2).join(' ')}));
+  return React.createElement('svg',{width:340,height:320,viewBox:'0 0 340 320'},
+    ...grid.map((pts,gi)=>React.createElement('polygon',{key:gi,points:pts,fill:gi===4?'rgba(27,79,216,.04)':'none',stroke:'#E2E8F0',strokeWidth:1})),
+    ...ang.map((a,i)=>React.createElement('line',{key:i,x1:cx,y1:cy,x2:cx+r*Math.cos(a),y2:cy+r*Math.sin(a),stroke:'#E2E8F0',strokeWidth:1})),
+    React.createElement('polygon',{points:data.map(p=>`${p.x},${p.y}`).join(' '),fill:'rgba(27,79,216,.14)',stroke:'#1B4FD8',strokeWidth:2.5,strokeLinejoin:'round'}),
+    ...data.map((p,i)=>React.createElement('circle',{key:i,cx:p.x,cy:p.y,r:5,fill:'#1B4FD8',stroke:'#fff',strokeWidth:2})),
+    ...labs.map((l,i)=>React.createElement('text',{key:i,x:l.x,y:l.y,textAnchor:'middle',dominantBaseline:'middle',fontSize:10,fontWeight:600,fill:'#1E293B',fontFamily:'Inter,sans-serif'},l.txt)),
+    ...data.map((p,i)=>React.createElement('text',{key:i,x:p.x,y:p.y-12,textAnchor:'middle',fontSize:10,fontWeight:700,fill:'#1B4FD8',fontFamily:'Inter,sans-serif'},porDim[i].promedio))
+  );
+}
+
+// ── COMPONENTES (idénticos a v2 pero usando api() en lugar de fetch directo) ──
+
+function Inicio({onInstructor,onCodigo}){
+  const [cod,setCod]=useState('');
+  const [err,setErr]=useState('');
+  const [carg,setCarg]=useState(false);
+  const ir=async()=>{
+    if(!cod.trim()){setErr('Ingrese un código.');return;}
+    setCarg(true);setErr('');
+    try{
+      const d=await api('buscar_sesion',{codigo:cod.trim()});
+      onCodigo(d);
+    }catch(e){setErr('Código no encontrado o sesión inactiva.');}
+    setCarg(false);
+  };
+  return React.createElement('div',{className:'inicio-wrap'},
+    React.createElement('div',{className:'inicio-logo'},
+      React.createElement('div',{style:{fontSize:52,marginBottom:12}},'🧠'),
+      React.createElement('h1',null,'MadurezIA Colombia'),
+      React.createElement('p',null,'Diagnóstico de Madurez en Inteligencia Artificial para Organizaciones')
+    ),
+    React.createElement('div',{className:'inicio-cards'},
+      React.createElement('div',{className:'inicio-card',onClick:onInstructor},
+        React.createElement('div',{className:'ic-icon'},'🎓'),
+        React.createElement('h3',null,'Soy instructor'),
+        React.createElement('p',null,'Crear y gestionar sesiones, ver resultados en tiempo real')
+      ),
+      React.createElement('div',{className:'inicio-card'},
+        React.createElement('div',{className:'ic-icon'},'👤'),
+        React.createElement('h3',null,'Tengo un código'),
+        React.createElement('p',null,'Ingresar a una sesión activa para responder el diagnóstico'),
+        React.createElement('div',{className:'codigo-wrap'},
+          React.createElement('input',{className:'codigo-input',placeholder:'Ej: ABC123',value:cod,onChange:e=>{setCod(e.target.value.toUpperCase());setErr('');},onKeyDown:e=>e.key==='Enter'&&ir()}),
+          React.createElement('button',{className:'btn-codigo',onClick:ir,disabled:carg},carg?'...':'→')
+        ),
+        err&&React.createElement('div',{style:{color:'#FCA5A5',fontSize:12,marginTop:8,textAlign:'left'}},err)
+      )
+    )
+  );
+}
+
+function Login({onLogin,onVolver}){
+  const [email,setEmail]=useState('');
+  const [pass,setPass]=useState('');
+  const [modo,setModo]=useState('login');
+  const [err,setErr]=useState('');
+  const [carg,setCarg]=useState(false);
+  const handle=async()=>{
+    if(!email||!pass){setErr('Complete todos los campos.');return;}
+    setCarg(true);setErr('');
+    try{
+      const fn=modo==='login'?sbSignIn:sbSignUp;
+      const d=await fn(email,pass);
+      if(d.error){setErr(d.error.message||'Error.');}
+      else if(modo==='registro'){setModo('login');alert('Cuenta creada. Ahora inicia sesión.');}
+      else{onLogin({token:d.access_token,user:d.user,email});}
+    }catch(e){setErr('Error de conexión.');}
+    setCarg(false);
+  };
+  return React.createElement('div',{className:'main',style:{maxWidth:420}},
+    React.createElement('div',{className:'card'},
+      React.createElement('div',{className:'card-h'},React.createElement('h2',null,modo==='login'?'Acceso Instructor':'Crear cuenta'),React.createElement('p',null,'Panel de administración MadurezIA Colombia')),
+      React.createElement('div',{className:'card-b'},
+        err&&React.createElement('div',{className:'alert alert-e'},err),
+        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Correo electrónico'),React.createElement('input',{type:'email',value:email,onChange:e=>setEmail(e.target.value),placeholder:'instructor@empresa.com',autoFocus:true})),
+        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Contraseña'),React.createElement('input',{type:'password',value:pass,onChange:e=>setPass(e.target.value),onKeyDown:e=>e.key==='Enter'&&handle(),placeholder:'Mínimo 6 caracteres'})),
+        React.createElement('button',{className:'btn btn-p btn-full',onClick:handle,disabled:carg},carg?'Procesando...':(modo==='login'?'Iniciar sesión':'Crear cuenta')),
+        React.createElement('div',{style:{textAlign:'center',marginTop:16,fontSize:13,color:'#64748B'}},
+          modo==='login'
+            ?React.createElement('span',null,'¿Primera vez? ',React.createElement('a',{style:{color:'#1B4FD8',cursor:'pointer',fontWeight:600},onClick:()=>{setModo('registro');setErr('');}},'\u00a0Crear cuenta'))
+            :React.createElement('span',null,'¿Ya tienes cuenta? ',React.createElement('a',{style:{color:'#1B4FD8',cursor:'pointer',fontWeight:600},onClick:()=>{setModo('login');setErr('');}},'\u00a0Iniciar sesión'))
+        ),
+        React.createElement('div',{style:{textAlign:'center',marginTop:12}},React.createElement('a',{style:{color:'#94A3B8',fontSize:12,cursor:'pointer'},onClick:onVolver},'← Volver al inicio'))
+      )
+    )
+  );
+}
+
+function ModalSesion({auth,onCreada,onCerrar}){
+  const [f,setF]=useState({nombre:'',descripcion:'',fecha:new Date().toISOString().split('T')[0],hora:''});
+  const [carg,setCarg]=useState(false);
+  const [err,setErr]=useState('');
+  const set=(k,v)=>setF(x=>({...x,[k]:v}));
+  const crear=async()=>{
+    if(!f.nombre){setErr('El nombre es obligatorio.');return;}
+    setCarg(true);setErr('');
+    try{
+      await api('crear_sesion',{nombre:f.nombre,descripcion:f.descripcion||null,fecha:f.fecha,hora:f.hora||null},auth.token);
+      onCreada();
+    }catch(e){setErr(`Error: ${e.message}`);}
+    setCarg(false);
+  };
+  return React.createElement('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onCerrar()},
+    React.createElement('div',{className:'modal'},
+      React.createElement('h3',null,'Nueva Sesión'),
+      err&&React.createElement('div',{className:'alert alert-e'},err),
+      React.createElement('div',{className:'form-g'},React.createElement('label',null,'Nombre de la sesión ',React.createElement('span',null,'*')),React.createElement('input',{value:f.nombre,onChange:e=>set('nombre',e.target.value),placeholder:'Ej: Diagnóstico Sector Financiero 2026',autoFocus:true})),
+      React.createElement('div',{className:'form-g'},React.createElement('label',null,'Descripción / Contexto'),React.createElement('textarea',{value:f.descripcion,onChange:e=>set('descripcion',e.target.value),placeholder:'Programa, cliente, proyecto...'})),
+      React.createElement('div',{className:'form-r'},
+        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Fecha'),React.createElement('input',{type:'date',value:f.fecha,onChange:e=>set('fecha',e.target.value)})),
+        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Hora (opcional)'),React.createElement('input',{type:'time',value:f.hora,onChange:e=>set('hora',e.target.value)}))
+      ),
+      React.createElement('div',{className:'btn-row'},
+        React.createElement('button',{className:'btn btn-s',onClick:onCerrar},'Cancelar'),
+        React.createElement('button',{className:'btn btn-p',onClick:crear,disabled:carg},carg?'Creando...':'Crear sesión')
+      )
+    )
+  );
+}
+
+function Panel({auth,onLogout}){
+  const [ses,setSes]=useState([]);
+  const [carg,setCarg]=useState(true);
+  const [modal,setModal]=useState(false);
+  const [activa,setActiva]=useState(null);
+
+  useEffect(()=>{cargar();},[]);
+
+  const cargar=async()=>{
+    setCarg(true);
+    try{
+      const data=await api('listar_sesiones',{},auth.token);
+      const con=await Promise.all(data.map(async s=>{
+        try{const r=await api('listar_respuestas',{sesion_codigo:s.codigo},auth.token);return {...s,_cnt:r.length};}
+        catch{return {...s,_cnt:0};}
+      }));
+      setSes(con);
+    }catch(e){setSes([]);}
+    setCarg(false);
+  };
+
+  const copiar=(cod)=>{
+    const url=`${window.location.origin}${window.location.pathname}?codigo=${cod}`;
+    navigator.clipboard.writeText(url).then(()=>alert(`URL copiada:\n${url}`));
+  };
+
+  if(activa)return React.createElement(DashSesion,{sesion:activa,auth,onVolver:()=>{setActiva(null);cargar();}});
+
+  return React.createElement('div',null,
+    React.createElement('header',{className:'header'},
+      React.createElement('div',{className:'logo'},React.createElement('div',{className:'logo-icon'},'🧠'),React.createElement('div',null,React.createElement('div',{className:'logo-text'},'MadurezIA Colombia'),React.createElement('div',{className:'logo-sub'},'Panel del Instructor'))),
+      React.createElement('div',{className:'header-right'},React.createElement('span',{className:'header-user'},auth.email),React.createElement('button',{className:'btn-nav danger',onClick:onLogout},'Cerrar sesión'))
+    ),
+    React.createElement('div',{className:'main-w'},
+      carg
+        ?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spin'}),React.createElement('p',null,'Cargando...'))
+        :React.createElement('div',null,
+          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24}},
+            React.createElement('div',null,React.createElement('h2',{style:{fontSize:22,fontWeight:800,color:'#0F1F3D'}},'Sesiones'),React.createElement('p',{style:{fontSize:13,color:'#64748B'}},`${ses.length} sesión(es) creada(s)`)),
+            React.createElement('button',{className:'btn btn-p',onClick:()=>setModal(true)},'+ Nueva Sesión')
+          ),
+          ses.length===0
+            ?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📋'),React.createElement('p',null,'No hay sesiones aún. Crea la primera.')))
+            :ses.map(s=>React.createElement('div',{key:s.id,className:'sesion-item'},
+              React.createElement('div',{className:'sesion-info'},
+                React.createElement('div',{className:'sesion-nombre'},s.nombre),
+                React.createElement('div',{className:'sesion-meta'},`${s.fecha} · Código: `,React.createElement('span',{className:'sesion-codigo'},s.codigo),s.descripcion?` · ${s.descripcion}`:'')
+              ),
+              React.createElement('div',{className:'sesion-resp'},`${s._cnt} resp.`),
+              React.createElement('div',{className:'sesion-acciones'},
+                React.createElement('button',{className:'btn-sm btn-sm-anil',onClick:()=>copiar(s.codigo)},'📋 URL Participantes'),
+                React.createElement('button',{className:'btn-sm btn-sm-verde',onClick:()=>setActiva(s)},'📊 Dashboard')
+              )
+            )),
+          modal&&React.createElement(ModalSesion,{auth,onCreada:()=>{setModal(false);cargar();},onCerrar:()=>setModal(false)})
+        )
+    )
+  );
+}
+
+function DashSesion({sesion,auth,onVolver}){
+  const [resp,setResp]=useState([]);
+  const [carg,setCarg]=useState(true);
+  const [tab,setTab]=useState('tabla');
+
+  useEffect(()=>{
+    (async()=>{
+      setCarg(true);
+      try{const d=await api('listar_respuestas',{sesion_codigo:sesion.codigo},auth.token);setResp(d);}
+      catch(e){setResp([]);}
+      setCarg(false);
+    })();
+  },[]);
+
+  const promDim=DIMS.map((d,di)=>{
+    const vals=resp.map(r=>[r.dim1,r.dim2,r.dim3,r.dim4,r.dim5][di]||0).filter(v=>v>0);
+    return{nombre:d.nombre,promedio:vals.length?parseFloat((vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2)):0};
+  });
+  const promIMP=resp.length?(resp.reduce((a,r)=>a+(r.imp||0),0)/resp.length).toFixed(2):'—';
+  const distNv=NIVELES.map(nv=>({...nv,count:resp.filter(r=>r.nivel===nv.nom).length}));
+  const maxC=Math.max(...distNv.map(n=>n.count),1);
+  const drFreq={};resp.forEach(r=>{if(r.dim_restrictiva)drFreq[r.dim_restrictiva]=(drFreq[r.dim_restrictiva]||0)+1;});
+  const drTop=Object.entries(drFreq).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  return React.createElement('div',null,
+    React.createElement('header',{className:'header'},
+      React.createElement('div',{className:'logo'},React.createElement('div',{className:'logo-icon'},'🧠'),React.createElement('div',null,React.createElement('div',{className:'logo-text'},sesion.nombre),React.createElement('div',{className:'logo-sub'},`Código: ${sesion.codigo} · ${resp.length} respuestas`))),
+      React.createElement('div',{className:'header-right'},React.createElement('button',{className:'btn-nav',onClick:onVolver},'← Volver'))
+    ),
+    React.createElement('div',{className:'main-w'},
+      carg?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spin'}),React.createElement('p',null,'Cargando...'))
+      :resp.length===0?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📭'),React.createElement('p',null,'Aún no hay respuestas.')))
+      :React.createElement('div',null,
+        React.createElement('div',{className:'stats-r'},
+          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},resp.length),React.createElement('div',{className:'stat-l'},'Participantes'),React.createElement('div',{className:'stat-d'},'Respuestas recibidas')),
+          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},promIMP),React.createElement('div',{className:'stat-l'},'IMP Promedio'),React.createElement('div',{className:'stat-d',style:{color:'#1B4FD8'}},'/ 5.00')),
+          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},new Set(resp.map(r=>r.sector).filter(Boolean)).size),React.createElement('div',{className:'stat-l'},'Sectores'),React.createElement('div',{className:'stat-d',style:{color:'#7C3AED'}},'Representados')),
+          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},resp.filter(r=>(r.imp||0)>=3).length),React.createElement('div',{className:'stat-l'},'En Adopción o superior'),React.createElement('div',{className:'stat-d',style:{color:'#059669'}},`${Math.round(resp.filter(r=>(r.imp||0)>=3).length/resp.length*100)}%`))
+        ),
+        React.createElement('div',{className:'tabs'},
+          React.createElement('button',{className:`tab ${tab==='tabla'?'active':''}`,onClick:()=>setTab('tabla')},'📋 Resultados individuales'),
+          React.createElement('button',{className:`tab ${tab==='dash'?'active':''}`,onClick:()=>setTab('dash')},'📊 Promedios y gráficas')
+        ),
+        tab==='tabla'
+          ?React.createElement('div',{className:'card'},
+            React.createElement('div',{style:{overflowX:'auto'}},
+              React.createElement('table',{className:'tabla'},
+                React.createElement('thead',null,React.createElement('tr',null,['Fecha','Empresa','Participante','Cargo','Sector','Municipio','IMP','Nivel','Dim. Restrictiva','Brecha'].map(h=>React.createElement('th',{key:h},h)))),
+                React.createElement('tbody',null,resp.map((r,i)=>{
+                  const nv=NIVELES.find(n=>n.nom===r.nivel)||NIVELES[0];
+                  return React.createElement('tr',{key:i},
+                    React.createElement('td',null,r.fecha?new Date(r.fecha).toLocaleDateString('es-CO'):'-'),
+                    React.createElement('td',null,React.createElement('strong',null,r.empresa||'-')),
+                    React.createElement('td',null,r.nombre||'-'),
+                    React.createElement('td',null,r.cargo||'-'),
+                    React.createElement('td',null,r.sector||'-'),
+                    React.createElement('td',null,r.municipio?`${r.municipio}, ${r.departamento}`:'—'),
+                    React.createElement('td',null,React.createElement('strong',{style:{color:colPt(r.imp||0)}},r.imp||'-')),
+                    React.createElement('td',null,React.createElement('span',{className:`badge b${nv.n}`},nv.nom)),
+                    React.createElement('td',null,React.createElement('span',{className:'tag-cuello'},r.dim_restrictiva?.split(' ')[0]||'-')),
+                    React.createElement('td',null,r.brecha||'-')
+                  );
+                }))
+              )
+            )
+          )
+          :React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+            React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+              React.createElement('div',{className:'card'},
+                React.createElement('div',{className:'card-b'},
+                  React.createElement('div',{className:'sec-t'},'Promedio por Dimensión'),
+                  React.createElement('div',{className:'sec-s'},`Basado en ${resp.length} respuesta(s)`),
+                  promDim.map((d,i)=>React.createElement('div',{key:i,className:'dim-res-row'},
+                    React.createElement('div',{className:'dim-res-n'},DIMS[i].nombre),
+                    React.createElement('div',{className:'barra-wrap'},React.createElement('div',{className:'barra-fill',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
+                    React.createElement('div',{className:'dim-pt',style:{color:colPt(d.promedio)}},d.promedio)
+                  ))
+                )
+              ),
+              React.createElement('div',{className:'card'},React.createElement('div',{className:'card-b'},React.createElement('div',{className:'sec-t'},'Radar de Madurez'),React.createElement('div',{className:'sec-s'},'Promedio de la sesión'),React.createElement(Radar,{porDim:promDim})))
+            ),
+            React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+              React.createElement('div',{className:'card'},
+                React.createElement('div',{className:'card-b'},
+                  React.createElement('div',{className:'sec-t'},'Distribución por Nivel'),
+                  React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:9,marginTop:12}},
+                    distNv.map(nv=>React.createElement('div',{key:nv.n,style:{display:'flex',alignItems:'center',gap:10}},
+                      React.createElement('div',{className:`badge b${nv.n}`,style:{width:110}},nv.nom),
+                      React.createElement('div',{style:{flex:1,height:18,background:'#F1F5F9',borderRadius:5,overflow:'hidden'}},React.createElement('div',{style:{height:'100%',width:`${(nv.count/maxC)*100}%`,background:nv.col,borderRadius:5}})),
+                      React.createElement('div',{style:{fontSize:13,fontWeight:700,width:20,textAlign:'right'}},nv.count)
+                    ))
+                  )
+                )
+              ),
+              React.createElement('div',{className:'card'},
+                React.createElement('div',{className:'card-b'},
+                  React.createElement('div',{className:'sec-t'},'Cuellos de Botella Frecuentes'),
+                  drTop.length
+                    ?React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:12}},
+                      drTop.map(([nom,cnt],i)=>React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:10}},
+                        React.createElement('div',{style:{width:22,height:22,background:'#FEF3C7',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:'#92400E'}},i+1),
+                        React.createElement('div',{style:{flex:1,fontSize:13,fontWeight:600}},nom),
+                        React.createElement('span',{className:'tag-cuello'},`${cnt} resp.`)
+                      ))
+                    )
+                    :React.createElement('p',{style:{fontSize:13,color:'#94A3B8',marginTop:12}},'Sin datos suficientes.')
+                )
+              )
+            )
+          )
+      )
+    )
+  );
+}
+
+function FormPart({sesion,onOk}){
+  const [f,setF]=useState({nombre:'',cargo:'',empresa:'',sector:'',correo:'',tamano:'',departamento:'',municipio:''});
+  const [err,setErr]=useState('');
+  const set=(k,v)=>setF(x=>({...x,[k]:v}));
+  const go=()=>{
+    if(!f.nombre||!f.cargo||!f.empresa||!f.correo){setErr('Complete todos los campos obligatorios.');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo)){setErr('Ingrese un correo válido.');return;}
+    setErr('');onOk(f);
+  };
+  const inp=(lbl,k,tp='text',req=true)=>React.createElement('div',{className:'form-g'},React.createElement('label',null,lbl,req&&React.createElement('span',null,' *')),React.createElement('input',{type:tp,value:f[k],onChange:e=>set(k,e.target.value),placeholder:`Ingrese ${lbl.toLowerCase()}`}));
+  return React.createElement('div',{className:'main'},
+    React.createElement('div',{className:'sesion-banner'},'📋 Sesión: ',React.createElement('strong',null,sesion.nombre),sesion.descripcion?` · ${sesion.descripcion}`:'',React.createElement('span',{style:{marginLeft:'auto',color:'#64748B'}},`Código: ${sesion.codigo}`)),
+    React.createElement('div',{className:'card'},
+      React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Diagnóstico de Madurez de IA'),React.createElement('p',null,'Sus datos serán tratados de forma confidencial conforme a la Ley 1581 de 2012.')),
+      React.createElement('div',{className:'card-b'},
+        err&&React.createElement('div',{className:'alert alert-e'},err),
+        React.createElement('div',{className:'form-r'},inp('Nombre completo','nombre'),inp('Cargo','cargo')),
+        React.createElement('div',{className:'form-r'},
+          inp('Empresa','empresa'),
+          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Sector'),React.createElement('select',{value:f.sector,onChange:e=>set('sector',e.target.value)},
+            ['','Financiero y Seguros','Manufactura','Comercio y Retail','Salud','Educación','Tecnología','Energía y Servicios Públicos','Gobierno y Sector Público','Logística y Transporte','Agroindustria','Otro'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
+          ))
+        ),
+        React.createElement('div',{className:'form-r'},
+          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Departamento'),React.createElement('select',{value:f.departamento,onChange:e=>{set('departamento',e.target.value);set('municipio','');}},
+            [''].concat(Object.keys(MUNICIPIOS_DANE).sort()).map(d=>React.createElement('option',{key:d,value:d},d||'Seleccione...'))
+          )),
+          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Municipio / Ciudad'),React.createElement('select',{value:f.municipio,onChange:e=>set('municipio',e.target.value),disabled:!f.departamento,style:{background:!f.departamento?'#F1F5F9':'#fff'}},
+            (f.departamento?[''].concat(MUNICIPIOS_DANE[f.departamento]||[]):[''])
+              .map(m=>React.createElement('option',{key:m,value:m},m||(f.departamento?'Seleccione municipio...':'Seleccione un departamento primero')))
+          ))
+        ),
+        React.createElement('div',{className:'form-r'},
+          inp('Correo electrónico','correo','email'),
+          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Tamaño de la empresa'),React.createElement('select',{value:f.tamano,onChange:e=>set('tamano',e.target.value)},
+            ['','Microempresa (1–10)','Pequeña (11–50)','Mediana (51–200)','Grande (201–1000)','Corporación (+1000)'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
+          ))
+        ),
+        React.createElement('button',{className:'btn btn-p btn-full',onClick:go},'Iniciar diagnóstico →')
+      )
+    )
+  );
+}
+
+function Wizard({part,sesion,onOk}){
+  const [di,setDi]=useState(0);
+  const [resp,setResp]=useState({});
+  const dim=DIMS[di];
+  const respondidas=Object.keys(resp).length;
+  const dimOk=dim.pregs.every((_,pi)=>resp[`${di}-${pi}`]!==undefined);
+  const sel=(pi,nv)=>setResp(r=>({...r,[`${di}-${pi}`]:nv}));
+  const pct=Math.round((respondidas/(DIMS.length*3))*100);
+  return React.createElement('div',{className:'main'},
+    React.createElement('div',{className:'sesion-banner'},'📋 ',React.createElement('strong',null,sesion.nombre),React.createElement('span',{style:{marginLeft:'auto',color:'#64748B'}},`Código: ${sesion.codigo}`)),
+    React.createElement('div',{className:'prog-wrap'},
+      React.createElement('div',{className:'prog-label'},React.createElement('span',null,`Dimensión ${di+1} de ${DIMS.length}: ${dim.nombre}`),React.createElement('span',null,`${pct}% completado`)),
+      React.createElement('div',{className:'prog-bar'},React.createElement('div',{className:'prog-fill',style:{width:`${pct}%`}})),
+      React.createElement('div',{className:'steps'},DIMS.map((_,i)=>React.createElement('div',{key:i,className:`step ${i<di?'done':i===di?'active':''}`})))
+    ),
+    React.createElement('div',{className:'card'},
+      React.createElement('div',{className:'card-b'},
+        React.createElement('div',{className:'dim-badge'},`Dimensión ${dim.id}`,'·',dim.nombre),
+        React.createElement('div',{className:'dim-title'},dim.nombre),
+        React.createElement('div',{className:'dim-desc'},dim.desc),
+        dim.pregs.map((preg,pi)=>React.createElement('div',{key:pi,className:'preg-wrap'},
+          React.createElement('div',{className:'preg-num'},`Pregunta ${pi+1} de 3`),
+          React.createElement('div',{className:'preg-texto'},preg.t),
+          React.createElement('div',{className:'opciones'},
+            preg.ops.map((op,oi)=>{
+              const s=resp[`${di}-${pi}`]===oi+1;
+              return React.createElement('div',{key:oi,className:`opcion ${s?'sel':''}`,onClick:()=>sel(pi,oi+1)},
+                React.createElement('div',{className:'op-n'},oi+1),
+                React.createElement('div',{className:'op-t'},op)
+              );
+            })
+          )
+        )),
+        React.createElement('div',{className:'btn-row'},
+          React.createElement('button',{className:'btn btn-s',onClick:()=>di>0&&setDi(d=>d-1),style:{visibility:di===0?'hidden':'visible'}},'← Anterior'),
+          React.createElement('button',{className:'btn btn-p',onClick:()=>di<DIMS.length-1?setDi(d=>d+1):onOk(resp),disabled:!dimOk},di<DIMS.length-1?'Siguiente →':'Ver resultados →')
+        )
+      )
+    )
+  );
+}
+
+function Resultados({part,resp,sesion,onNuevo}){
+  const res=calcRes(resp);
+  const [enviando,setEnviando]=useState(false);
+  const [enviado,setEnviado]=useState(false);
+  const [analisisIA,setAnalisisIA]=useState('');
+  const [guardado,setGuardado]=useState(false);
+  const narrativa=narrText(res);
+
+  useEffect(()=>{
+    (async()=>{
+      try{
+        await api('guardar_respuesta',{
+          sesion_codigo:sesion.codigo,
+          participante:part,
+          resultados:res,
+          respuestas_raw:resp
+        });
+        setGuardado(true);
+      }catch(e){console.log('guardar err',e);}
+    })();
+  },[]);
+
+  const enviar=async()=>{
+    setEnviando(true);
+    try{
+      let ia='';
+      try{
+        const prompt=`Eres un consultor experto en transformación digital para empresas colombianas. Genera un resumen ejecutivo breve (máximo 120 palabras) en español para ${part.nombre} de ${part.empresa} (${part.cargo}). Diagnóstico: IMP=${res.IMP}/5 (${res.nivel.nom}), Dimensión Restrictiva: ${res.DR.nombre} (${res.DR.promedio}/5), Brecha: ${res.brecha}. Dimensiones: ${res.porDim.map(d=>d.nombre+': '+d.promedio).join(', ')}. Tono profesional, motivador. 2-3 recomendaciones para el contexto colombiano.`;
+        const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+        const d=await r.json();
+        ia=d.content?.find(c=>c.type==='text')?.text||'';
+        setAnalisisIA(ia);
+      }catch(e){console.log('claude err',e);}
+      await enviarCorreo(part,res,narrativa,ia);
+    }catch(e){console.log('err',e);alert('Error al enviar. Verifique su conexión.');}
+    setEnviando(false);setEnviado(true);
+  };
+
+  const {IMP,DR,brecha,nivel,porDim}=res;
+  return React.createElement('div',{className:'main'},
+    React.createElement('div',{className:'sesion-banner'},'📋 ',React.createElement('strong',null,sesion.nombre),guardado&&React.createElement('span',{style:{marginLeft:'auto',color:'#059669',fontSize:12,fontWeight:600}},'✓ Guardado')),
+    React.createElement('div',{className:'card'},
+      React.createElement('div',{className:'res-hero'},React.createElement('div',{className:'nivel-n',style:{color:nivel.col}},IMP),React.createElement('div',{className:'nivel-nom',style:{color:nivel.col}},nivel.nom),React.createElement('div',{className:'nivel-sub'},nivel.desc)),
+      React.createElement('div',{className:'met-row'},
+        React.createElement('div',{className:'met-c'},React.createElement('div',{className:'met-v'},IMP),React.createElement('div',{className:'met-l'},'Índice de Madurez Ponderado'),React.createElement('div',{className:'met-s'},'Promedio 5 dimensiones')),
+        React.createElement('div',{className:'met-c',style:{background:'#FEF3C7'}},React.createElement('div',{className:'met-v',style:{color:'#D97706'}},DR.promedio),React.createElement('div',{className:'met-l'},'Dimensión Restrictiva'),React.createElement('div',{className:'met-s'},DR.nombre.split(' ').slice(0,2).join(' '))),
+        React.createElement('div',{className:'met-c'},React.createElement('div',{className:'met-v',style:{color:brecha>1?'#DC2626':'#059669'}},brecha),React.createElement('div',{className:'met-l'},'Brecha Estratégica'),React.createElement('div',{className:'met-s'},brecha>1?'Desbalance significativo':'Equilibrado'))
+      ),
+      React.createElement('div',{className:'radar-wrap'},React.createElement(Radar,{porDim})),
+      React.createElement('div',{className:'dim-res'},
+        React.createElement('div',{style:{fontSize:11,fontWeight:700,color:'#64748B',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:14}},'Resultados por Dimensión'),
+        porDim.map((d,i)=>{
+          const nv=nvPt(d.promedio);const esDR=d.nombre===DR.nombre;
+          return React.createElement('div',{key:i,className:'dim-res-row'},
+            React.createElement('div',{className:'dim-res-n'},d.nombre,esDR&&React.createElement('span',{className:'tag-cuello',style:{marginLeft:5}},'⚠ Cuello')),
+            React.createElement('div',{className:'barra-wrap'},React.createElement('div',{className:'barra-fill',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
+            React.createElement('div',{className:'dim-pt',style:{color:colPt(d.promedio)}},d.promedio),
+            React.createElement('div',{className:`nivel-tag badge b${nv.n}`},nv.nom)
+          );
+        })
+      ),
+      React.createElement('div',{className:'narr'},React.createElement('p',null,narrativa)),
+      analisisIA&&React.createElement('div',{className:'narr',style:{background:'#F0FDF4',borderColor:'#059669',margin:'0 28px 24px'}},React.createElement('p',{style:{fontWeight:600,marginBottom:6,color:'#065F46'}},'✨ Análisis personalizado:'),React.createElement('p',null,analisisIA)),
+      !enviado
+        ?React.createElement('div',{style:{padding:'0 28px 28px',display:'flex',gap:10}},
+          React.createElement('button',{className:'btn btn-p',onClick:enviar,disabled:enviando,style:{flex:1}},enviando?'⏳ Generando análisis y enviando...':'📧 Enviar resultados a mi correo'),
+          React.createElement('button',{className:'btn btn-s',onClick:onNuevo},'Nuevo diagnóstico')
+        )
+        :React.createElement('div',{className:'correo-ok'},
+          React.createElement('div',{className:'co-i'},'✅'),
+          React.createElement('div',{className:'co-t'},`Resultados enviados a ${part.correo}`),
+          React.createElement('div',{className:'co-s'},'Revise su bandeja. Si no aparece, verifique spam.'),
+          React.createElement('button',{className:'btn btn-s',style:{marginTop:14},onClick:onNuevo},'Realizar otro diagnóstico')
+        )
+    )
+  );
+}
+
+function App(){
+  const [vista,setVista]=useState('inicio');
+  const [auth,setAuth]=useState(null);
+  const [sesion,setSesion]=useState(null);
+  const [part,setPart]=useState(null);
+  const [resp,setResp]=useState({});
+
+  useEffect(()=>{
+    const p=new URLSearchParams(window.location.search);
+    const cod=p.get('codigo');
+    if(cod){
+      api('buscar_sesion',{codigo:cod})
+        .then(d=>{setSesion(d);setVista('form');})
+        .catch(()=>{});
+    }
+  },[]);
+
+  const logout=async()=>{if(auth)await sbSignOut(auth.token);setAuth(null);setVista('inicio');};
+  const reset=()=>{setSesion(null);setPart(null);setResp({});setVista('inicio');};
+
+  if(vista==='inicio')return React.createElement(Inicio,{onInstructor:()=>setVista('login'),onCodigo:(s)=>{setSesion(s);setVista('form');}});
+  if(vista==='login')return React.createElement(Login,{onLogin:(a)=>{setAuth(a);setVista('panel');},onVolver:()=>setVista('inicio')});
+  if(vista==='panel'&&auth)return React.createElement(Panel,{auth,onLogout:logout});
+  if(vista==='form'&&sesion)return React.createElement(FormPart,{sesion,onOk:(p)=>{setPart(p);setVista('wizard');}});
+  if(vista==='wizard'&&part&&sesion)return React.createElement(Wizard,{part,sesion,onOk:(r)=>{setResp(r);setVista('resultados');}});
+  if(vista==='resultados'&&part&&sesion)return React.createElement(Resultados,{part,resp,sesion,onNuevo:reset});
+  return React.createElement(Inicio,{onInstructor:()=>setVista('login'),onCodigo:(s)=>{setSesion(s);setVista('form');}});
+}
+
+ReactDOM.render(React.createElement(App),document.getElementById('root'));
+</script>
+</body>
+</html>
