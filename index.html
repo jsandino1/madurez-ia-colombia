@@ -7,192 +7,266 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-:root{--azul:#0F1F3D;--anil:#1B4FD8;--anil-c:#EEF2FF;--ambar:#F59E0B;--ambar-c:#FEF3C7;--verde:#059669;--verde-c:#D1FAE5;--rojo:#DC2626;--rojo-c:#FEE2E2;--purp:#7C3AED;--purp-c:#EDE9FE;--blanco:#fff;--fondo:#F7F8FA;--borde:#E2E8F0;--texto:#1E293B;--texto2:#64748B;}
+:root{
+  --p:#0066cc;--pd:#2997ff;--ink:#1d1d1f;--ink2:#6e6e73;--ink3:#7a7a7a;
+  --canvas:#fff;--parch:#f5f5f7;--dark:#272729;--dark2:#1d1d1f;
+  --hair:#d2d2d7;--hairsf:#f0f0f0;--green:#30d158;--orange:#ff9f0a;--red:#ff453a;--purp:#bf5af2;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--texto);min-height:100vh}
-.header{background:var(--azul);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:34px;height:34px;background:var(--anil);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px}
-.logo-text{color:#fff;font-weight:700;font-size:15px}
-.logo-sub{color:#94A3B8;font-size:11px}
-.header-right{display:flex;align-items:center;gap:10px}
-.header-user{color:#94A3B8;font-size:12px}
-.btn-nav{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#CBD5E1;padding:6px 14px;border-radius:6px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif}
-.btn-nav:hover{background:rgba(255,255,255,0.1);color:#fff}
-.btn-nav.danger{border-color:rgba(220,38,38,0.4);color:#FCA5A5}
-.main{max-width:820px;margin:0 auto;padding:36px 20px 80px}
-.main-w{max-width:1060px;margin:0 auto;padding:36px 20px 80px}
-.card{background:#fff;border-radius:14px;border:1px solid var(--borde);box-shadow:0 4px 20px rgba(15,31,61,.09);overflow:hidden;margin-bottom:20px}
-.card-h{background:var(--azul);padding:24px 28px}
-.card-h h2{color:#fff;font-size:19px;font-weight:700;margin-bottom:3px}
-.card-h p{color:#94A3B8;font-size:13px}
-.card-b{padding:28px}
-.inicio-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(135deg,#0F1F3D 0%,#1B3A6B 100%)}
-.inicio-logo{text-align:center;margin-bottom:40px}
-.inicio-logo h1{color:#fff;font-size:28px;font-weight:800;margin-bottom:6px}
-.inicio-logo p{color:#94A3B8;font-size:14px}
-.inicio-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:600px;width:100%}
-.inicio-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:32px 24px;cursor:pointer;transition:all .25s;text-align:center}
-.inicio-card:hover{background:rgba(255,255,255,0.13);border-color:rgba(255,255,255,0.3);transform:translateY(-2px)}
-.inicio-card .ic-icon{font-size:36px;margin-bottom:12px}
-.inicio-card h3{color:#fff;font-size:16px;font-weight:700;margin-bottom:6px}
-.inicio-card p{color:#94A3B8;font-size:13px;line-height:1.5}
-.codigo-wrap{margin-top:12px;display:flex;gap:8px}
-.codigo-input{flex:1;padding:11px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-size:15px;font-family:'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;outline:none}
-.codigo-input::placeholder{color:#94A3B8;letter-spacing:1px;text-transform:none}
-.codigo-input:focus{border-color:#1B4FD8}
-.btn-codigo{padding:11px 16px;background:#1B4FD8;border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:18px}
-.form-g{margin-bottom:18px}
-.form-r{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
-label span{color:var(--rojo)}
-input,select,textarea{width:100%;padding:10px 13px;border:1.5px solid var(--borde);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--texto);background:#fff;outline:none;transition:border-color .2s}
-textarea{resize:vertical;min-height:70px}
-input:focus,select:focus,textarea:focus{border-color:var(--anil);box-shadow:0 0 0 3px rgba(27,79,216,.09)}
-input:disabled,select:disabled{background:#F1F5F9;color:#94A3B8;cursor:not-allowed}
-.btn{padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s}
-.btn-p{background:var(--anil);color:#fff}
-.btn-p:hover{background:#1440B8;transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,79,216,.28)}
-.btn-p:disabled{background:var(--borde);color:var(--texto2);transform:none;box-shadow:none;cursor:not-allowed}
-.btn-s{background:var(--fondo);color:var(--texto);border:1.5px solid var(--borde)}
-.btn-s:hover{background:var(--borde)}
-.btn-full{width:100%}
-.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px}
-.sesion-item{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:12px;transition:box-shadow .2s}
-.sesion-item:hover{box-shadow:0 4px 16px rgba(15,31,61,.08)}
+body{font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;background:var(--parch);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.gnav{background:rgba(0,0,0,0.92);backdrop-filter:saturate(180%) blur(20px);height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100}
+.gnav-logo{color:#fff;font-size:15px;font-weight:600;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+.gnav-logo span{color:var(--pd)}
+.gnav-ctx{color:rgba(255,255,255,.45);font-size:12px;letter-spacing:-.12px}
+.gnav-right{display:flex;align-items:center;gap:14px}
+.gnav-user{color:rgba(255,255,255,.45);font-size:12px}
+.btn-ghost-nav{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:12px;padding:5px 14px;border-radius:980px;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-ghost-nav:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost-nav.danger{border-color:rgba(255,69,58,.4);color:#ff6961}
+
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:40px 28px 80px}
+.page-sm{max-width:680px;margin:0 auto;padding:40px 28px 80px}
+.page-xs{max-width:460px;margin:80px auto;padding:0 20px}
+
+/* HERO */
+.hero{background:var(--dark);min-height:calc(100vh - 44px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;text-align:center}
+.hero-eyebrow{color:var(--pd);font-size:14px;font-weight:400;letter-spacing:-.2px;margin-bottom:14px}
+.hero-h1{font-family:-apple-system,"SF Pro Display",sans-serif;font-size:52px;font-weight:600;line-height:1.07;letter-spacing:-.28px;color:#fff;max-width:740px;margin-bottom:18px}
+.hero-h1 span{color:var(--pd)}
+.hero-sub{font-size:19px;font-weight:400;line-height:1.4;color:#ccc;max-width:520px;margin-bottom:40px;letter-spacing:.1px}
+.hero-dims{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;max-width:860px;margin-top:56px;width:100%}
+.hero-dim-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px 14px;text-align:left}
+.hero-dim-icon{font-size:20px;margin-bottom:10px}
+.hero-dim-name{font-size:12px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-dim-desc{font-size:11px;color:rgba(255,255,255,.45);line-height:1.5}
+
+/* BUTTONS */
+.btn-pill{background:var(--p);color:#fff;font-size:15px;font-weight:400;padding:10px 24px;border-radius:980px;border:none;cursor:pointer;font-family:inherit;letter-spacing:-.2px;transition:transform .1s;display:inline-block}
+.btn-pill:hover{opacity:.9}
+.btn-pill:active{transform:scale(.95)}
+.btn-pill:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-pill-lg{font-size:17px;padding:14px 32px}
+.btn-pill-sm{font-size:13px;padding:8px 18px}
+.btn-ghost{background:transparent;color:var(--pd);font-size:15px;padding:10px 24px;border-radius:980px;border:1.5px solid rgba(41,151,255,.35);cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-ghost:hover{border-color:var(--pd);background:rgba(41,151,255,.06)}
+.btn-util{background:var(--parch);color:var(--ink);font-size:12px;font-weight:500;padding:7px 14px;border-radius:8px;border:1px solid var(--hair);cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .15s}
+.btn-util:hover{background:#e8e8ed}
+.btn-util-blue{background:rgba(0,102,204,.07);color:var(--p);border-color:rgba(0,102,204,.15)}
+.btn-util-blue:hover{background:rgba(0,102,204,.12)}
+.btn-cancel{background:var(--parch);color:var(--ink);border:1px solid var(--hair);font-size:15px;padding:11px 22px;border-radius:980px;cursor:pointer;font-family:inherit}
+.cta-row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+
+/* CARDS */
+.card{background:var(--canvas);border:1px solid var(--hairsf);border-radius:18px;padding:24px;margin-bottom:16px}
+.card-0{padding:0;overflow:hidden}
+.card-title{font-size:11px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--canvas);border:1px solid var(--hairsf);border-radius:18px;padding:22px 24px}
+.stat-val{font-size:38px;font-weight:600;letter-spacing:-1.5px;color:var(--ink);line-height:1}
+.stat-label{font-size:13px;color:var(--ink2);margin-top:6px;letter-spacing:-.224px}
+.stat-delta{font-size:12px;font-weight:500;margin-top:8px}
+
+/* TABS */
+.tabs-bar{display:flex;gap:3px;background:rgba(0,0,0,.05);border-radius:10px;padding:3px;margin-bottom:22px;width:fit-content}
+.tab-btn{padding:7px 18px;border-radius:8px;border:none;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--ink2);background:transparent;transition:all .2s;letter-spacing:-.224px}
+.tab-btn.active{background:var(--canvas);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+
+/* SESION CARDS */
+.sesion-card{background:var(--canvas);border:1px solid var(--hairsf);border-radius:14px;padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:10px;transition:box-shadow .2s}
+.sesion-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-g{background:var(--green)}.dot-o{background:var(--orange)}
 .sesion-info{flex:1}
-.sesion-nombre{font-size:15px;font-weight:700;margin-bottom:3px}
-.sesion-meta{font-size:12px;color:var(--texto2)}
-.sesion-codigo{font-weight:700;color:var(--anil)}
-.sesion-resp{font-size:13px;font-weight:700;color:var(--anil);min-width:60px;text-align:center}
-.sesion-acciones{display:flex;gap:8px;flex-wrap:wrap}
-.btn-sm{padding:7px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;white-space:nowrap}
-.btn-sm-anil{background:var(--anil-c);color:var(--anil)}
-.btn-sm-verde{background:var(--verde-c);color:#065F46}
-.prog-wrap{margin-bottom:28px}
-.prog-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px;color:var(--texto2)}
-.prog-bar{height:5px;background:var(--borde);border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--anil),#6366F1);border-radius:99px;transition:width .4s}
+.sesion-name{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.374px}
+.sesion-meta{font-size:12px;color:var(--ink2);margin-top:3px}
+.sesion-cod{font-weight:700;color:var(--p);font-family:monospace;font-size:13px}
+.resp-badge{background:rgba(0,102,204,.08);color:var(--p);font-size:13px;font-weight:600;padding:5px 14px;border-radius:980px;white-space:nowrap}
+.sesion-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* FORMS */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-.224px}
+.field label span{color:var(--red)}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;font-size:15px;font-family:inherit;color:var(--ink);background:var(--canvas);border:1px solid var(--hair);border-radius:10px;outline:none;letter-spacing:-.2px;transition:border-color .2s}
+.field textarea{min-height:70px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(0,102,204,.1)}
+.field input:disabled,.field select:disabled{background:var(--parch);color:var(--ink2);cursor:not-allowed}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* DARK FORM FIELDS */
+.field-dark label{color:rgba(255,255,255,.7)}
+.field-dark input,.field-dark select{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#fff}
+.field-dark input::placeholder{color:rgba(255,255,255,.3)}
+.field-dark input:focus,.field-dark select:focus{border-color:var(--pd);box-shadow:0 0 0 3px rgba(41,151,255,.12)}
+
+/* PROGRESS */
+.prog-track{height:2px;background:rgba(255,255,255,.1);border-radius:99px;margin-bottom:44px;overflow:hidden}
+.prog-fill{height:100%;background:var(--pd);border-radius:99px;transition:width .4s}
 .steps{display:flex;gap:5px;margin-top:10px}
-.step{flex:1;height:4px;border-radius:99px;background:var(--borde)}
-.step.done{background:var(--anil)}.step.active{background:var(--ambar)}
-.dim-badge{display:inline-flex;align-items:center;gap:7px;background:var(--anil-c);color:var(--anil);padding:5px 13px;border-radius:99px;font-size:11px;font-weight:600;margin-bottom:16px}
-.dim-title{font-size:17px;font-weight:700;margin-bottom:5px}
-.dim-desc{font-size:13px;color:var(--texto2);margin-bottom:24px;line-height:1.6}
-.preg-wrap{margin-bottom:26px}
-.preg-num{font-size:11px;font-weight:600;color:var(--texto2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
-.preg-texto{font-size:14px;font-weight:600;margin-bottom:14px;line-height:1.5}
-.opciones{display:flex;flex-direction:column;gap:7px}
-.opcion{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border:1.5px solid var(--borde);border-radius:9px;cursor:pointer;background:#fff;transition:all .2s}
-.opcion:hover,.opcion.sel{border-color:var(--anil);background:var(--anil-c)}
-.op-n{width:26px;height:26px;border-radius:50%;background:var(--borde);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--texto2);flex-shrink:0}
-.opcion.sel .op-n{background:var(--anil);color:#fff}
-.op-t{font-size:13px;line-height:1.5;padding-top:3px}
-.res-hero{text-align:center;padding:36px 28px 28px;border-bottom:1px solid var(--borde)}
-.nivel-n{font-size:66px;font-weight:800;line-height:1}
-.nivel-nom{font-size:21px;font-weight:700;margin-top:4px}
-.nivel-sub{font-size:13px;color:var(--texto2);margin-top:3px}
-.met-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:20px 28px;border-bottom:1px solid var(--borde)}
-.met-c{background:var(--fondo);border-radius:11px;padding:15px;text-align:center}
-.met-v{font-size:26px;font-weight:800;color:var(--azul)}
-.met-l{font-size:11px;font-weight:600;color:var(--texto2);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
-.met-s{font-size:11px;color:var(--texto2);margin-top:2px}
-.radar-wrap{display:flex;justify-content:center;padding:20px 28px;border-bottom:1px solid var(--borde)}
-.dim-res{padding:20px 28px}
-.dim-res-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.dim-res-n{font-size:12px;font-weight:600;width:185px;flex-shrink:0;line-height:1.3}
-.barra-wrap{flex:1;height:7px;background:var(--borde);border-radius:99px;overflow:hidden}
-.barra-fill{height:100%;border-radius:99px;transition:width .6s}
+.step{flex:1;height:3px;border-radius:99px;background:rgba(255,255,255,.15);transition:background .3s}
+.step.done{background:var(--pd)}.step.cur{background:var(--orange)}
+
+/* WIZARD */
+.q-eyebrow{font-size:11px;color:var(--pd);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:600}
+.q-text{font-size:26px;font-weight:600;color:#fff;line-height:1.25;letter-spacing:-.3px;margin-bottom:28px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid rgba(255,255,255,.1);border-radius:13px;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.03)}
+.opt:hover{border-color:rgba(41,151,255,.4);background:rgba(41,151,255,.06)}
+.opt.sel{border-color:var(--pd);background:rgba(41,151,255,.1)}
+.opt-n{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);flex-shrink:0;transition:all .2s}
+.opt.sel .opt-n{background:var(--pd);color:#fff}
+.opt-t{font-size:14px;color:rgba(255,255,255,.75);line-height:1.45;padding-top:2px}
+.opt.sel .opt-t{color:#fff}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+
+/* RESULTS */
+.res-hero{text-align:center;padding:48px 28px 36px;border-bottom:1px solid rgba(255,255,255,.08)}
+.res-score{font-size:88px;font-weight:700;line-height:1;letter-spacing:-4px}
+.res-level{font-size:26px;font-weight:600;margin-top:8px}
+.res-desc{font-size:15px;color:#ccc;margin-top:5px}
+.met-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.met-c{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;text-align:center}
+.met-v{font-size:30px;font-weight:600;color:#fff;letter-spacing:-1px}
+.met-l{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.6px;margin-top:5px}
+.met-s{font-size:11px;color:rgba(255,255,255,.3);margin-top:3px}
+.radar-wrap{display:flex;justify-content:center;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.dim-res-list{padding:20px 28px}
+.dim-res-row{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.dim-res-n{font-size:12px;font-weight:500;width:180px;flex-shrink:0;color:rgba(255,255,255,.8);line-height:1.3}
+.bar-t{flex:1;height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden}
+.bar-f{height:100%;border-radius:99px;transition:width .6s}
 .dim-pt{font-size:13px;font-weight:700;width:28px;text-align:right}
-.nivel-tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;width:105px;text-align:center;flex-shrink:0}
-.narr{margin:0 28px 24px;background:var(--anil-c);border-left:4px solid var(--anil);border-radius:0 8px 8px 0;padding:14px 18px}
-.narr p{font-size:13px;color:var(--azul);line-height:1.7}
-.tag-cuello{display:inline-flex;align-items:center;gap:3px;background:var(--ambar-c);color:#92400E;padding:2px 7px;border-radius:99px;font-size:11px;font-weight:600}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:700}
-.b1{background:#FEE2E2;color:#991B1B}.b2{background:#FEF3C7;color:#92400E}.b3{background:#EEF2FF;color:#1E40AF}.b4{background:#EDE9FE;color:#5B21B6}.b5{background:#D1FAE5;color:#065F46}
-.alert{padding:11px 15px;border-radius:8px;font-size:13px;margin-bottom:16px}
-.alert-e{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
-.alert-ok{background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0}
-.loading{text-align:center;padding:60px 28px;color:var(--texto2)}
-.spin{width:38px;height:38px;border:3px solid var(--borde);border-top-color:var(--anil);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+.nvtag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:980px;width:105px;text-align:center;flex-shrink:0}
+.n1{background:#fee2e2;color:#991b1b}.n2{background:#fef3c7;color:#92400e}
+.n3{background:#dbeafe;color:#1e40af}.n4{background:#ede9fe;color:#5b21b6}.n5{background:#d1fae5;color:#065f46}
+.narr-box{margin:0 28px 24px;background:rgba(41,151,255,.1);border-left:3px solid var(--pd);border-radius:0 10px 10px 0;padding:16px 18px}
+.narr-box p{font-size:14px;color:rgba(255,255,255,.85);line-height:1.7}
+.ia-box{margin:0 28px 24px;background:rgba(48,209,88,.08);border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:16px 18px}
+.ia-box p{font-size:14px;color:rgba(255,255,255,.85);line-height:1.7}
+.cuello-tag{display:inline-flex;align-items:center;background:#fef3c7;color:#92400e;font-size:11px;font-weight:600;padding:2px 8px;border-radius:980px;gap:3px}
+.tag-cuello{display:inline-flex;align-items:center;background:rgba(255,159,10,.15);color:#ff9f0a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:980px;margin-left:5px}
+.envio-ok{text-align:center;padding:28px 28px 36px}
+.envio-ok .icon{font-size:44px;margin-bottom:10px}
+.envio-ok h3{font-size:18px;font-weight:600;color:var(--green);margin-bottom:6px}
+.envio-ok p{font-size:14px;color:rgba(255,255,255,.5)}
+
+/* DASHBOARD */
+.dash-header{background:var(--canvas);border:1px solid var(--hairsf);border-radius:18px;padding:26px 30px;margin-bottom:20px;display:flex;align-items:center;gap:20px}
+.dash-cod{font-family:monospace;font-size:20px;font-weight:700;color:var(--p);background:rgba(0,102,204,.07);padding:10px 20px;border-radius:12px;letter-spacing:2px;white-space:nowrap}
+.dim-row{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.dim-row:last-child{margin-bottom:0}
+.dim-lbl{font-size:12px;font-weight:500;color:var(--ink);width:175px;flex-shrink:0;line-height:1.3}
+.bar-track{flex:1;height:5px;background:var(--hairsf);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px}
+.dist-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.dist-row:last-child{margin-bottom:0}
+.dist-bt{flex:1;height:16px;background:var(--hairsf);border-radius:6px;overflow:hidden}
+.dist-bf{height:100%;border-radius:6px}
+.dist-cnt{font-size:12px;font-weight:600;width:20px;text-align:right;color:var(--ink2)}
+.cuello-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--hairsf)}
+.cuello-row:last-child{border-bottom:none}
+.cuello-rank{width:24px;height:24px;border-radius:50%;background:var(--parch);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink2);flex-shrink:0}
+.cuello-nom{flex:1;font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.2px}
+.cuello-cnt{font-size:11px;font-weight:600;color:#92400e;background:#fef3c7;padding:3px 9px;border-radius:980px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* TABLE */
+.tabla-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--parch);padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink2);border-bottom:1px solid var(--hair)}
+td{padding:12px 14px;border-bottom:1px solid var(--hairsf);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--parch)}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal{background:var(--canvas);border-radius:20px;padding:32px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal h3{font-size:20px;font-weight:600;letter-spacing:-.5px;margin-bottom:22px}
+.modal-btns{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+
+/* BACK */
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--p);font-size:14px;font-weight:500;cursor:pointer;margin-bottom:22px;letter-spacing:-.2px;background:none;border:none;font-family:inherit}
+
+/* SESION BANNER */
+.sesion-banner{background:rgba(41,151,255,.1);border:1px solid rgba(41,151,255,.2);border-radius:10px;padding:11px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.7);flex-wrap:wrap}
+.sesion-banner strong{color:var(--pd)}
+
+/* ALERT */
+.alert-e{padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.alert-ok{padding:11px 15px;border-radius:10px;font-size:13px;margin-bottom:16px;background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
+
+/* LOADING */
+.loading{text-align:center;padding:60px 20px;color:var(--ink2)}
+.spin{width:36px;height:36px;border:3px solid var(--hairsf);border-top-color:var(--p);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.tabs{display:flex;gap:4px;background:var(--fondo);border-radius:9px;padding:4px;margin-bottom:20px;border:1px solid var(--borde)}
-.tab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;border-radius:7px;cursor:pointer;color:var(--texto2);border:none;background:transparent;font-family:'Inter',sans-serif}
-.tab.active{background:#fff;color:var(--anil);box-shadow:0 1px 5px rgba(0,0,0,.07)}
-.stats-r{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.stat-c{background:#fff;border:1px solid var(--borde);border-radius:11px;padding:18px}
-.stat-v{font-size:30px;font-weight:800;color:var(--azul)}
-.stat-l{font-size:12px;color:var(--texto2);margin-top:3px;font-weight:500}
-.stat-d{font-size:12px;color:var(--verde);font-weight:600;margin-top:5px}
-.tabla{width:100%;border-collapse:collapse;font-size:13px}
-.tabla th{background:var(--fondo);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--texto2);border-bottom:2px solid var(--borde)}
-.tabla td{padding:12px 14px;border-bottom:1px solid var(--borde);vertical-align:middle}
-.tabla tr:hover td{background:var(--fondo)}
-.empty{text-align:center;padding:56px 28px;color:var(--texto2)}
-.empty-i{font-size:44px;margin-bottom:10px}
-.correo-ok{text-align:center;padding:20px 28px 28px}
-.co-i{font-size:44px;margin-bottom:10px}
-.co-t{font-size:17px;font-weight:700;color:var(--verde);margin-bottom:5px}
-.co-s{font-size:13px;color:var(--texto2)}
-.sec-t{font-size:17px;font-weight:700;margin-bottom:3px}
-.sec-s{font-size:13px;color:var(--texto2);margin-bottom:20px}
-.sesion-banner{background:var(--anil-c);border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap}
-.sesion-banner strong{color:var(--anil)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
-.modal{background:#fff;border-radius:16px;padding:32px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal h3{font-size:18px;font-weight:700;margin-bottom:20px}
-@media(max-width:600px){.form-r{grid-template-columns:1fr}.met-row{grid-template-columns:1fr}.stats-r{grid-template-columns:repeat(2,1fr)}.inicio-cards{grid-template-columns:1fr}.dim-res-n{width:120px}.nivel-tag{display:none}.sesion-acciones{flex-direction:column}}
+
+/* DARK SECTION */
+.dark-section{background:var(--dark);min-height:calc(100vh - 44px);padding:0}
+
+/* PAGE HEADER */
+.ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px}
+.ph-title{font-size:32px;font-weight:600;letter-spacing:-.5px;color:var(--ink)}
+.ph-sub{font-size:14px;color:var(--ink2);margin-top:3px;letter-spacing:-.2px}
+
+/* INICIO */
+.inicio-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;width:100%;margin-top:0}
+.ic{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:30px 24px;cursor:pointer;transition:all .25s;text-align:center}
+.ic:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);transform:translateY(-2px)}
+.ic-icon{font-size:32px;margin-bottom:12px}
+.ic h3{color:#fff;font-size:16px;font-weight:600;margin-bottom:6px;letter-spacing:-.3px}
+.ic p{color:rgba(255,255,255,.5);font-size:13px;line-height:1.5}
+.cod-wrap{margin-top:14px;display:flex;gap:8px}
+.cod-inp{flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-size:15px;font-family:inherit;letter-spacing:2px;text-transform:uppercase;outline:none}
+.cod-inp::placeholder{color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:none}
+.cod-inp:focus{border-color:var(--pd)}
+.cod-btn{padding:10px 16px;background:var(--p);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:17px;transition:opacity .2s}
+.cod-btn:hover{opacity:.85}
+
+/* EMPTY */
+.empty{text-align:center;padding:56px 28px;color:var(--ink2)}
+.empty-i{font-size:40px;margin-bottom:10px}
+
+@media(max-width:768px){
+  .hero-h1{font-size:32px}.hero-dims{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}.met-row{grid-template-columns:1fr}
+  .dim-res-n{width:120px}.nvtag{display:none}
+  .sesion-card{flex-wrap:wrap}.gnav-user{display:none}
+  .inicio-cards{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script>
 const {useState,useEffect} = React;
-
-// ── CONFIG (solo claves públicas en el navegador) ────────────────────
-// Config: auth va por Netlify Function, no necesitamos SB_URL/SB_KEY en el cliente
-const SB_URL = '';
-const SB_KEY = '';
-async function loadConfig() { /* no-op */ }
+const SB_URL = "https://mmgmwrbxzxmqmygwtwdw.supabase.co";
+const SB_KEY = "sb_publishable_Ii_rirLA5pmmoejJwQBXqw_FwQe-MXm";
 const MUNICIPIOS_DANE = {"Amazonas": ["Leticia", "Puerto Nariño"], "Antioquia": ["Abejorral", "Abriaquí", "Alejandría", "Amagá", "Amalfi", "Andes", "Angelópolis", "Angostura", "Anorí", "Anzá", "Apartadó", "Arboletes", "Argelia", "Armenia", "Barbosa", "Bello", "Belmira", "Betania", "Betulia", "Briceño", "Buriticá", "Caicedo", "Caldas", "Campamento", "Caracolí", "Caramanta", "Carepa", "Carolina Del Principe", "Caucasia", "Cañasgordas", "Chigorodó", "Cisneros", "Ciudad Bolívar", "Cocorná", "Concepción", "Concordia", "Copacabana", "Cáceres", "Dabeiba", "Don Matías", "Ebéjico", "El Bagre", "El Carmen De Viboral", "El Peñol", "El Retiro", "El Santuario", "Entrerríos", "Envigado", "Fredonia", "Frontino", "Giraldo", "Girardota", "Granada", "Guadalupe", "Guarne", "Guatapé", "Gómez Plata", "Heliconia", "Hispania", "Itagüí", "Ituango", "Jardín", "Jericó", "La Ceja Del Tambo", "La Estrella", "La Pintada", "La Unión", "Liborina", "Maceo", "Marinilla", "Medellín", "Montebello", "Murindó", "Mutatá", "Nariño", "Nechí", "Necoclí", "Olaya", "Peque", "Pueblorrico", "Puerto Berrío", "Puerto Nare", "Puerto Triunfo", "Remedios", "Rionegro", "Sabanalarga", "Sabaneta", "Salgar", "San Andrés De Cuerquía", "San Carlos", "San Francisco", "San Jerónimo", "San José De La Montaña", "San Juan De Urabá", "San Luis", "San Pedro De Los Milagros", "San Pedro De Urabá", "San Rafael", "San Roque", "San Vicente Ferrer", "Santa Bárbara", "Santa Fé De Antioquia", "Santa Rosa De Osos", "Santo Domingo", "Segovia", "Sonsón", "Sopetrán", "Tarazá", "Tarso", "Titiribí", "Toledo", "Turbo", "Támesis", "Uramita", "Urrao", "Valdivia", "Valparaíso", "Vegachí", "Venecia", "Vigía Del Fuerte", "Yalí", "Yarumal", "Yolombó", "Yondó", "Zaragoza"], "Arauca": ["Arauca", "Arauquita", "Cravo Norte", "Fortul", "Puerto Rondón", "Saravena", "Tame"], "Atlántico": ["Baranoa", "Barranquilla", "Campo De La Cruz", "Candelaria", "Galapa", "Juan De Acosta", "Luruaco", "Malambo", "Manatí", "Palmar De Varela", "Piojó", "Polonuevo", "Ponedera", "Puerto Colombia", "Repelón", "Sabanagrande", "Sabanalarga", "Santa Lucía", "Santo Tomas", "Soledad", "Suan", "Tubará", "Usiacurí"], "Bolívar": ["Achí", "Altos Del Rosario", "Arenal", "Arjona", "Arroyohondo", "Barranco De Loba", "Calamar", "Cantagallo", "Cartagena de Indias", "Cicuco", "Clemencia", "Córdoba", "El Carmen De Bolívar", "El Guamo", "El Peñón", "Hatillo De Loba", "Magangué", "Mahates", "Margarita", "María La Baja", "Mompóx", "Montecristo", "Morales", "Norosí", "Pinillos", "Regidor", "Rioviejo", "San Cristóbal", "San Estanislao", "San Fernando", "San Jacinto", "San Jacinto Del Cauca", "San Juan Nepomuceno", "San Martín De Loba", "San Pablo", "Santa Catalina", "Santa Rosa", "Santa Rosa Del Sur", "Simití", "Soplaviento", "Talaigua Nuevo", "Tiquisio", "Turbaco", "Turbaná", "Villanueva", "Zambrano"], "Boyacá": ["Almeida", "Aquitania", "Arcabuco", "Belén", "Berbeo", "Betéitiva", "Boavita", "Boyacá", "Briceño", "Buenavista", "Busbanzá", "Caldas", "Campohermoso", "Cerinza", "Chinavita", "Chiquinquirá", "Chiscas", "Chita", "Chitaraque", "Chivatá", "Chivor", "Chíquiza", "Ciénega", "Coper", "Corrales", "Covarachía", "Cubará", "Cucaita", "Cuítiva", "Cómbita", "Duitama", "El Cocuy", "El Espino", "Firavitoba", "Floresta", "Gachantivá", "Garagoa", "Guacamayas", "Guateque", "Guayatá", "Gámeza", "Güicán De La Sierra", "Iza", "Jenesano", "Jericó", "La Capilla", "La Uvita", "La Victoria", "Labranzagrande", "Macanal", "Maripí", "Miraflores", "Mongua", "Monguí", "Moniquirá", "Motavita", "Muzo", "Nobsa", "Nuevo Colón", "Oicatá", "Otanche", "Pachavita", "Paipa", "Pajarito", "Panqueba", "Pauna", "Paya", "Paz De Río", "Pesca", "Pisba", "Puerto Boyacá", "Páez", "Quípama", "Ramiriquí", "Rondón", "Ráquira", "Saboyá", "Samacá", "San Eduardo", "San José De Pare", "San Luis De Gaceno", "San Mateo", "San Miguel De Sema", "San Pablo De Borbur", "Santa María", "Santa Rosa De Viterbo", "Santa Sofía", "Santana", "Sativanorte", "Sativasur", "Siachoque", "Soatá", "Socha", "Socotá", "Sogamoso", "Somondoco", "Sora", "Soracá", "Sotaquirá", "Susacón", "Sutamarchán", "Sutatenza", "Sáchica", "Tasco", "Tenza", "Tibaná", "Tibasosa", "Tinjacá", "Tipacoque", "Toca", "Togüí", "Tota", "Tunja", "Tununguá", "Turmequé", "Tuta", "Tutazá", "Tópaga", "Ventaquemada", "Villa De Leyva", "Viracachá", "Zetaquirá", "Úmbita"], "Caldas": ["Aguadas", "Anserma", "Aranzazu", "Belalcázar", "Chinchiná", "Filadelfia", "La Dorada", "La Merced", "Manizales", "Manzanares", "Marmato", "Marquetalia", "Marulanda", "Neira", "Norcasia", "Palestina", "Pensilvania", "Pácora", "Riosucio", "Risaralda", "Salamina", "Samaná", "San José", "Supía", "Victoria", "Villamaría", "Viterbo"], "Caquetá": ["Albania", "Belén De Los Andaquíes", "Cartagena Del Chairá", "Curillo", "El Doncello", "El Paujíl", "Florencia", "La Montañita", "Milán", "Morelia", "Puerto Rico", "San José Del Fragua", "San Vicente Del Caguán", "Solano", "Solita", "Valparaíso"], "Casanare": ["Aguazul", "Chámeza", "Hato Corozal", "La Salina", "Maní", "Monterrey", "Nunchía", "Orocué", "Paz De Ariporo", "Pore", "Recetor", "Sabanalarga", "San Luis De Palenque", "Sácama", "Tauramena", "Trinidad", "Támara", "Villanueva", "Yopal"], "Cauca": ["Almaguer", "Argelia", "Balboa", "Bolívar", "Buenos Aires", "Cajibío", "Caldono", "Caloto", "Corinto", "El Tambo", "Florencia", "Guachené", "Guapi", "Inzá", "Jambaló", "La Sierra", "La Vega", "López De Micay", "Mercaderes", "Miranda", "Morales", "Padilla", "Patía", "Piamonte", "Piendamó", "Popayán", "Puerto Tejada", "Puracé", "Páez", "Rosas", "San Sebastián", "Santa Rosa", "Santander De Quilichao", "Silvia", "Sotará", "Sucre", "Suárez", "Timbiquí", "Timbío", "Toribío", "Totoró", "Villa Rica"], "Cesar": ["Aguachica", "Agustín Codazzi", "Astrea", "Becerril", "Bosconia", "Chimichagua", "Chiriguaná", "Curumaní", "El Copey", "El Paso", "Gamarra", "González", "La Gloria", "La Jagua De Ibirico", "La Paz", "Manaure Balcón Del César", "Pailitas", "Pelaya", "Pueblo Bello", "Río De Oro", "San Alberto", "San Diego", "San Martín", "Tamalameque", "Valledupar"], "Chocó": ["Acandí", "Alto Baudó", "Atrato", "Bagadó", "Bahía Solano", "Bajo Baudó", "Bojayá", "Carmen Del Darién", "Condoto", "Cértegui", "El Cantón De San Pablo", "El Carmen De Atrato", "El Litoral De San Juan", "Istmina", "Juradó", "Lloró", "Medio Atrato", "Medio Baudó", "Medio San Juan", "Nuevo Belén de Bajirá", "Nuquí", "Nóvita", "Quibdó", "Riosucio", "Río Iró", "Río Quito", "San José Del Palmar", "San José de Tadó", "Sipí", "Unguía", "Unión Panamericana"], "Córdoba": ["Ayapel", "Buenavista", "Canalete", "Cereté", "Chimá", "Chinú", "Ciénaga De Oro", "Cotorra", "La Apartada", "Lorica", "Los Córdobas", "Momil", "Montelíbano", "Montería", "Moñitos", "Planeta Rica", "Pueblo Nuevo", "Puerto Escondido", "Puerto Libertador", "Purísima", "Sahagún", "San Andrés De Sotavento", "San Antero", "San Bernardo Del Viento", "San Carlos", "San José De Uré", "San Pelayo", "Tierralta", "Tuchín", "Valencia"], "Cundinamarca": ["Agua De Dios", "Albán", "Anapoima", "Anolaima", "Apulo", "Arbeláez", "Beltrán", "Bituima", "Bojacá", "Cabrera", "Cachipay", "Cajicá", "Caparrapí", "Carmen De Carupa", "Chaguaní", "Chipaque", "Choachí", "Chocontá", "Chía", "Cogua", "Cota", "Cucunubá", "Cáqueza", "El Colegio", "El Peñón", "El Rosal", "Facatativá", "Fosca", "Funza", "Fusagasugá", "Fómeque", "Fúquene", "Gachalá", "Gachancipá", "Gachetá", "Gama", "Girardot", "Granada", "Guachetá", "Guaduas", "Guasca", "Guataquí", "Guatavita", "Guayabal De Síquima", "Guayabetal", "Gutiérrez", "Jerusalén", "Junín", "La Calera", "La Mesa", "La Palma", "La Peña", "La Vega", "Lenguazaque", "Machetá", "Madrid", "Manta", "Medina", "Mosquera", "Nariño", "Nemocón", "Nilo", "Nimaima", "Nocaima", "Pacho", "Paime", "Pandi", "Paratebueno", "Pasca", "Puerto Salgar", "Pulí", "Quebradanegra", "Quetame", "Quipile", "Ricaurte", "San Antonio Del Tequendama", "San Bernardo", "San Cayetano", "San Francisco", "San Juan De Rioseco", "Sasaima", "Sesquilé", "Sibaté", "Silvania", "Simijaca", "Soacha", "Sopó", "Subachoque", "Suesca", "Supatá", "Susa", "Sutatausa", "Tabio", "Tausa", "Tena", "Tenjo", "Tibacuy", "Tibirita", "Tocaima", "Tocancipá", "Topaipí", "Ubalá", "Ubaque", "Ubaté", "Une", "Venecia", "Vergara", "Vianí", "Villagómez", "Villapinzón", "Villeta", "Viotá", "Yacopí", "Zipacón", "Zipaquirá", "Útica"], "Bogotá D.C.": ["Bogotá D.C."], "Guainía": ["Barrancominas", "Inírida"], "Guaviare": ["Calamar", "El Retorno", "Miraflores", "San José Del Guaviare"], "Huila": ["Acevedo", "Agrado", "Aipe", "Algeciras", "Altamira", "Baraya", "Campoalegre", "Colombia", "Elías", "Garzón", "Gigante", "Guadalupe", "Hobo", "Isnos", "La Argentina", "La Plata", "Neiva", "Nátaga", "Oporapa", "Paicol", "Palermo", "Palestina", "Pital", "Pitalito", "Rivera", "Saladoblanco", "San Agustín", "Santa María", "Suaza", "Tarqui", "Tello", "Teruel", "Tesalia", "Timaná", "Villavieja", "Yaguará", "Íquira"], "La Guajira": ["Albania", "Barrancas", "Dibulla", "Distracción", "El Molino", "Fonseca", "Hatonuevo", "La Jagua Del Pilar", "Maicao", "Manaure", "Riohacha", "San Juan Del Cesar", "Uribia", "Urumita", "Villanueva"], "Magdalena": ["Algarrobo", "Aracataca", "Ariguaní", "Cerro De San Antonio", "Chibolo", "Ciénaga", "Concordia", "El Banco", "El Piñón", "El Retén", "Fundación", "Guamal", "Nueva Granada", "Pedraza", "Pijiño Del Carmen", "Pivijay", "Plato", "Puebloviejo", "Remolino", "Sabanas De San Ángel", "Salamina", "San Sebastián De Buenavista", "San Zenón", "Santa Ana", "Santa Bárbara De Pinto", "Santa Marta", "Sitionuevo", "Tenerife", "Zapayán", "Zona Bananera"], "Meta": ["Acacías", "Barranca De Upía", "Cabuyaro", "Castilla La Nueva", "Cubarral", "Cumaral", "El Calvario", "El Castillo", "El Dorado", "Fuente De Oro", "Granada", "Guamal", "La Macarena", "LejanÍas", "Mapiripán", "Mesetas", "Puerto Concordia", "Puerto Gaitán", "Puerto Lleras", "Puerto López", "Puerto Rico", "Restrepo", "San Carlos De Guaroa", "San Juan De Arama", "San Juanito", "San Martín", "Uribe", "Villavicencio", "Vista Hermosa"], "Nariño": ["Albán", "Aldana", "Ancuyá", "Arboleda", "Barbacoas", "Belén", "Buesaco", "Chachagüí", "Colón", "Consacá", "Contadero", "Cuaspud", "Cumbal", "Cumbitara", "Córdoba", "El Charco", "El Peñol", "El Rosario", "El Tablón De Gómez", "El Tambo", "Francisco Pizarro", "Funes", "Guachucal", "Guaitarilla", "Gualmatán", "Iles", "Imués", "Ipiales", "La Cruz", "La Florida", "La Llanada", "La Tola", "La Unión", "Leiva", "Linares", "Los Andes", "Magüí", "Mallama", "Mosquera", "Nariño", "Olaya Herrera", "Ospina", "Pasto", "Policarpa", "Potosí", "Providencia", "Puerres", "Pupiales", "Ricaurte", "Roberto Payán", "Samaniego", "San Bernardo", "San Lorenzo", "San Pablo", "San Pedro De Cartago", "Sandoná", "Santa Bárbara", "Santa cruz", "Sapuyes", "Taminango", "Tangua", "Tumaco", "Túquerres", "Yacuanquer"], "Norte De Santander": ["Arboledas", "Bochalema", "Bucarasica", "Chinácota", "Chitagá", "Convención", "Cucutilla", "Cáchira", "Cácota", "Durania", "El Carmen", "El Tarra", "El Zulia", "Gramalote", "Hacarí", "Herrán", "La Esperanza", "La Playa", "Labateca", "Los Patios", "Lourdes", "Mutiscua", "Ocaña", "Pamplona", "Pamplonita", "Puerto Santander", "Ragonvalia", "Salazar", "San Calixto", "San Cayetano", "San José De Cúcuta", "Santiago", "Sardinata", "Silos", "Teorama", "Tibú", "Toledo", "Villa Caro", "Villa Del Rosario", "Ábrego"], "Putumayo": ["Colón", "Mocoa", "Orito", "Puerto Asís", "Puerto Caicedo", "Puerto Guzmán", "Puerto Leguízamo", "San Francisco", "San Miguel", "Santiago", "Sibundoy", "Valle Del Guamuez", "Villagarzón"], "Quindío": ["Armenia", "Buenavista", "Calarcá", "Circasia", "Córdoba", "Filandia", "Génova", "La Tebaida", "Montenegro", "Pijao", "Quimbaya", "Salento"], "Risaralda": ["Apía", "Balboa", "Belén De Umbría", "Dosquebradas", "Guática", "La Celia", "La Virginia", "Marsella", "Mistrató", "Pereira", "Pueblo Rico", "Quinchía", "Santa Rosa De Cabal", "Santuario"], "San Andrés": ["Providencia"], "Santander": ["Aguada", "Albania", "Aratoca", "Barbosa", "Barichara", "Barrancabermeja", "Betulia", "Bolívar", "Bucaramanga", "Cabrera", "California", "Capitanejo", "Carcasí", "Cepitá", "Cerrito", "Charalá", "Charta", "Chimá", "Chipatá", "Cimitarra", "Concepción", "Confines", "Contratación", "Coromoro", "Curití", "El Carmen De Chucurí", "El Guacamayo", "El Peñón", "El Playón", "Encino", "Enciso", "Floridablanca", "Florián", "Galán", "Girón", "Guaca", "Guadalupe", "Guapotá", "Guavatá", "Gámbita", "Güepsa", "Hato", "Jesús María", "Jordán", "La Belleza", "La Paz", "Landázuri", "Lebrija", "Los Santos", "Macaravita", "Matanza", "Mogotes", "Molagavita", "Málaga", "Ocamonte", "Oiba", "Onzaga", "Palmar", "Palmas Del Socorro", "Piedecuesta", "Pinchote", "Puente Nacional", "Puerto Parra", "Puerto Wilches", "Páramo", "Rionegro", "Sabana De Torres", "San Andrés", "San Benito", "San Gil", "San Joaquín", "San José De Miranda", "San Miguel", "San Vicente De Chucurí", "Santa Bárbara", "Santa Helena De Opón", "Simacota", "Socorro", "Suaita", "Sucre", "Suratá", "Tona", "Valle De San José", "Vetas", "Villanueva", "Vélez", "Zapatoca"], "Sucre": ["Buenavista", "Caimito", "Chalán", "Coloso", "Corozal", "Coveñas", "El Roble", "Galeras", "Guaranda", "La Unión", "Los Palmitos", "Majagual", "Morroa", "Ovejas", "Sampués", "San Antonio De Palmito", "San Benito Abad", "San Juan De Betulia", "San Marcos", "San Onofre", "San Pedro", "Santiago De Tolú", "Sincelejo", "Sincé", "Sucre", "Toluviejo"], "Tolima": ["Alpujarra", "Alvarado", "Ambalema", "Anzoátegui", "Armero", "Ataco", "Cajamarca", "Carmen De Apicalá", "Casabianca", "Chaparral", "Coello", "Coyaima", "Cunday", "Dolores", "Espinal", "Falan", "Flandes", "Fresno", "Guamo", "Herveo", "Honda", "Ibagué", "Icononzo", "Lérida", "Líbano", "Mariquita", "Melgar", "Murillo", "Natagaima", "Ortega", "Palocabildo", "Piedras", "Planadas", "Prado", "Purificación", "Rioblanco", "Roncesvalles", "Rovira", "Saldaña", "San Antonio", "San Luis", "Santa Isabel", "Suárez", "Valle De San Juan", "Venadillo", "Villahermosa", "Villarrica"], "Valle Del Cauca": ["Alcalá", "Andalucía", "Ansermanuevo", "Argelia", "Bolívar", "Buenaventura", "Bugalagrande", "Caicedonia", "Cali", "Calima El Darién", "Candelaria", "Cartago", "Dagua", "El Cairo", "El Cerrito", "El Dovio", "El Águila", "Florida", "Ginebra", "Guacarí", "Guadalajara De Buga", "Jamundí", "La Cumbre", "La Unión", "La Victoria", "Obando", "Palmira", "Pradera", "Restrepo", "Riofrío", "Roldanillo", "San Pedro", "Sevilla", "Toro", "Trujillo", "Tuluá", "Ulloa", "Versalles", "Vijes", "Yotoco", "Yumbo", "Zarzal"], "Vaupés": ["Carurú", "Mitú", "Taraira"], "Vichada": ["Cumaribo", "La Primavera", "Puerto Carreño", "Santa Rosalía"]};
 
-// ── API: todas las llamadas de datos van por Netlify Function ────────
-async function api(accion, datos = {}, token = null) {
-  const r = await fetch('/.netlify/functions/api', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ accion, token, ...datos })
-  });
-  const d = await r.json();
-  if (!r.ok) throw new Error(d.error || 'Error en la API');
+// ── API & AUTH ───────────────────────────────────────────────────────
+async function api(accion, datos={}, token=null){
+  const r=await fetch('/.netlify/functions/api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion,token,...datos})});
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error||'Error en la API');
   return d;
 }
+async function sbSignIn(email,password){
+  const r=await fetch('/.netlify/functions/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'login',email,password})});
+  const d=await r.json();if(!r.ok)return{error:{message:d.error}};return d;
+}
+async function sbSignUp(email,password){
+  const r=await fetch('/.netlify/functions/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'registro',email,password})});
+  const d=await r.json();if(!r.ok)return{error:{message:d.error}};return d;
+}
+async function sbSignOut(){}
 
-// ── AUTH: login/signup directo con Supabase (solo auth, no datos) ────
-async function sbSignIn(email, password) {
-  const r = await fetch('/.netlify/functions/auth', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({accion:'login', email, password})
-  });
-  const d = await r.json();
-  if (!r.ok) return {error: {message: d.error}};
-  return d;
-}
-async function sbSignUp(email, password) {
-  const r = await fetch('/.netlify/functions/auth', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({accion:'registro', email, password})
-  });
-  const d = await r.json();
-  if (!r.ok) return {error: {message: d.error}};
-  return d;
-}
-async function sbSignOut(token) { /* token expira solo */ }
-
-// ── MODELO DE DATOS ──────────────────────────────────────────────────
+// ── MODELO ───────────────────────────────────────────────────────────
 const DIMS=[
   {id:1,nombre:"Estrategia Orientada a Valor",desc:"Mide la alineación de la IA con los objetivos de negocio para asegurar un retorno de inversión claro y el compromiso del liderazgo.",pregs:[
     {t:"Alineación Estratégica y ROI: ¿Cómo se seleccionan y miden sus iniciativas de IA?",ops:["No hay selección formal; son iniciativas aisladas por curiosidad sin métricas.","Se eligen proyectos por su novedad tecnológica, sin un caso de negocio claro.","Los proyectos se eligen según su impacto en la utilidad operativa (EBIT) o reducción de costos.","Existen métricas de éxito estandarizadas que demuestran valor en múltiples funciones.","La IA impulsa nuevos modelos de negocio y flujos de ingresos con ROI superior al 200%."]},
@@ -222,29 +296,29 @@ const DIMS=[
 ];
 
 const NIVELES=[
-  {n:1,nom:"Exploración",desc:"La IA existe como concepto pero no como práctica institucional",col:"#DC2626",bg:"#FEE2E2"},
-  {n:2,nom:"Experimentación",desc:"Hay iniciativas puntuales sin estructura ni continuidad",col:"#D97706",bg:"#FEF3C7"},
-  {n:3,nom:"Adopción",desc:"La IA empieza a integrarse de forma estructurada en áreas clave",col:"#1B4FD8",bg:"#EEF2FF"},
-  {n:4,nom:"Escalamiento",desc:"La IA opera a escala con gobernanza y genera valor medible",col:"#7C3AED",bg:"#EDE9FE"},
-  {n:5,nom:"Transformación",desc:"La IA es inseparable del modelo de negocio y se reinventa continuamente",col:"#059669",bg:"#D1FAE5"}
+  {n:1,nom:"Exploración",desc:"La IA existe como concepto pero no como práctica institucional",col:"#ff453a",bg:"#fee2e2"},
+  {n:2,nom:"Experimentación",desc:"Hay iniciativas puntuales sin estructura ni continuidad",col:"#ff9f0a",bg:"#fef3c7"},
+  {n:3,nom:"Adopción",desc:"La IA empieza a integrarse de forma estructurada en áreas clave",col:"#0066cc",bg:"#dbeafe"},
+  {n:4,nom:"Escalamiento",desc:"La IA opera a escala con gobernanza y genera valor medible",col:"#bf5af2",bg:"#ede9fe"},
+  {n:5,nom:"Transformación",desc:"La IA es inseparable del modelo de negocio y se reinventa continuamente",col:"#30d158",bg:"#d1fae5"}
 ];
 
 function calcRes(resp){
   const porDim=DIMS.map((d,di)=>{
     const pts=d.pregs.map((_,pi)=>resp[`${di}-${pi}`]||0);
     const prom=parseFloat((pts.reduce((a,b)=>a+b,0)/pts.length).toFixed(2));
-    return {nombre:d.nombre,promedio:prom};
+    return{nombre:d.nombre,promedio:prom};
   });
   const IMP=parseFloat((porDim.reduce((a,d)=>a+d.promedio,0)/5).toFixed(2));
   const DR=porDim.reduce((m,d)=>d.promedio<m.promedio?d:m,porDim[0]);
   const brecha=parseFloat((IMP-DR.promedio).toFixed(2));
-  return {porDim,IMP,DR,brecha,nivel:NIVELES[Math.min(Math.max(Math.round(IMP)-1,0),4)]};
+  return{porDim,IMP,DR,brecha,nivel:NIVELES[Math.min(Math.max(Math.round(IMP)-1,0),4)]};
 }
-function colPt(p){if(p>=4.5)return"#059669";if(p>=3.5)return"#7C3AED";if(p>=2.5)return"#1B4FD8";if(p>=1.5)return"#D97706";return"#DC2626";}
+function colPt(p){if(p>=4.5)return"#30d158";if(p>=3.5)return"#bf5af2";if(p>=2.5)return"#0066cc";if(p>=1.5)return"#ff9f0a";return"#ff453a";}
 function nvPt(p){return NIVELES[Math.min(Math.max(Math.round(p)-1,0),4)];}
 
 function narrText(res){
-  const {IMP,DR,brecha,nivel}=res;
+  const{IMP,DR,brecha,nivel}=res;
   let t=`Su organización tiene un Índice de Madurez Ponderado de ${IMP}/5, ubicándola en el nivel de ${nivel.nom}. `;
   if(brecha>1.2)t+=`La Dimensión Restrictiva es "${DR.nombre}" (${DR.promedio}/5). La Brecha Estratégica de ${brecha} puntos indica que algunas áreas están adelantadas respecto a este cuello de botella crítico. `;
   else if(brecha>0.5)t+=`La Dimensión Restrictiva es "${DR.nombre}" (${DR.promedio}/5) con una brecha moderada de ${brecha} puntos que conviene atender. `;
@@ -256,162 +330,111 @@ function narrText(res){
   return t;
 }
 
-async function enviarCorreo(part,res,narrativa,analisisIA){
-  const dimRows=res.porDim.map(d=>`
-    <tr>
-      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-size:14px">${d.nombre}</td>
-      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-weight:700;color:#1B4FD8;font-size:14px">${d.promedio}/5</td>
-      <td style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-size:13px">${['','Exploración','Experimentación','Adopción','Escalamiento','Transformación'][Math.round(d.promedio)]||''}</td>
-    </tr>`).join('');
-
-  const htmlCorreo=`<!DOCTYPE html>
-<html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Diagnóstico MadurezIA Colombia</title>
-</head>
-<body style="margin:0;padding:0;background:#F7F8FA;font-family:Arial,sans-serif">
-<div style="max-width:640px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)">
-  <!-- Header -->
-  <div style="background:#0F1F3D;padding:28px 32px">
-    <div style="color:#fff;font-size:20px;font-weight:700">🧠 MadurezIA Colombia</div>
-    <div style="color:#94A3B8;font-size:13px;margin-top:4px">Diagnóstico de Madurez en Inteligencia Artificial</div>
-  </div>
-  <!-- Saludo -->
-  <div style="padding:28px 32px 0">
-    <p style="font-size:15px;color:#1E293B;margin:0 0 8px">Estimado/a <strong>${part.nombre}</strong>,</p>
-    <p style="font-size:14px;color:#64748B;margin:0">A continuación encontrará los resultados de su diagnóstico de madurez en IA para <strong>${part.empresa}</strong>.</p>
-    <p style="font-size:12px;color:#94A3B8;margin:8px 0 0">${part.cargo} · ${part.sector||''} · ${part.municipio||''}${part.departamento?', '+part.departamento:''}</p>
-  </div>
-  <!-- Nivel principal -->
-  <div style="margin:24px 32px;background:linear-gradient(135deg,#0F1F3D,#1B3A6B);border-radius:10px;padding:28px;text-align:center">
-    <div style="font-size:64px;font-weight:800;color:${res.nivel.col};line-height:1">${res.IMP}</div>
-    <div style="font-size:22px;font-weight:700;color:${res.nivel.col};margin-top:6px">${res.nivel.nom}</div>
-    <div style="font-size:13px;color:#94A3B8;margin-top:4px">${res.nivel.desc}</div>
-  </div>
-  <!-- Métricas -->
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 32px 24px">
-    <div style="background:#F7F8FA;border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:22px;font-weight:800;color:#0F1F3D">${res.IMP}</div>
-      <div style="font-size:10px;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Índice de Madurez</div>
+async function enviarCorreo(part,res,narrativa,ia){
+  const dimRows=res.porDim.map(d=>`<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;font-size:14px">${d.nombre}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:700;color:#0066cc;font-size:14px">${d.promedio}/5</td><td style="padding:8px 12px;border-bottom:1px solid #eee;font-size:13px">${['','Exploración','Experimentación','Adopción','Escalamiento','Transformación'][Math.round(d.promedio)]||''}</td></tr>`).join('');
+  const html=`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Diagnóstico MadurezIA</title></head>
+<body style="margin:0;padding:0;background:#f5f5f7;font-family:-apple-system,Arial,sans-serif">
+<div style="max-width:600px;margin:28px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)">
+  <div style="background:#1d1d1f;padding:28px 32px"><div style="color:#fff;font-size:20px;font-weight:600">🧠 MadurezIA Colombia</div><div style="color:#6e6e73;font-size:13px;margin-top:3px">Diagnóstico de Madurez en Inteligencia Artificial</div></div>
+  <div style="padding:28px 32px">
+    <p style="font-size:15px;color:#1d1d1f;margin:0 0 6px">Estimado/a <strong>${part.nombre}</strong>,</p>
+    <p style="font-size:14px;color:#6e6e73;margin:0 0 24px">A continuación sus resultados para <strong>${part.empresa}</strong> · ${part.cargo}</p>
+    <div style="background:#1d1d1f;border-radius:12px;padding:28px;text-align:center;margin-bottom:20px">
+      <div style="font-size:72px;font-weight:700;color:${res.nivel.col};line-height:1;letter-spacing:-3px">${res.IMP}</div>
+      <div style="font-size:22px;font-weight:600;color:${res.nivel.col};margin-top:6px">${res.nivel.nom}</div>
+      <div style="font-size:13px;color:#6e6e73;margin-top:4px">${res.nivel.desc}</div>
     </div>
-    <div style="background:#FEF3C7;border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:22px;font-weight:800;color:#D97706">${res.DR.promedio}</div>
-      <div style="font-size:10px;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Dim. Restrictiva</div>
-      <div style="font-size:11px;color:#92400E;margin-top:2px">${res.DR.nombre.split(' ').slice(0,2).join(' ')}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
+      <div style="background:#f5f5f7;border-radius:10px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:700;color:#1d1d1f">${res.IMP}</div><div style="font-size:10px;color:#6e6e73;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Índice de Madurez</div></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:700;color:#d97706">${res.DR.promedio}</div><div style="font-size:10px;color:#92400e;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Dim. Restrictiva</div><div style="font-size:11px;color:#92400e;margin-top:2px">${res.DR.nombre.split(' ').slice(0,2).join(' ')}</div></div>
+      <div style="background:${res.brecha>1?'#fee2e2':'#d1fae5'};border-radius:10px;padding:14px;text-align:center"><div style="font-size:22px;font-weight:700;color:${res.brecha>1?'#dc2626':'#059669'}">${res.brecha}</div><div style="font-size:10px;color:${res.brecha>1?'#991b1b':'#065f46'};text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Brecha Estratégica</div></div>
     </div>
-    <div style="background:${res.brecha>1?'#FEE2E2':'#D1FAE5'};border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:22px;font-weight:800;color:${res.brecha>1?'#DC2626':'#059669'}">${res.brecha}</div>
-      <div style="font-size:10px;color:${res.brecha>1?'#991B1B':'#065F46'};text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Brecha Estratégica</div>
-    </div>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:20px"><thead><tr><th style="background:#1d1d1f;color:#fff;padding:10px 12px;text-align:left;font-size:12px">Dimensión</th><th style="background:#1d1d1f;color:#fff;padding:10px 12px;text-align:left;font-size:12px">Puntaje</th><th style="background:#1d1d1f;color:#fff;padding:10px 12px;text-align:left;font-size:12px">Nivel</th></tr></thead><tbody>${dimRows}</tbody></table>
+    <div style="background:#dbeafe;border-left:3px solid #0066cc;border-radius:0 10px 10px 0;padding:16px;margin-bottom:${ia?'16px':'0'}"><p style="font-size:14px;color:#1d1d1f;line-height:1.7;margin:0">${narrativa}</p></div>
+    ${ia?`<div style="background:#d1fae5;border-left:3px solid #059669;border-radius:0 10px 10px 0;padding:16px"><div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">✨ Análisis Personalizado</div><p style="font-size:14px;color:#1d1d1f;line-height:1.7;margin:0">${ia}</p></div>`:''}
   </div>
-  <!-- Tabla dimensiones -->
-  <div style="margin:0 32px 24px">
-    <div style="font-size:13px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Resultados por Dimensión</div>
-    <table style="width:100%;border-collapse:collapse;border:1px solid #E2E8F0;border-radius:8px;overflow:hidden">
-      <thead>
-        <tr style="background:#0F1F3D">
-          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Dimensión</th>
-          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Puntaje</th>
-          <th style="padding:10px 14px;text-align:left;color:#fff;font-size:12px">Nivel</th>
-        </tr>
-      </thead>
-      <tbody>${dimRows}</tbody>
-    </table>
-  </div>
-  <!-- Narrativa -->
-  <div style="margin:0 32px 24px;background:#EEF2FF;border-left:4px solid #1B4FD8;border-radius:0 8px 8px 0;padding:16px 18px">
-    <div style="font-size:12px;font-weight:700;color:#1B4FD8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Interpretación</div>
-    <p style="font-size:14px;color:#1E293B;line-height:1.7;margin:0">${narrativa}</p>
-  </div>
-  ${analisisIA?`
-  <!-- Análisis IA -->
-  <div style="margin:0 32px 24px;background:#F0FDF4;border-left:4px solid #059669;border-radius:0 8px 8px 0;padding:16px 18px">
-    <div style="font-size:12px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">✨ Análisis Personalizado</div>
-    <p style="font-size:14px;color:#1E293B;line-height:1.7;margin:0">${analisisIA}</p>
-  </div>`:''}
-  <!-- Footer -->
-  <div style="background:#F7F8FA;padding:20px 32px;border-top:1px solid #E2E8F0">
-    <p style="font-size:11px;color:#94A3B8;margin:0;line-height:1.6">
-      Generado por <strong>MadurezIA Colombia</strong> · Basado en NIST AI RMF y Política Nacional de IA (CONPES 3975)<br>
-      Tratamiento de datos conforme a la Ley 1581 de 2012
-    </p>
-  </div>
-</div>
-</body>
-</html>`;
-
-  // Enviar sin adjunto — el reporte completo va en el cuerpo del correo
-  const r=await fetch('/.netlify/functions/send-email',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      to:part.correo,
-      subject:`Diagnóstico de Madurez en IA — ${part.empresa} (${res.IMP}/5 · ${res.nivel.nom})`,
-      html:htmlCorreo
-    })
-  });
+  <div style="background:#f5f5f7;padding:18px 32px;border-top:1px solid #e5e7eb"><p style="font-size:11px;color:#6e6e73;margin:0;line-height:1.6"><strong>MadurezIA Colombia</strong> · Diagnóstico de Madurez en Inteligencia Artificial<br>Tratamiento de datos conforme a la Ley 1581 de 2012</p></div>
+</div></body></html>`;
+  const r=await fetch('/.netlify/functions/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:part.correo,subject:`Diagnóstico de Madurez en IA — ${part.empresa} (${res.IMP}/5 · ${res.nivel.nom})`,html})});
   if(!r.ok){const e=await r.text();throw new Error(e);}
   return r.json();
 }
 
-function Radar({porDim}){
-  const cx=170,cy=160,r=110,n=5;
+// ── RADAR ────────────────────────────────────────────────────────────
+function Radar({porDim,dark=true}){
+  const cx=160,cy=150,r=100,n=5;
   const ang=porDim.map((_,i)=>Math.PI*2*i/n-Math.PI/2);
   const pt=(a,v)=>({x:cx+r*(v/5)*Math.cos(a),y:cy+r*(v/5)*Math.sin(a)});
   const grid=[1,2,3,4,5].map(lv=>ang.map(a=>pt(a,lv)).map(p=>`${p.x},${p.y}`).join(' '));
   const data=ang.map((a,i)=>pt(a,porDim[i].promedio));
-  const labs=ang.map((a,i)=>({x:cx+(r+28)*Math.cos(a),y:cy+(r+28)*Math.sin(a),txt:porDim[i].nombre.split(' ').slice(0,2).join(' ')}));
-  return React.createElement('svg',{width:340,height:320,viewBox:'0 0 340 320'},
-    ...grid.map((pts,gi)=>React.createElement('polygon',{key:gi,points:pts,fill:gi===4?'rgba(27,79,216,.04)':'none',stroke:'#E2E8F0',strokeWidth:1})),
-    ...ang.map((a,i)=>React.createElement('line',{key:i,x1:cx,y1:cy,x2:cx+r*Math.cos(a),y2:cy+r*Math.sin(a),stroke:'#E2E8F0',strokeWidth:1})),
-    React.createElement('polygon',{points:data.map(p=>`${p.x},${p.y}`).join(' '),fill:'rgba(27,79,216,.14)',stroke:'#1B4FD8',strokeWidth:2.5,strokeLinejoin:'round'}),
-    ...data.map((p,i)=>React.createElement('circle',{key:i,cx:p.x,cy:p.y,r:5,fill:'#1B4FD8',stroke:'#fff',strokeWidth:2})),
-    ...labs.map((l,i)=>React.createElement('text',{key:i,x:l.x,y:l.y,textAnchor:'middle',dominantBaseline:'middle',fontSize:10,fontWeight:600,fill:'#1E293B',fontFamily:'Inter,sans-serif'},l.txt)),
-    ...data.map((p,i)=>React.createElement('text',{key:i,x:p.x,y:p.y-12,textAnchor:'middle',fontSize:10,fontWeight:700,fill:'#1B4FD8',fontFamily:'Inter,sans-serif'},porDim[i].promedio))
+  const labs=ang.map((a,i)=>({x:cx+(r+26)*Math.cos(a),y:cy+(r+26)*Math.sin(a),txt:porDim[i].nombre.split(' ').slice(0,2).join(' ')}));
+  const gc=dark?'rgba(255,255,255,0.08)':'#f0f0f0';
+  const tc=dark?'rgba(255,255,255,0.8)':'#1d1d1f';
+  return React.createElement('svg',{width:320,height:300,viewBox:'0 0 320 300'},
+    ...grid.map((pts,gi)=>React.createElement('polygon',{key:gi,points:pts,fill:gi===4?'rgba(0,102,204,0.05)':'none',stroke:gc,strokeWidth:1})),
+    ...ang.map((a,i)=>React.createElement('line',{key:i,x1:cx,y1:cy,x2:cx+r*Math.cos(a),y2:cy+r*Math.sin(a),stroke:gc,strokeWidth:1})),
+    React.createElement('polygon',{points:data.map(p=>`${p.x},${p.y}`).join(' '),fill:'rgba(0,102,204,0.15)',stroke:'#0066cc',strokeWidth:2,strokeLinejoin:'round'}),
+    ...data.map((p,i)=>React.createElement('circle',{key:i,cx:p.x,cy:p.y,r:4,fill:'#0066cc',stroke:'#fff',strokeWidth:2})),
+    ...labs.map((l,i)=>React.createElement('text',{key:i,x:l.x,y:l.y,textAnchor:'middle',dominantBaseline:'middle',fontSize:10,fontWeight:600,fill:tc,fontFamily:'-apple-system,sans-serif'},l.txt)),
+    ...data.map((p,i)=>React.createElement('text',{key:i,x:p.x,y:p.y-12,textAnchor:'middle',fontSize:10,fontWeight:700,fill:'#2997ff',fontFamily:'-apple-system,sans-serif'},porDim[i].promedio))
   );
 }
 
-// ── COMPONENTES (idénticos a v2 pero usando api() en lugar de fetch directo) ──
-
+// ── INICIO ───────────────────────────────────────────────────────────
 function Inicio({onInstructor,onCodigo}){
   const [cod,setCod]=useState('');
   const [err,setErr]=useState('');
   const [carg,setCarg]=useState(false);
   const ir=async()=>{
-    if(!cod.trim()){setErr('Ingrese un código.');return;}
+    if(!cod.trim()){setErr('Ingrese un código de sesión.');return;}
     setCarg(true);setErr('');
-    try{
-      const d=await api('buscar_sesion',{codigo:cod.trim()});
-      onCodigo(d);
-    }catch(e){setErr('Código no encontrado o sesión inactiva.');}
+    try{const d=await api('buscar_sesion',{codigo:cod.trim()});onCodigo(d);}
+    catch(e){setErr('Código no encontrado o sesión inactiva.');}
     setCarg(false);
   };
-  return React.createElement('div',{className:'inicio-wrap'},
-    React.createElement('div',{className:'inicio-logo'},
-      React.createElement('div',{style:{fontSize:52,marginBottom:12}},'🧠'),
-      React.createElement('h1',null,'MadurezIA Colombia'),
-      React.createElement('p',null,'Diagnóstico de Madurez en Inteligencia Artificial para Organizaciones')
+  return React.createElement('div',{className:'dark-section'},
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+      React.createElement('button',{className:'btn-ghost-nav',onClick:onInstructor},'Soy instructor')
     ),
-    React.createElement('div',{className:'inicio-cards'},
-      React.createElement('div',{className:'inicio-card',onClick:onInstructor},
-        React.createElement('div',{className:'ic-icon'},'🎓'),
-        React.createElement('h3',null,'Soy instructor'),
-        React.createElement('p',null,'Crear y gestionar sesiones, ver resultados en tiempo real')
-      ),
-      React.createElement('div',{className:'inicio-card'},
-        React.createElement('div',{className:'ic-icon'},'👤'),
-        React.createElement('h3',null,'Tengo un código'),
-        React.createElement('p',null,'Ingresar a una sesión activa para responder el diagnóstico'),
-        React.createElement('div',{className:'codigo-wrap'},
-          React.createElement('input',{className:'codigo-input',placeholder:'Ej: ABC123',value:cod,onChange:e=>{setCod(e.target.value.toUpperCase());setErr('');},onKeyDown:e=>e.key==='Enter'&&ir()}),
-          React.createElement('button',{className:'btn-codigo',onClick:ir,disabled:carg},carg?'...':'→')
+    React.createElement('div',{className:'hero'},
+      React.createElement('div',{className:'hero-eyebrow'},'Colombia · 2026'),
+      React.createElement('h1',{className:'hero-h1'},'Descubre en qué nivel de ',React.createElement('span',null,'madurez en IA'),' está tu organización.'),
+      React.createElement('p',{className:'hero-sub'},'15 preguntas. 5 dimensiones. Un diagnóstico de madurez en Inteligencia Artificial para organizaciones colombianas.'),
+      React.createElement('div',{className:'inicio-cards'},
+        React.createElement('div',{className:'ic',onClick:onInstructor},
+          React.createElement('div',{className:'ic-icon'},'🎓'),
+          React.createElement('h3',null,'Soy instructor'),
+          React.createElement('p',null,'Crear y gestionar sesiones, ver resultados en tiempo real')
         ),
-        err&&React.createElement('div',{style:{color:'#FCA5A5',fontSize:12,marginTop:8,textAlign:'left'}},err)
+        React.createElement('div',{className:'ic'},
+          React.createElement('div',{className:'ic-icon'},'👤'),
+          React.createElement('h3',null,'Tengo un código'),
+          React.createElement('p',null,'Ingresar a una sesión activa para responder el diagnóstico'),
+          React.createElement('div',{className:'cod-wrap'},
+            React.createElement('input',{className:'cod-inp',placeholder:'Ej: ABC123',value:cod,onChange:e=>{setCod(e.target.value.toUpperCase());setErr('');},onKeyDown:e=>e.key==='Enter'&&ir()}),
+            React.createElement('button',{className:'cod-btn',onClick:ir,disabled:carg},carg?'…':'→')
+          ),
+          err&&React.createElement('div',{style:{color:'#ff6961',fontSize:12,marginTop:8,textAlign:'left'}},err)
+        )
+      ),
+      React.createElement('div',{className:'hero-dims'},
+        [{icon:'🎯',nom:'Estrategia Orientada a Valor',desc:'Alineación de la IA con los objetivos de negocio y el compromiso del liderazgo.'},
+         {icon:'🗄️',nom:'Modernización de Datos',desc:'Paso de datos fragmentados hacia arquitecturas unificadas con calidad y control.'},
+         {icon:'🧠',nom:'Cultura y Alfabetización Digital',desc:'Desarrollo de habilidades en IA y gestión del talento frente al cambio.'},
+         {icon:'🛡️',nom:'Gobernanza de Riesgos',desc:'Mitigación de riesgos éticos, legales y de privacidad bajo normas colombianas.'},
+         {icon:'⚙️',nom:'Procesos y Agilidad Operativa',desc:'Capacidad de rediseñar la empresa hacia la autonomía cognitiva y procesos ágiles.'}
+        ].map((d,i)=>React.createElement('div',{key:i,className:'hero-dim-card'},
+          React.createElement('div',{className:'hero-dim-icon'},d.icon),
+          React.createElement('div',{className:'hero-dim-name'},d.nom),
+          React.createElement('div',{className:'hero-dim-desc'},d.desc)
+        ))
       )
     )
   );
 }
 
+// ── LOGIN ────────────────────────────────────────────────────────────
 function Login({onLogin,onVolver}){
   const [email,setEmail]=useState('');
   const [pass,setPass]=useState('');
@@ -427,112 +450,130 @@ function Login({onLogin,onVolver}){
       if(d.error){setErr(d.error.message||'Error.');}
       else if(modo==='registro'){setModo('login');alert('Cuenta creada. Ahora inicia sesión.');}
       else if(d.token){onLogin({token:d.token,user:d.user||{},email});}
+      else{setErr('Error al iniciar sesión.');}
     }catch(e){setErr('Error de conexión.');}
     setCarg(false);
   };
-  return React.createElement('div',{className:'main',style:{maxWidth:420}},
-    React.createElement('div',{className:'card'},
-      React.createElement('div',{className:'card-h'},React.createElement('h2',null,modo==='login'?'Acceso Instructor':'Crear cuenta'),React.createElement('p',null,'Panel de administración MadurezIA Colombia')),
-      React.createElement('div',{className:'card-b'},
-        err&&React.createElement('div',{className:'alert alert-e'},err),
-        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Correo electrónico'),React.createElement('input',{type:'email',value:email,onChange:e=>setEmail(e.target.value),placeholder:'instructor@empresa.com',autoFocus:true})),
-        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Contraseña'),React.createElement('input',{type:'password',value:pass,onChange:e=>setPass(e.target.value),onKeyDown:e=>e.key==='Enter'&&handle(),placeholder:'Mínimo 6 caracteres'})),
-        React.createElement('button',{className:'btn btn-p btn-full',onClick:handle,disabled:carg},carg?'Procesando...':(modo==='login'?'Iniciar sesión':'Crear cuenta')),
-        React.createElement('div',{style:{textAlign:'center',marginTop:16,fontSize:13,color:'#64748B'}},
-          modo==='login'
-            ?React.createElement('span',null,'¿Primera vez? ',React.createElement('a',{style:{color:'#1B4FD8',cursor:'pointer',fontWeight:600},onClick:()=>{setModo('registro');setErr('');}},'\u00a0Crear cuenta'))
-            :React.createElement('span',null,'¿Ya tienes cuenta? ',React.createElement('a',{style:{color:'#1B4FD8',cursor:'pointer',fontWeight:600},onClick:()=>{setModo('login');setErr('');}},'\u00a0Iniciar sesión'))
+  return React.createElement('div',{className:'dark-section'},
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+      React.createElement('button',{className:'btn-ghost-nav',onClick:onVolver},'← Inicio')
+    ),
+    React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 44px)',padding:'40px 20px'}},
+      React.createElement('div',{style:{background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:20,padding:36,maxWidth:420,width:'100%'}},
+        React.createElement('h2',{style:{color:'#fff',fontSize:24,fontWeight:600,letterSpacing:'-.5px',marginBottom:6}},modo==='login'?'Acceso Instructor':'Crear cuenta'),
+        React.createElement('p',{style:{color:'rgba(255,255,255,.45)',fontSize:13,marginBottom:28}},'Panel de administración MadurezIA Colombia'),
+        err&&React.createElement('div',{className:'alert-e'},err),
+        React.createElement('div',{className:'field field-dark'},
+          React.createElement('label',null,'Correo electrónico'),
+          React.createElement('input',{type:'email',value:email,onChange:e=>setEmail(e.target.value),placeholder:'instructor@empresa.com',autoFocus:true})
         ),
-        React.createElement('div',{style:{textAlign:'center',marginTop:12}},React.createElement('a',{style:{color:'#94A3B8',fontSize:12,cursor:'pointer'},onClick:onVolver},'← Volver al inicio'))
+        React.createElement('div',{className:'field field-dark'},
+          React.createElement('label',null,'Contraseña'),
+          React.createElement('input',{type:'password',value:pass,onChange:e=>setPass(e.target.value),onKeyDown:e=>e.key==='Enter'&&handle(),placeholder:'Mínimo 6 caracteres'})
+        ),
+        React.createElement('button',{className:'btn-pill btn-pill-lg',style:{width:'100%',textAlign:'center'},onClick:handle,disabled:carg},carg?'Procesando...':(modo==='login'?'Iniciar sesión':'Crear cuenta')),
+        React.createElement('div',{style:{textAlign:'center',marginTop:16,fontSize:13,color:'rgba(255,255,255,.4)'}},
+          modo==='login'
+            ?React.createElement('span',null,'¿Primera vez? ',React.createElement('a',{style:{color:'#2997ff',cursor:'pointer'},onClick:()=>{setModo('registro');setErr('');}},'\u00a0Crear cuenta'))
+            :React.createElement('span',null,'¿Ya tienes cuenta? ',React.createElement('a',{style:{color:'#2997ff',cursor:'pointer'},onClick:()=>{setModo('login');setErr('');}},'\u00a0Iniciar sesión'))
+        )
       )
     )
   );
 }
 
+// ── MODAL SESION ─────────────────────────────────────────────────────
 function ModalSesion({auth,onCreada,onCerrar}){
-  const [f,setF]=useState({nombre:'',descripcion:'',fecha:new Date().toISOString().split('T')[0],hora:''});
+  const [f,setF]=useState({nombre:'',desc:'',fecha:new Date().toISOString().split('T')[0],hora:''});
   const [carg,setCarg]=useState(false);
   const [err,setErr]=useState('');
   const set=(k,v)=>setF(x=>({...x,[k]:v}));
   const crear=async()=>{
     if(!f.nombre){setErr('El nombre es obligatorio.');return;}
     setCarg(true);setErr('');
-    try{
-      await api('crear_sesion',{nombre:f.nombre,descripcion:f.descripcion||null,fecha:f.fecha,hora:f.hora||null},auth.token);
-      onCreada();
-    }catch(e){setErr(`Error: ${e.message}`);}
+    try{await api('crear_sesion',{nombre:f.nombre,descripcion:f.desc||null,fecha:f.fecha,hora:f.hora||null},auth.token);onCreada();}
+    catch(e){setErr(`Error: ${e.message}`);}
     setCarg(false);
   };
-  return React.createElement('div',{className:'modal-overlay',onClick:e=>e.target===e.currentTarget&&onCerrar()},
+  return React.createElement('div',{className:'modal-ov',onClick:e=>e.target===e.currentTarget&&onCerrar()},
     React.createElement('div',{className:'modal'},
       React.createElement('h3',null,'Nueva Sesión'),
-      err&&React.createElement('div',{className:'alert alert-e'},err),
-      React.createElement('div',{className:'form-g'},React.createElement('label',null,'Nombre de la sesión ',React.createElement('span',null,'*')),React.createElement('input',{value:f.nombre,onChange:e=>set('nombre',e.target.value),placeholder:'Ej: Diagnóstico Sector Financiero 2026',autoFocus:true})),
-      React.createElement('div',{className:'form-g'},React.createElement('label',null,'Descripción / Contexto'),React.createElement('textarea',{value:f.descripcion,onChange:e=>set('descripcion',e.target.value),placeholder:'Programa, cliente, proyecto...'})),
-      React.createElement('div',{className:'form-r'},
-        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Fecha'),React.createElement('input',{type:'date',value:f.fecha,onChange:e=>set('fecha',e.target.value)})),
-        React.createElement('div',{className:'form-g'},React.createElement('label',null,'Hora (opcional)'),React.createElement('input',{type:'time',value:f.hora,onChange:e=>set('hora',e.target.value)}))
+      err&&React.createElement('div',{className:'alert-e'},err),
+      React.createElement('div',{className:'field'},React.createElement('label',null,'Nombre de la sesión ',React.createElement('span',null,'*')),React.createElement('input',{value:f.nombre,onChange:e=>set('nombre',e.target.value),placeholder:'Ej: Diagnóstico Sector Financiero 2026',autoFocus:true})),
+      React.createElement('div',{className:'field'},React.createElement('label',null,'Descripción / Contexto'),React.createElement('textarea',{value:f.desc,onChange:e=>set('desc',e.target.value),placeholder:'Programa, cliente, evento...'})),
+      React.createElement('div',{className:'field-row'},
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Fecha'),React.createElement('input',{type:'date',value:f.fecha,onChange:e=>set('fecha',e.target.value)})),
+        React.createElement('div',{className:'field'},React.createElement('label',null,'Hora (opcional)'),React.createElement('input',{type:'time',value:f.hora,onChange:e=>set('hora',e.target.value)}))
       ),
-      React.createElement('div',{className:'btn-row'},
-        React.createElement('button',{className:'btn btn-s',onClick:onCerrar},'Cancelar'),
-        React.createElement('button',{className:'btn btn-p',onClick:crear,disabled:carg},carg?'Creando...':'Crear sesión')
+      React.createElement('div',{className:'modal-btns'},
+        React.createElement('button',{className:'btn-cancel',onClick:onCerrar},'Cancelar'),
+        React.createElement('button',{className:'btn-pill',onClick:crear,disabled:carg},carg?'Creando...':'Crear sesión')
       )
     )
   );
 }
 
+// ── PANEL INSTRUCTOR ──────────────────────────────────────────────────
 function Panel({auth,onLogout}){
   const [ses,setSes]=useState([]);
   const [carg,setCarg]=useState(true);
   const [modal,setModal]=useState(false);
   const [activa,setActiva]=useState(null);
-
   useEffect(()=>{cargar();},[]);
-
   const cargar=async()=>{
     setCarg(true);
     try{
       const data=await api('listar_sesiones',{},auth.token);
       const con=await Promise.all(data.map(async s=>{
-        try{const r=await api('listar_respuestas',{sesion_codigo:s.codigo},auth.token);return {...s,_cnt:r.length};}
-        catch{return {...s,_cnt:0};}
+        try{const r=await api('listar_respuestas',{sesion_codigo:s.codigo},auth.token);return{...s,_cnt:r.length};}
+        catch{return{...s,_cnt:0};}
       }));
       setSes(con);
     }catch(e){setSes([]);}
     setCarg(false);
   };
-
   const copiar=(cod)=>{
     const url=`${window.location.origin}${window.location.pathname}?codigo=${cod}`;
     navigator.clipboard.writeText(url).then(()=>alert(`URL copiada:\n${url}`));
   };
-
   if(activa)return React.createElement(DashSesion,{sesion:activa,auth,onVolver:()=>{setActiva(null);cargar();}});
-
+  const total=ses.length;
+  const promIMP=total?(ses.reduce((a,s)=>a+(s._cnt>0?3:0),0)).toFixed(0):0;
   return React.createElement('div',null,
-    React.createElement('header',{className:'header'},
-      React.createElement('div',{className:'logo'},React.createElement('div',{className:'logo-icon'},'🧠'),React.createElement('div',null,React.createElement('div',{className:'logo-text'},'MadurezIA Colombia'),React.createElement('div',{className:'logo-sub'},'Panel del Instructor'))),
-      React.createElement('div',{className:'header-right'},React.createElement('span',{className:'header-user'},auth.email),React.createElement('button',{className:'btn-nav danger',onClick:onLogout},'Cerrar sesión'))
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{style:{display:'flex',alignItems:'center',gap:16}},
+        React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+        React.createElement('span',{className:'gnav-ctx'},'Panel del Instructor')
+      ),
+      React.createElement('div',{className:'gnav-right'},
+        React.createElement('span',{className:'gnav-user'},auth.email),
+        React.createElement('button',{className:'btn-ghost-nav danger',onClick:onLogout},'Cerrar sesión')
+      )
     ),
-    React.createElement('div',{className:'main-w'},
+    React.createElement('div',{className:'page'},
       carg
         ?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spin'}),React.createElement('p',null,'Cargando...'))
         :React.createElement('div',null,
-          React.createElement('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:24}},
-            React.createElement('div',null,React.createElement('h2',{style:{fontSize:22,fontWeight:800,color:'#0F1F3D'}},'Sesiones'),React.createElement('p',{style:{fontSize:13,color:'#64748B'}},`${ses.length} sesión(es) creada(s)`)),
-            React.createElement('button',{className:'btn btn-p',onClick:()=>setModal(true)},'+ Nueva Sesión')
+          React.createElement('div',{className:'ph'},
+            React.createElement('div',null,
+              React.createElement('div',{className:'ph-title'},'Sesiones'),
+              React.createElement('div',{className:'ph-sub'},`${ses.length} sesión(es) creada(s)`)
+            ),
+            React.createElement('button',{className:'btn-pill',onClick:()=>setModal(true)},'+ Nueva Sesión')
           ),
           ses.length===0
-            ?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📋'),React.createElement('p',null,'No hay sesiones aún. Crea la primera.')))
-            :ses.map(s=>React.createElement('div',{key:s.id,className:'sesion-item'},
+            ?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📋'),React.createElement('p',null,'No hay sesiones aún. Crea la primera para comenzar.')))
+            :ses.map(s=>React.createElement('div',{key:s.id,className:'sesion-card'},
+              React.createElement('div',{className:`dot ${s._cnt>0?'dot-g':'dot-o'}`}),
               React.createElement('div',{className:'sesion-info'},
-                React.createElement('div',{className:'sesion-nombre'},s.nombre),
-                React.createElement('div',{className:'sesion-meta'},`${s.fecha} · Código: `,React.createElement('span',{className:'sesion-codigo'},s.codigo),s.descripcion?` · ${s.descripcion}`:'')
+                React.createElement('div',{className:'sesion-name'},s.nombre),
+                React.createElement('div',{className:'sesion-meta'},`${s.fecha} · Código: `,React.createElement('span',{className:'sesion-cod'},s.codigo),s.descripcion?` · ${s.descripcion}`:'')
               ),
-              React.createElement('div',{className:'sesion-resp'},`${s._cnt} resp.`),
-              React.createElement('div',{className:'sesion-acciones'},
-                React.createElement('button',{className:'btn-sm btn-sm-anil',onClick:()=>copiar(s.codigo)},'📋 URL Participantes'),
-                React.createElement('button',{className:'btn-sm btn-sm-verde',onClick:()=>setActiva(s)},'📊 Dashboard')
+              React.createElement('div',{className:'resp-badge'},`${s._cnt} resp.`),
+              React.createElement('div',{className:'sesion-actions'},
+                React.createElement('button',{className:'btn-util',onClick:()=>copiar(s.codigo)},'📋 URL'),
+                React.createElement('button',{className:'btn-util btn-util-blue',onClick:()=>setActiva(s)},'📊 Dashboard')
               )
             )),
           modal&&React.createElement(ModalSesion,{auth,onCreada:()=>{setModal(false);cargar();},onCerrar:()=>setModal(false)})
@@ -541,11 +582,11 @@ function Panel({auth,onLogout}){
   );
 }
 
+// ── DASHBOARD SESIÓN ──────────────────────────────────────────────────
 function DashSesion({sesion,auth,onVolver}){
   const [resp,setResp]=useState([]);
   const [carg,setCarg]=useState(true);
-  const [tab,setTab]=useState('tabla');
-
+  const [tab,setTab]=useState('dash');
   useEffect(()=>{
     (async()=>{
       setCarg(true);
@@ -554,7 +595,6 @@ function DashSesion({sesion,auth,onVolver}){
       setCarg(false);
     })();
   },[]);
-
   const promDim=DIMS.map((d,di)=>{
     const vals=resp.map(r=>[r.dim1,r.dim2,r.dim3,r.dim4,r.dim5][di]||0).filter(v=>v>0);
     return{nombre:d.nombre,promedio:vals.length?parseFloat((vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2)):0};
@@ -564,98 +604,113 @@ function DashSesion({sesion,auth,onVolver}){
   const maxC=Math.max(...distNv.map(n=>n.count),1);
   const drFreq={};resp.forEach(r=>{if(r.dim_restrictiva)drFreq[r.dim_restrictiva]=(drFreq[r.dim_restrictiva]||0)+1;});
   const drTop=Object.entries(drFreq).sort((a,b)=>b[1]-a[1]).slice(0,3);
-
+  const copiar=()=>{
+    const url=`${window.location.origin}${window.location.pathname}?codigo=${sesion.codigo}`;
+    navigator.clipboard.writeText(url).then(()=>alert(`URL copiada:\n${url}`));
+  };
   return React.createElement('div',null,
-    React.createElement('header',{className:'header'},
-      React.createElement('div',{className:'logo'},React.createElement('div',{className:'logo-icon'},'🧠'),React.createElement('div',null,React.createElement('div',{className:'logo-text'},sesion.nombre),React.createElement('div',{className:'logo-sub'},`Código: ${sesion.codigo} · ${resp.length} respuestas`))),
-      React.createElement('div',{className:'header-right'},React.createElement('button',{className:'btn-nav',onClick:onVolver},'← Volver'))
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{style:{display:'flex',alignItems:'center',gap:16}},
+        React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+        React.createElement('span',{className:'gnav-ctx'},sesion.nombre)
+      ),
+      React.createElement('div',{className:'gnav-right'},
+        React.createElement('button',{className:'btn-ghost-nav',onClick:onVolver},'← Sesiones')
+      )
     ),
-    React.createElement('div',{className:'main-w'},
-      carg?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spin'}),React.createElement('p',null,'Cargando...'))
-      :resp.length===0?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📭'),React.createElement('p',null,'Aún no hay respuestas.')))
-      :React.createElement('div',null,
-        React.createElement('div',{className:'stats-r'},
-          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},resp.length),React.createElement('div',{className:'stat-l'},'Participantes'),React.createElement('div',{className:'stat-d'},'Respuestas recibidas')),
-          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},promIMP),React.createElement('div',{className:'stat-l'},'IMP Promedio'),React.createElement('div',{className:'stat-d',style:{color:'#1B4FD8'}},'/ 5.00')),
-          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},new Set(resp.map(r=>r.sector).filter(Boolean)).size),React.createElement('div',{className:'stat-l'},'Sectores'),React.createElement('div',{className:'stat-d',style:{color:'#7C3AED'}},'Representados')),
-          React.createElement('div',{className:'stat-c'},React.createElement('div',{className:'stat-v'},resp.filter(r=>(r.imp||0)>=3).length),React.createElement('div',{className:'stat-l'},'En Adopción o superior'),React.createElement('div',{className:'stat-d',style:{color:'#059669'}},`${Math.round(resp.filter(r=>(r.imp||0)>=3).length/resp.length*100)}%`))
-        ),
-        React.createElement('div',{className:'tabs'},
-          React.createElement('button',{className:`tab ${tab==='tabla'?'active':''}`,onClick:()=>setTab('tabla')},'📋 Resultados individuales'),
-          React.createElement('button',{className:`tab ${tab==='dash'?'active':''}`,onClick:()=>setTab('dash')},'📊 Promedios y gráficas')
-        ),
-        tab==='tabla'
-          ?React.createElement('div',{className:'card'},
-            React.createElement('div',{style:{overflowX:'auto'}},
-              React.createElement('table',{className:'tabla'},
-                React.createElement('thead',null,React.createElement('tr',null,['Fecha','Empresa','Participante','Cargo','Sector','Municipio','IMP','Nivel','Dim. Restrictiva','Brecha'].map(h=>React.createElement('th',{key:h},h)))),
-                React.createElement('tbody',null,resp.map((r,i)=>{
-                  const nv=NIVELES.find(n=>n.nom===r.nivel)||NIVELES[0];
-                  return React.createElement('tr',{key:i},
-                    React.createElement('td',null,r.fecha?new Date(r.fecha).toLocaleDateString('es-CO'):'-'),
-                    React.createElement('td',null,React.createElement('strong',null,r.empresa||'-')),
-                    React.createElement('td',null,r.nombre||'-'),
-                    React.createElement('td',null,r.cargo||'-'),
-                    React.createElement('td',null,r.sector||'-'),
-                    React.createElement('td',null,r.municipio?`${r.municipio}, ${r.departamento}`:'—'),
-                    React.createElement('td',null,React.createElement('strong',{style:{color:colPt(r.imp||0)}},r.imp||'-')),
-                    React.createElement('td',null,React.createElement('span',{className:`badge b${nv.n}`},nv.nom)),
-                    React.createElement('td',null,React.createElement('span',{className:'tag-cuello'},r.dim_restrictiva?.split(' ')[0]||'-')),
-                    React.createElement('td',null,r.brecha||'-')
-                  );
-                }))
-              )
-            )
-          )
-          :React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:18}},
-            React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
-              React.createElement('div',{className:'card'},
-                React.createElement('div',{className:'card-b'},
-                  React.createElement('div',{className:'sec-t'},'Promedio por Dimensión'),
-                  React.createElement('div',{className:'sec-s'},`Basado en ${resp.length} respuesta(s)`),
-                  promDim.map((d,i)=>React.createElement('div',{key:i,className:'dim-res-row'},
-                    React.createElement('div',{className:'dim-res-n'},DIMS[i].nombre),
-                    React.createElement('div',{className:'barra-wrap'},React.createElement('div',{className:'barra-fill',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
-                    React.createElement('div',{className:'dim-pt',style:{color:colPt(d.promedio)}},d.promedio)
-                  ))
-                )
-              ),
-              React.createElement('div',{className:'card'},React.createElement('div',{className:'card-b'},React.createElement('div',{className:'sec-t'},'Radar de Madurez'),React.createElement('div',{className:'sec-s'},'Promedio de la sesión'),React.createElement(Radar,{porDim:promDim})))
+    React.createElement('div',{className:'page'},
+      carg
+        ?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spin'}),React.createElement('p',null,'Cargando resultados...'))
+        :React.createElement('div',null,
+          React.createElement('div',{className:'dash-header'},
+            React.createElement('div',{style:{flex:1}},
+              React.createElement('div',{style:{fontSize:20,fontWeight:600,letterSpacing:'-.5px',color:'var(--ink)'}},sesion.nombre),
+              React.createElement('div',{style:{fontSize:13,color:'var(--ink2)',marginTop:4}},`${sesion.fecha}${sesion.descripcion?' · '+sesion.descripcion:''} · ${resp.length} participante(s)`)
             ),
-            React.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
-              React.createElement('div',{className:'card'},
-                React.createElement('div',{className:'card-b'},
-                  React.createElement('div',{className:'sec-t'},'Distribución por Nivel'),
-                  React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:9,marginTop:12}},
-                    distNv.map(nv=>React.createElement('div',{key:nv.n,style:{display:'flex',alignItems:'center',gap:10}},
-                      React.createElement('div',{className:`badge b${nv.n}`,style:{width:110}},nv.nom),
-                      React.createElement('div',{style:{flex:1,height:18,background:'#F1F5F9',borderRadius:5,overflow:'hidden'}},React.createElement('div',{style:{height:'100%',width:`${(nv.count/maxC)*100}%`,background:nv.col,borderRadius:5}})),
-                      React.createElement('div',{style:{fontSize:13,fontWeight:700,width:20,textAlign:'right'}},nv.count)
-                    ))
+            React.createElement('div',{className:'dash-cod'},sesion.codigo),
+            React.createElement('button',{className:'btn-pill btn-pill-sm',onClick:copiar},'📋 Copiar URL')
+          ),
+          React.createElement('div',{className:'stats-row'},
+            React.createElement('div',{className:'stat-card'},React.createElement('div',{className:'stat-val'},resp.length),React.createElement('div',{className:'stat-label'},'Participantes'),React.createElement('div',{className:'stat-delta',style:{color:'var(--green)'}},'Respuestas recibidas')),
+            React.createElement('div',{className:'stat-card'},React.createElement('div',{className:'stat-val'},promIMP),React.createElement('div',{className:'stat-label'},'IMP Promedio'),React.createElement('div',{className:'stat-delta',style:{color:'var(--p)'}},'/ 5.00')),
+            React.createElement('div',{className:'stat-card'},React.createElement('div',{className:'stat-val'},new Set(resp.map(r=>r.sector).filter(Boolean)).size),React.createElement('div',{className:'stat-label'},'Sectores'),React.createElement('div',{className:'stat-delta',style:{color:'var(--purp)'}},'Representados')),
+            React.createElement('div',{className:'stat-card'},React.createElement('div',{className:'stat-val'},resp.filter(r=>(r.imp||0)>=3).length),React.createElement('div',{className:'stat-label'},'En Adopción o superior'),React.createElement('div',{className:'stat-delta',style:{color:'var(--green)'}},`${resp.length?Math.round(resp.filter(r=>(r.imp||0)>=3).length/resp.length*100):0}%`))
+          ),
+          resp.length===0
+            ?React.createElement('div',{className:'card'},React.createElement('div',{className:'empty'},React.createElement('div',{className:'empty-i'},'📭'),React.createElement('p',null,'Aún no hay respuestas en esta sesión.')))
+            :React.createElement('div',null,
+              React.createElement('div',{className:'tabs-bar'},
+                React.createElement('button',{className:`tab-btn ${tab==='dash'?'active':''}`,onClick:()=>setTab('dash')},'📊 Promedios y gráficas'),
+                React.createElement('button',{className:`tab-btn ${tab==='tabla'?'active':''}`,onClick:()=>setTab('tabla')},'📋 Resultados individuales')
+              ),
+              tab==='dash'
+                ?React.createElement('div',null,
+                  React.createElement('div',{className:'grid-2'},
+                    React.createElement('div',{className:'card'},
+                      React.createElement('div',{className:'card-title'},'Promedio por Dimensión'),
+                      promDim.map((d,i)=>React.createElement('div',{key:i,className:'dim-row'},
+                        React.createElement('div',{className:'dim-lbl'},DIMS[i].nombre),
+                        React.createElement('div',{className:'bar-track'},React.createElement('div',{className:'bar-fill',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
+                        React.createElement('div',{style:{fontSize:13,fontWeight:700,width:28,textAlign:'right',color:colPt(d.promedio)}},d.promedio)
+                      ))
+                    ),
+                    React.createElement('div',{className:'card',style:{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}},
+                      React.createElement('div',{className:'card-title',style:{alignSelf:'flex-start'}},'Radar de Madurez'),
+                      React.createElement(Radar,{porDim:promDim,dark:false})
+                    )
+                  ),
+                  React.createElement('div',{className:'grid-2'},
+                    React.createElement('div',{className:'card'},
+                      React.createElement('div',{className:'card-title'},'Distribución por Nivel'),
+                      distNv.map(nv=>React.createElement('div',{key:nv.n,className:'dist-row'},
+                        React.createElement('div',{className:`nvtag n${nv.n}`,style:{width:110,textAlign:'center'}},nv.nom),
+                        React.createElement('div',{className:'dist-bt'},React.createElement('div',{className:'dist-bf',style:{width:`${(nv.count/maxC)*100}%`,background:nv.col}})),
+                        React.createElement('div',{className:'dist-cnt'},nv.count)
+                      ))
+                    ),
+                    React.createElement('div',{className:'card'},
+                      React.createElement('div',{className:'card-title'},'Cuellos de Botella Frecuentes'),
+                      drTop.length
+                        ?drTop.map(([nom,cnt],i)=>React.createElement('div',{key:i,className:'cuello-row'},
+                          React.createElement('div',{className:'cuello-rank'},i+1),
+                          React.createElement('div',{className:'cuello-nom'},nom),
+                          React.createElement('div',{className:'cuello-cnt'},`${cnt} resp.`)
+                        ))
+                        :React.createElement('p',{style:{fontSize:13,color:'var(--ink2)',marginTop:12}},'Sin datos suficientes.')
+                    )
                   )
                 )
-              ),
-              React.createElement('div',{className:'card'},
-                React.createElement('div',{className:'card-b'},
-                  React.createElement('div',{className:'sec-t'},'Cuellos de Botella Frecuentes'),
-                  drTop.length
-                    ?React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:12}},
-                      drTop.map(([nom,cnt],i)=>React.createElement('div',{key:i,style:{display:'flex',alignItems:'center',gap:10}},
-                        React.createElement('div',{style:{width:22,height:22,background:'#FEF3C7',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:'#92400E'}},i+1),
-                        React.createElement('div',{style:{flex:1,fontSize:13,fontWeight:600}},nom),
-                        React.createElement('span',{className:'tag-cuello'},`${cnt} resp.`)
-                      ))
+                :React.createElement('div',{className:'card card-0'},
+                  React.createElement('div',{className:'tabla-wrap'},
+                    React.createElement('table',null,
+                      React.createElement('thead',null,React.createElement('tr',null,
+                        ['Fecha','Empresa','Participante','Cargo','Sector','Municipio','IMP','Nivel','Dim. Restrictiva','Brecha'].map(h=>React.createElement('th',{key:h},h))
+                      )),
+                      React.createElement('tbody',null,resp.map((r,i)=>{
+                        const nv=NIVELES.find(n=>n.nom===r.nivel)||NIVELES[0];
+                        return React.createElement('tr',{key:i},
+                          React.createElement('td',{style:{color:'var(--ink2)'}},r.fecha?new Date(r.fecha).toLocaleDateString('es-CO'):'-'),
+                          React.createElement('td',null,React.createElement('strong',null,r.empresa||'-')),
+                          React.createElement('td',null,r.nombre||'-'),
+                          React.createElement('td',null,r.cargo||'-'),
+                          React.createElement('td',null,r.sector||'-'),
+                          React.createElement('td',null,r.municipio?`${r.municipio}, ${r.departamento}`:'—'),
+                          React.createElement('td',null,React.createElement('strong',{style:{color:colPt(r.imp||0)}},r.imp||'-')),
+                          React.createElement('td',null,React.createElement('span',{className:`nvtag n${nv.n}`},nv.nom)),
+                          React.createElement('td',null,React.createElement('span',{className:'cuello-tag'},'⚠ ',r.dim_restrictiva?.split(' ')[0]||'-')),
+                          React.createElement('td',null,r.brecha||'-')
+                        );
+                      }))
                     )
-                    :React.createElement('p',{style:{fontSize:13,color:'#94A3B8',marginTop:12}},'Sin datos suficientes.')
+                  )
                 )
-              )
             )
-          )
-      )
+        )
     )
   );
 }
 
+// ── FORM PARTICIPANTE ─────────────────────────────────────────────────
 function FormPart({sesion,onOk}){
   const [f,setF]=useState({nombre:'',cargo:'',empresa:'',sector:'',correo:'',tamano:'',departamento:'',municipio:''});
   const [err,setErr]=useState('');
@@ -665,41 +720,50 @@ function FormPart({sesion,onOk}){
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo)){setErr('Ingrese un correo válido.');return;}
     setErr('');onOk(f);
   };
-  const inp=(lbl,k,tp='text',req=true)=>React.createElement('div',{className:'form-g'},React.createElement('label',null,lbl,req&&React.createElement('span',null,' *')),React.createElement('input',{type:tp,value:f[k],onChange:e=>set(k,e.target.value),placeholder:`Ingrese ${lbl.toLowerCase()}`}));
-  return React.createElement('div',{className:'main'},
-    React.createElement('div',{className:'sesion-banner'},'📋 Sesión: ',React.createElement('strong',null,sesion.nombre),sesion.descripcion?` · ${sesion.descripcion}`:'',React.createElement('span',{style:{marginLeft:'auto',color:'#64748B'}},`Código: ${sesion.codigo}`)),
-    React.createElement('div',{className:'card'},
-      React.createElement('div',{className:'card-h'},React.createElement('h2',null,'Diagnóstico de Madurez de IA'),React.createElement('p',null,'Sus datos serán tratados de forma confidencial conforme a la Ley 1581 de 2012.')),
-      React.createElement('div',{className:'card-b'},
-        err&&React.createElement('div',{className:'alert alert-e'},err),
-        React.createElement('div',{className:'form-r'},inp('Nombre completo','nombre'),inp('Cargo','cargo')),
-        React.createElement('div',{className:'form-r'},
+  const inp=(lbl,k,tp='text',req=true)=>React.createElement('div',{className:'field field-dark'},React.createElement('label',null,lbl,req&&React.createElement('span',null,' *')),React.createElement('input',{type:tp,value:f[k],onChange:e=>set(k,e.target.value),placeholder:`${lbl}`}));
+  return React.createElement('div',{className:'dark-section'},
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+      React.createElement('div',{className:'sesion-banner',style:{margin:'0 28px',fontSize:12}},
+        '📋 Sesión: ',React.createElement('strong',null,sesion.nombre),
+        sesion.descripcion?` · ${sesion.descripcion}`:'',
+        React.createElement('span',{style:{marginLeft:'auto',color:'rgba(255,255,255,.4)'}},`Código: ${sesion.codigo}`)
+      )
+    ),
+    React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 44px)',padding:'40px 20px'}},
+      React.createElement('div',{style:{background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.1)',borderRadius:20,padding:36,maxWidth:560,width:'100%'}},
+        React.createElement('h2',{style:{color:'#fff',fontSize:24,fontWeight:600,letterSpacing:'-.5px',marginBottom:6}},'Diagnóstico de Madurez de IA'),
+        React.createElement('p',{style:{color:'rgba(255,255,255,.4)',fontSize:13,marginBottom:28}},'Sus datos serán tratados conforme a la Ley 1581 de 2012.'),
+        err&&React.createElement('div',{className:'alert-e'},err),
+        React.createElement('div',{className:'field-row'},inp('Nombre completo','nombre'),inp('Cargo','cargo')),
+        React.createElement('div',{className:'field-row'},
           inp('Empresa','empresa'),
-          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Sector'),React.createElement('select',{value:f.sector,onChange:e=>set('sector',e.target.value)},
+          React.createElement('div',{className:'field field-dark'},React.createElement('label',null,'Sector'),React.createElement('select',{value:f.sector,onChange:e=>set('sector',e.target.value)},
             ['','Financiero y Seguros','Manufactura','Comercio y Retail','Salud','Educación','Tecnología','Energía y Servicios Públicos','Gobierno y Sector Público','Logística y Transporte','Agroindustria','Construcción e Infraestructura','Turismo, Hotelería y Entretenimiento','Servicios Profesionales y Empresariales','Minería, Petróleo y Gas','Otro'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
           ))
         ),
-        React.createElement('div',{className:'form-r'},
-          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Departamento'),React.createElement('select',{value:f.departamento,onChange:e=>{set('departamento',e.target.value);set('municipio','');}},
+        React.createElement('div',{className:'field-row'},
+          React.createElement('div',{className:'field field-dark'},React.createElement('label',null,'Departamento'),React.createElement('select',{value:f.departamento,onChange:e=>{set('departamento',e.target.value);set('municipio','');}},
             [''].concat(Object.keys(MUNICIPIOS_DANE).sort()).map(d=>React.createElement('option',{key:d,value:d},d||'Seleccione...'))
           )),
-          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Municipio / Ciudad'),React.createElement('select',{value:f.municipio,onChange:e=>set('municipio',e.target.value),disabled:!f.departamento,style:{background:!f.departamento?'#F1F5F9':'#fff'}},
+          React.createElement('div',{className:'field field-dark'},React.createElement('label',null,'Municipio / Ciudad'),React.createElement('select',{value:f.municipio,onChange:e=>set('municipio',e.target.value),disabled:!f.departamento,style:{opacity:f.departamento?1:.5}},
             (f.departamento?[''].concat(MUNICIPIOS_DANE[f.departamento]||[]):[''])
-              .map(m=>React.createElement('option',{key:m,value:m},m||(f.departamento?'Seleccione municipio...':'Seleccione un departamento primero')))
+              .map(m=>React.createElement('option',{key:m,value:m},m||(f.departamento?'Seleccione...':'Seleccione depto. primero')))
           ))
         ),
-        React.createElement('div',{className:'form-r'},
+        React.createElement('div',{className:'field-row'},
           inp('Correo electrónico','correo','email'),
-          React.createElement('div',{className:'form-g'},React.createElement('label',null,'Tamaño de la empresa'),React.createElement('select',{value:f.tamano,onChange:e=>set('tamano',e.target.value)},
+          React.createElement('div',{className:'field field-dark'},React.createElement('label',null,'Tamaño de la empresa'),React.createElement('select',{value:f.tamano,onChange:e=>set('tamano',e.target.value)},
             ['','Microempresa (1–10)','Pequeña (11–50)','Mediana (51–200)','Grande (201–1000)','Corporación (+1000)'].map(s=>React.createElement('option',{key:s,value:s},s||'Seleccione...'))
           ))
         ),
-        React.createElement('button',{className:'btn btn-p btn-full',onClick:go},'Iniciar diagnóstico →')
+        React.createElement('button',{className:'btn-pill btn-pill-lg',style:{width:'100%',textAlign:'center'},onClick:go},'Iniciar diagnóstico →')
       )
     )
   );
 }
 
+// ── WIZARD ───────────────────────────────────────────────────────────
 function Wizard({part,sesion,onOk}){
   const [di,setDi]=useState(0);
   const [resp,setResp]=useState({});
@@ -708,62 +772,57 @@ function Wizard({part,sesion,onOk}){
   const dimOk=dim.pregs.every((_,pi)=>resp[`${di}-${pi}`]!==undefined);
   const sel=(pi,nv)=>setResp(r=>({...r,[`${di}-${pi}`]:nv}));
   const pct=Math.round((respondidas/(DIMS.length*3))*100);
-  return React.createElement('div',{className:'main'},
-    React.createElement('div',{className:'sesion-banner'},'📋 ',React.createElement('strong',null,sesion.nombre),React.createElement('span',{style:{marginLeft:'auto',color:'#64748B'}},`Código: ${sesion.codigo}`)),
-    React.createElement('div',{className:'prog-wrap'},
-      React.createElement('div',{className:'prog-label'},React.createElement('span',null,`Dimensión ${di+1} de ${DIMS.length}: ${dim.nombre}`),React.createElement('span',null,`${pct}% completado`)),
-      React.createElement('div',{className:'prog-bar'},React.createElement('div',{className:'prog-fill',style:{width:`${pct}%`}})),
-      React.createElement('div',{className:'steps'},DIMS.map((_,i)=>React.createElement('div',{key:i,className:`step ${i<di?'done':i===di?'active':''}`})))
+  return React.createElement('div',{className:'dark-section'},
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+      React.createElement('span',{className:'gnav-ctx'},sesion.nombre)
     ),
-    React.createElement('div',{className:'card'},
-      React.createElement('div',{className:'card-b'},
-        React.createElement('div',{className:'dim-badge'},`Dimensión ${dim.id}`,'·',dim.nombre),
-        React.createElement('div',{className:'dim-title'},dim.nombre),
-        React.createElement('div',{className:'dim-desc'},dim.desc),
-        dim.pregs.map((preg,pi)=>React.createElement('div',{key:pi,className:'preg-wrap'},
-          React.createElement('div',{className:'preg-num'},`Pregunta ${pi+1} de 3`),
-          React.createElement('div',{className:'preg-texto'},preg.t),
-          React.createElement('div',{className:'opciones'},
+    React.createElement('div',{className:'page-sm'},
+      React.createElement('div',{style:{marginBottom:6,display:'flex',justifyContent:'space-between',fontSize:12,color:'rgba(255,255,255,.4)'}},
+        React.createElement('span',null,`Dimensión ${di+1} de ${DIMS.length}: ${dim.nombre}`),
+        React.createElement('span',null,`${pct}% completado`)
+      ),
+      React.createElement('div',{className:'prog-track'},React.createElement('div',{className:'prog-fill',style:{width:`${pct}%`}})),
+      React.createElement('div',{className:'steps'},DIMS.map((_,i)=>React.createElement('div',{key:i,className:`step ${i<di?'done':i===di?'cur':''}`}))),
+      React.createElement('div',{style:{marginTop:36}},
+        dim.pregs.map((preg,pi)=>React.createElement('div',{key:pi,style:{marginBottom:32}},
+          React.createElement('div',{className:'q-eyebrow'},`Pregunta ${pi+1} de 3`),
+          React.createElement('div',{className:'q-text'},preg.t),
+          React.createElement('div',{className:'opts'},
             preg.ops.map((op,oi)=>{
               const s=resp[`${di}-${pi}`]===oi+1;
-              return React.createElement('div',{key:oi,className:`opcion ${s?'sel':''}`,onClick:()=>sel(pi,oi+1)},
-                React.createElement('div',{className:'op-n'},oi+1),
-                React.createElement('div',{className:'op-t'},op)
+              return React.createElement('div',{key:oi,className:`opt ${s?'sel':''}`,onClick:()=>sel(pi,oi+1)},
+                React.createElement('div',{className:'opt-n'},oi+1),
+                React.createElement('div',{className:'opt-t'},op)
               );
             })
           )
         )),
-        React.createElement('div',{className:'btn-row'},
-          React.createElement('button',{className:'btn btn-s',onClick:()=>di>0&&setDi(d=>d-1),style:{visibility:di===0?'hidden':'visible'}},'← Anterior'),
-          React.createElement('button',{className:'btn btn-p',onClick:()=>di<DIMS.length-1?setDi(d=>d+1):onOk(resp),disabled:!dimOk},di<DIMS.length-1?'Siguiente →':'Ver resultados →')
+        React.createElement('div',{className:'nav-row'},
+          React.createElement('button',{className:'btn-ghost',style:{visibility:di===0?'hidden':'visible'},onClick:()=>di>0&&setDi(d=>d-1)},'← Anterior'),
+          React.createElement('button',{className:'btn-pill',onClick:()=>di<DIMS.length-1?setDi(d=>d+1):onOk(resp),disabled:!dimOk},di<DIMS.length-1?'Siguiente →':'Ver resultados →')
         )
       )
     )
   );
 }
 
+// ── RESULTADOS ────────────────────────────────────────────────────────
 function Resultados({part,resp,sesion,onNuevo}){
   const res=calcRes(resp);
   const [enviando,setEnviando]=useState(false);
   const [enviado,setEnviado]=useState(false);
-  const [analisisIA,setAnalisisIA]=useState('');
+  const [iaText,setIaText]=useState('');
   const [guardado,setGuardado]=useState(false);
   const narrativa=narrText(res);
-
   useEffect(()=>{
     (async()=>{
       try{
-        await api('guardar_respuesta',{
-          sesion_codigo:sesion.codigo,
-          participante:part,
-          resultados:res,
-          respuestas_raw:resp
-        });
+        await api('guardar_respuesta',{sesion_codigo:sesion.codigo,participante:part,resultados:res,respuestas_raw:resp});
         setGuardado(true);
       }catch(e){console.log('guardar err',e);}
     })();
   },[]);
-
   const enviar=async()=>{
     setEnviando(true);
     try{
@@ -773,60 +832,66 @@ function Resultados({part,resp,sesion,onNuevo}){
         const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
         const d=await r.json();
         ia=d.content?.find(c=>c.type==='text')?.text||'';
-        setAnalisisIA(ia);
+        setIaText(ia);
       }catch(e){console.log('claude err',e);}
       await enviarCorreo(part,res,narrativa,ia);
     }catch(e){console.log('err',e);alert('Error al enviar. Verifique su conexión.');}
     setEnviando(false);setEnviado(true);
   };
-
   const {IMP,DR,brecha,nivel,porDim}=res;
-  return React.createElement('div',{className:'main'},
-    React.createElement('div',{className:'sesion-banner'},'📋 ',React.createElement('strong',null,sesion.nombre),guardado&&React.createElement('span',{style:{marginLeft:'auto',color:'#059669',fontSize:12,fontWeight:600}},'✓ Guardado')),
-    React.createElement('div',{className:'card'},
-      React.createElement('div',{className:'res-hero'},React.createElement('div',{className:'nivel-n',style:{color:nivel.col}},IMP),React.createElement('div',{className:'nivel-nom',style:{color:nivel.col}},nivel.nom),React.createElement('div',{className:'nivel-sub'},nivel.desc)),
+  return React.createElement('div',{className:'dark-section'},
+    React.createElement('nav',{className:'gnav'},
+      React.createElement('div',{className:'gnav-logo'},'🧠 Madurez',React.createElement('span',null,'IA'),' Colombia'),
+      guardado&&React.createElement('span',{style:{color:'var(--green)',fontSize:12,fontWeight:600}},'✓ Guardado')
+    ),
+    React.createElement('div',{className:'page-sm'},
+      React.createElement('div',{className:'res-hero'},
+        React.createElement('div',{className:'res-score',style:{color:nivel.col}},IMP),
+        React.createElement('div',{className:'res-level',style:{color:nivel.col}},nivel.nom),
+        React.createElement('div',{className:'res-desc'},nivel.desc)
+      ),
       React.createElement('div',{className:'met-row'},
         React.createElement('div',{className:'met-c'},React.createElement('div',{className:'met-v'},IMP),React.createElement('div',{className:'met-l'},'Índice de Madurez Ponderado'),React.createElement('div',{className:'met-s'},'Promedio 5 dimensiones')),
-        React.createElement('div',{className:'met-c',style:{background:'#FEF3C7'}},React.createElement('div',{className:'met-v',style:{color:'#D97706'}},DR.promedio),React.createElement('div',{className:'met-l'},'Dimensión Restrictiva'),React.createElement('div',{className:'met-s'},DR.nombre.split(' ').slice(0,2).join(' '))),
-        React.createElement('div',{className:'met-c'},React.createElement('div',{className:'met-v',style:{color:brecha>1?'#DC2626':'#059669'}},brecha),React.createElement('div',{className:'met-l'},'Brecha Estratégica'),React.createElement('div',{className:'met-s'},brecha>1?'Desbalance significativo':'Equilibrado'))
+        React.createElement('div',{className:'met-c',style:{background:'rgba(255,159,10,.1)',borderColor:'rgba(255,159,10,.2)'}},React.createElement('div',{className:'met-v',style:{color:'#ff9f0a'}},DR.promedio),React.createElement('div',{className:'met-l',style:{color:'rgba(255,159,10,.7)'}},'Dimensión Restrictiva'),React.createElement('div',{className:'met-s'},DR.nombre.split(' ').slice(0,2).join(' '))),
+        React.createElement('div',{className:'met-c'},React.createElement('div',{className:'met-v',style:{color:brecha>1?'#ff453a':'#30d158'}},brecha),React.createElement('div',{className:'met-l'},'Brecha Estratégica'),React.createElement('div',{className:'met-s'},brecha>1?'Desbalance significativo':'Equilibrado'))
       ),
       React.createElement('div',{className:'radar-wrap'},React.createElement(Radar,{porDim})),
-      React.createElement('div',{className:'dim-res'},
-        React.createElement('div',{style:{fontSize:11,fontWeight:700,color:'#64748B',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:14}},'Resultados por Dimensión'),
+      React.createElement('div',{className:'dim-res-list'},
+        React.createElement('div',{style:{fontSize:11,fontWeight:700,color:'rgba(255,255,255,.35)',textTransform:'uppercase',letterSpacing:'.5px',marginBottom:14}},'Resultados por Dimensión'),
         porDim.map((d,i)=>{
           const nv=nvPt(d.promedio);const esDR=d.nombre===DR.nombre;
           return React.createElement('div',{key:i,className:'dim-res-row'},
-            React.createElement('div',{className:'dim-res-n'},d.nombre,esDR&&React.createElement('span',{className:'tag-cuello',style:{marginLeft:5}},'⚠ Cuello')),
-            React.createElement('div',{className:'barra-wrap'},React.createElement('div',{className:'barra-fill',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
+            React.createElement('div',{className:'dim-res-n'},d.nombre,esDR&&React.createElement('span',{className:'tag-cuello'},'⚠ Cuello')),
+            React.createElement('div',{className:'bar-t'},React.createElement('div',{className:'bar-f',style:{width:`${(d.promedio/5)*100}%`,background:colPt(d.promedio)}})),
             React.createElement('div',{className:'dim-pt',style:{color:colPt(d.promedio)}},d.promedio),
-            React.createElement('div',{className:`nivel-tag badge b${nv.n}`},nv.nom)
+            React.createElement('div',{className:`nvtag n${nv.n}`},nv.nom)
           );
         })
       ),
-      React.createElement('div',{className:'narr'},React.createElement('p',null,narrativa)),
-      analisisIA&&React.createElement('div',{className:'narr',style:{background:'#F0FDF4',borderColor:'#059669',margin:'0 28px 24px'}},React.createElement('p',{style:{fontWeight:600,marginBottom:6,color:'#065F46'}},'✨ Análisis personalizado:'),React.createElement('p',null,analisisIA)),
+      React.createElement('div',{className:'narr-box'},React.createElement('p',null,narrativa)),
+      iaText&&React.createElement('div',{className:'ia-box'},React.createElement('p',{style:{fontWeight:600,marginBottom:6,color:'var(--green)'},'✨ Análisis personalizado:'),React.createElement('p',null,iaText)),
       !enviado
-        ?React.createElement('div',{style:{padding:'0 28px 28px',display:'flex',gap:10}},
-          React.createElement('button',{className:'btn btn-p',onClick:enviar,disabled:enviando,style:{flex:1}},enviando?'⏳ Generando análisis y enviando...':'📧 Enviar resultados a mi correo'),
-          React.createElement('button',{className:'btn btn-s',onClick:onNuevo},'Nuevo diagnóstico')
+        ?React.createElement('div',{style:{padding:'0 0 32px',display:'flex',gap:12}},
+          React.createElement('button',{className:'btn-pill',style:{flex:1},onClick:enviar,disabled:enviando},enviando?'⏳ Generando y enviando...':'📧 Enviar resultados a mi correo'),
+          React.createElement('button',{className:'btn-ghost',onClick:onNuevo},'Nuevo')
         )
-        :React.createElement('div',{className:'correo-ok'},
-          React.createElement('div',{className:'co-i'},'✅'),
-          React.createElement('div',{className:'co-t'},`Resultados enviados a ${part.correo}`),
-          React.createElement('div',{className:'co-s'},'Revise su bandeja. Si no aparece, verifique spam.'),
-          React.createElement('button',{className:'btn btn-s',style:{marginTop:14},onClick:onNuevo},'Realizar otro diagnóstico')
+        :React.createElement('div',{className:'envio-ok'},
+          React.createElement('div',{className:'icon'},'✅'),
+          React.createElement('h3',null,`Enviado a ${part.correo}`),
+          React.createElement('p',null,'Revise su bandeja de entrada. Si no aparece, verifique spam.'),
+          React.createElement('button',{className:'btn-ghost',style:{marginTop:16},onClick:onNuevo},'Realizar otro diagnóstico')
         )
     )
   );
 }
 
+// ── APP ───────────────────────────────────────────────────────────────
 function App(){
   const [vista,setVista]=useState('inicio');
   const [auth,setAuth]=useState(null);
   const [sesion,setSesion]=useState(null);
   const [part,setPart]=useState(null);
   const [resp,setResp]=useState({});
-
   useEffect(()=>{
     const p=new URLSearchParams(window.location.search);
     const cod=p.get('codigo');
@@ -836,10 +901,8 @@ function App(){
         .catch(()=>{});
     }
   },[]);
-
-  const logout=async()=>{if(auth)await sbSignOut(auth.token);setAuth(null);setVista('inicio');};
+  const logout=async()=>{await sbSignOut();setAuth(null);setVista('inicio');};
   const reset=()=>{setSesion(null);setPart(null);setResp({});setVista('inicio');};
-
   if(vista==='inicio')return React.createElement(Inicio,{onInstructor:()=>setVista('login'),onCodigo:(s)=>{setSesion(s);setVista('form');}});
   if(vista==='login')return React.createElement(Login,{onLogin:(a)=>{setAuth(a);setVista('panel');},onVolver:()=>setVista('inicio')});
   if(vista==='panel'&&auth)return React.createElement(Panel,{auth,onLogout:logout});
@@ -848,8 +911,7 @@ function App(){
   if(vista==='resultados'&&part&&sesion)return React.createElement(Resultados,{part,resp,sesion,onNuevo:reset});
   return React.createElement(Inicio,{onInstructor:()=>setVista('login'),onCodigo:(s)=>{setSesion(s);setVista('form');}});
 }
-
-loadConfig().then(() => ReactDOM.render(React.createElement(App),document.getElementById('root')));
+ReactDOM.render(React.createElement(App),document.getElementById('root'));
 </script>
 </body>
 </html>
