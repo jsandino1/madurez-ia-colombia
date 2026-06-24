@@ -870,7 +870,7 @@ function Resultados({part,resp,sesion,onNuevo}){
         })
       ),
       React.createElement('div',{className:'narr-box'},React.createElement('p',null,narrativa)),
-      iaText&&React.createElement('div',{className:'ia-box'},React.createElement('p',{style:{fontWeight:600,marginBottom:6,color:'var(--green)'},'✨ Análisis personalizado:'),React.createElement('p',null,iaText)),
+      iaText&&React.createElement('div',{className:'ia-box'},React.createElement('p',{style:{fontWeight:600,marginBottom:6,color:'var(--green)'}},'✨ Análisis personalizado:'),React.createElement('p',null,iaText)),
       !enviado
         ?React.createElement('div',{style:{padding:'0 0 32px',display:'flex',gap:12}},
           React.createElement('button',{className:'btn-pill',style:{flex:1},onClick:enviar,disabled:enviando},enviando?'⏳ Generando y enviando...':'📧 Enviar resultados a mi correo'),
@@ -894,13 +894,15 @@ function App(){
   const [part,setPart]=useState(null);
   const [resp,setResp]=useState({});
   useEffect(()=>{
-    const p=new URLSearchParams(window.location.search);
-    const cod=p.get('codigo');
-    if(cod){
-      api('buscar_sesion',{codigo:cod})
-        .then(d=>{setSesion(d);setVista('form');})
-        .catch(()=>{});
-    }
+    try{
+      const p=new URLSearchParams(window.location.search);
+      const cod=p.get('codigo');
+      if(cod){
+        api('buscar_sesion',{codigo:cod})
+          .then(d=>{setSesion(d);setVista('form');})
+          .catch(()=>{setVista('inicio');});
+      }
+    }catch(e){setVista('inicio');}
   },[]);
   const logout=async()=>{await sbSignOut();setAuth(null);setVista('inicio');};
   const reset=()=>{setSesion(null);setPart(null);setResp({});setVista('inicio');};
