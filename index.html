@@ -92,7 +92,10 @@ body{font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;b
 .field{margin-bottom:18px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:-.224px}
 .field label span{color:var(--red)}
-.field input,.field select,.field textarea{width:100%;padding:11px 14px;font-size:15px;font-family:inherit;color:var(--ink);background:var(--canvas);border:1px solid var(--hair);border-radius:10px;outline:none;letter-spacing:-.2px;transition:border-color .2s}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;font-size:15px;font-family:inherit;color:var(--ink);background:var(--canvas);border:1px solid var(--hair);border-radius:10px;outline:none;letter-spacing:-.2px;transition:border-color .2s;color-scheme:light}
+.field select option{background:#ffffff;color:#1d1d1f}
+.field-dark input,.field-dark select,.field-dark textarea{color-scheme:dark}
+.field-dark select option{background:#2a2a2a;color:#ffffff}
 .field textarea{min-height:70px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(0,102,204,.1)}
 .field input:disabled,.field select:disabled{background:var(--parch);color:var(--ink2);cursor:not-allowed}
